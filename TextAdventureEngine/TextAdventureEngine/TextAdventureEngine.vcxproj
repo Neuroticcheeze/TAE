@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{760C8B50-31C8-45FE-89BC-D02E2DF69597}</ProjectGuid>
+    <RootNamespace>TextAdventureEngine</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(SolutionDir)../Dependencies/LIBSNDFILE/include;$(SolutionDir)../Dependencies/PORTAUDIO/include;$(SolutionDir)../Dependencies/SIGIL-0.9.0/include;$(SolutionDir)TextAdventureEngine;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)../Dependencies/LIBSNDFILE/lib;$(SolutionDir)../Dependencies/PORTAUDIO/lib;$(SolutionDir)../Dependencies/SIGIL-0.9.0/lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <IntDir>$(SolutionDir)_Inter\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(SolutionDir)../Dependencies/LIBSNDFILE/include;$(SolutionDir)../Dependencies/PORTAUDIO/include;$(SolutionDir)../Dependencies/SIGIL-0.9.0/include;$(SolutionDir)TextAdventureEngine;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)../Dependencies/LIBSNDFILE/lib;$(SolutionDir)../Dependencies/PORTAUDIO/lib;$(SolutionDir)../Dependencies/SIGIL-0.9.0/lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <IntDir>$(SolutionDir)_Inter\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <ForcedIncludeFiles>cstdint;Framework/Platform/Platform.hpp;Framework/Utils/Debug.hpp;Framework/Utils/Enum.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libsndfile-1.lib;sigil.lib;portaudio_x86_d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <ForcedIncludeFiles>cstdint;Framework/Platform/Platform.hpp;Framework/Utils/Debug.hpp;Framework/Utils/Enum.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>libsndfile-1.lib;sigil.lib;portaudio_x86.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Framework\Audio\AudioManager.cpp" />
+    <ClCompile Include="Framework\Config\Config.cpp" />
+    <ClCompile Include="Framework\Containers\CString.cpp" />
+    <ClCompile Include="Framework\Containers\DataStream.cpp" />
+    <ClCompile Include="Framework\Containers\WString.cpp" />
+    <ClCompile Include="Framework\Entity\EntitySystem.cpp" />
+    <ClCompile Include="Framework\File\FileManager.cpp" />
+    <ClCompile Include="Framework\GameStructure\World\Locality.cpp" />
+    <ClCompile Include="Framework\GameStructure\Items\Inventory.cpp" />
+    <ClCompile Include="Framework\GameStructure\Items\Item.cpp" />
+    <ClCompile Include="Framework\GameStructure\Items\ItemGroup.cpp" />
+    <ClCompile Include="Framework\GameStructure\Items\ItemRegistry.cpp" />
+    <ClCompile Include="Framework\GameStructure\Player.cpp" />
+    <ClCompile Include="Framework\GameStructure\World\Nature\Meteorology2\Climatograph.cpp" />
+    <ClCompile Include="Framework\GameStructure\World\Nature\Meteorology2\WindSystem.cpp" />
+    <ClCompile Include="Framework\GameStructure\World\Nature\TimeFlow.cpp" />
+    <ClCompile Include="Framework\GameStructure\UI\FadeManager.cpp" />
+    <ClCompile Include="Framework\GameStructure\UI\Page.cpp" />
+    <ClCompile Include="Framework\GameStructure\UI\PageManager.cpp" />
+    <ClCompile Include="Framework\GameStructure\UI\PageItemInventory.cpp" />
+    <ClCompile Include="Framework\GameStructure\UI\ViewSprite.cpp" />
+    <ClCompile Include="Framework\GameStructure\UI\ViewText.cpp" />
+    <ClCompile Include="Framework\GameStructure\UI\View.cpp" />
+    <ClCompile Include="Framework\GameStructure\World\WorldManager.cpp" />
+    <ClCompile Include="Framework\Graphics\GraphicsManager.cpp" />
+    <ClCompile Include="Framework\Graphics\NineSpriteSheet.cpp" />
+    <ClCompile Include="Framework\Graphics\Particles\Emitter.cpp" />
+    <ClCompile Include="Framework\Graphics\Particles\ParticleSystem.cpp" />
+    <ClCompile Include="Framework\Graphics\SpriteSheet.cpp" />
+    <ClCompile Include="Framework\Input\CommandLineManager.cpp" />
+    <ClCompile Include="Framework\Input\InputManager.cpp" />
+    <ClCompile Include="Framework\Math\Colour\Colour.cpp" />
+    <ClCompile Include="Framework\Math\Curve\Bezier.cpp" />
+    <ClCompile Include="Framework\Math\Linear\Vector2.cpp" />
+    <ClCompile Include="Framework\Math\Math.cpp" />
+    <ClCompile Include="Framework\Math\RandomRange.cpp" />
+    <ClCompile Include="Framework\Thread\ConditionVariable.cpp" />
+    <ClCompile Include="Framework\Thread\Mutex.cpp" />
+    <ClCompile Include="Framework\Thread\ThreadManager.cpp" />
+    <ClCompile Include="Framework\Time\TimePoint.cpp" />
+    <ClCompile Include="Framework\Time\Timer.cpp" />
+    <ClCompile Include="Framework\Utils\Debug.cpp" />
+    <ClCompile Include="Framework\Utils\Hash.cpp" />
+    <ClCompile Include="Framework\Utils\MemoryExt.cpp" />
+    <ClCompile Include="Framework\Utils\Random.cpp" />
+    <ClCompile Include="Main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Engine.hpp" />
+    <ClInclude Include="Framework\Audio\AudioManager.hpp" />
+    <ClInclude Include="Framework\Config\Config.hpp" />
+    <ClInclude Include="Framework\Containers\Array.hpp" />
+    <ClInclude Include="Framework\Containers\CString.hpp" />
+    <ClInclude Include="Framework\Containers\DataStream.hpp" />
+    <ClInclude Include="Framework\Containers\Dictionary.hpp" />
+    <ClInclude Include="Framework\Containers\LinkedList.hpp" />
+    <ClInclude Include="Framework\Containers\Queue.hpp" />
+    <ClInclude Include="Framework\Containers\Stack.hpp" />
+    <ClInclude Include="Framework\Containers\StaticArray.hpp" />
+    <ClInclude Include="Framework\Containers\StaticDictionary.hpp" />
+    <ClInclude Include="Framework\Containers\WString.hpp" />
+    <ClInclude Include="Framework\Entity\EntitySystem.hpp" />
+    <ClInclude Include="Framework\File\FileManager.hpp" />
+    <ClInclude Include="Framework\File\FileStream.hpp" />
+    <ClInclude Include="Framework\GameStructure\World\Locality.hpp" />
+    <ClInclude Include="Framework\GameStructure\Items\Inventory.hpp" />
+    <ClInclude Include="Framework\GameStructure\Items\Item.hpp" />
+    <ClInclude Include="Framework\GameStructure\Items\ItemGroup.hpp" />
+    <ClInclude Include="Framework\GameStructure\Items\ItemRegistry.hpp" />
+    <ClInclude Include="Framework\GameStructure\Player.hpp" />
+    <ClInclude Include="Framework\GameStructure\World\Nature\Meteorology2\Climatograph.hpp" />
+    <ClInclude Include="Framework\GameStructure\World\Nature\Meteorology2\WindSystem.hpp" />
+    <ClInclude Include="Framework\GameStructure\World\Nature\Meteorology2\MeteorologyUtils.hpp" />
+    <ClInclude Include="Framework\GameStructure\World\Nature\TimeFlow.hpp" />
+    <ClInclude Include="Framework\GameStructure\UI\FadeManager.hpp" />
+    <ClInclude Include="Framework\GameStructure\UI\Page.hpp" />
+    <ClInclude Include="Framework\GameStructure\UI\PageManager.hpp" />
+    <ClInclude Include="Framework\GameStructure\UI\PageItemInventory.hpp" />
+    <ClInclude Include="Framework\GameStructure\UI\ViewSprite.hpp" />
+    <ClInclude Include="Framework\GameStructure\UI\ViewText.hpp" />
+    <ClInclude Include="Framework\GameStructure\UI\View.hpp" />
+    <ClInclude Include="Framework\GameStructure\World\WorldManager.hpp" />
+    <ClInclude Include="Framework\Graphics\GraphicsManager.hpp" />
+    <ClInclude Include="Framework\Graphics\NineSpriteSheet.hpp" />
+    <ClInclude Include="Framework\Graphics\Particles\Emitter.hpp" />
+    <ClInclude Include="Framework\Graphics\Particles\EmitterInfo.hpp" />
+    <ClInclude Include="Framework\Graphics\Particles\Particle.hpp" />
+    <ClInclude Include="Framework\Graphics\Particles\ParticleSystem.hpp" />
+    <ClInclude Include="Framework\Graphics\SpriteSheet.hpp" />
+    <ClInclude Include="Framework\Input\CommandLineManager.hpp" />
+    <ClInclude Include="Framework\Input\InputManager.hpp" />
+    <ClInclude Include="Framework\Math\Colour\Colour.hpp" />
+    <ClInclude Include="Framework\Math\Curve\Bezier.hpp" />
+    <ClInclude Include="Framework\Math\Gradient.hpp" />
+    <ClInclude Include="Framework\Math\Linear\Vector2.hpp" />
+    <ClInclude Include="Framework\Math\Math.hpp" />
+    <ClInclude Include="Framework\Math\RandomRange.hpp" />
+    <ClInclude Include="Framework\Platform\Platform.hpp" />
+    <ClInclude Include="Framework\Template\Manager.hpp" />
+    <ClInclude Include="Framework\Template\Registry.hpp" />
+    <ClInclude Include="Framework\Template\Serialisable.hpp" />
+    <ClInclude Include="Framework\Template\Singleton.hpp" />
+    <ClInclude Include="Framework\Template\StateMachine.hpp" />
+    <ClInclude Include="Framework\Template\StringRepresentable.hpp" />
+    <ClInclude Include="Framework\Template\System.hpp" />
+    <ClInclude Include="Framework\Template\Toggleable.hpp" />
+    <ClInclude Include="Framework\Template\Validatable.hpp" />
+    <ClInclude Include="Framework\Thread\ConditionVariable.hpp" />
+    <ClInclude Include="Framework\Thread\Mutex.hpp" />
+    <ClInclude Include="Framework\Thread\ThreadManager.hpp" />
+    <ClInclude Include="Framework\Time\TimePoint.hpp" />
+    <ClInclude Include="Framework\Time\Timer.hpp" />
+    <ClInclude Include="Framework\Utils\Allocator.hpp" />
+    <ClInclude Include="Framework\Utils\BitField.hpp" />
+    <ClInclude Include="Framework\Utils\Debug.hpp" />
+    <ClInclude Include="Framework\Utils\Enum.hpp" />
+    <ClInclude Include="Framework\Utils\Exception.hpp" />
+    <ClInclude Include="Framework\Utils\Function.hpp" />
+    <ClInclude Include="Framework\Utils\Hash.hpp" />
+    <ClInclude Include="Framework\Utils\InitialiserList.hpp" />
+    <ClInclude Include="Framework\Utils\Memory.hpp" />
+    <ClInclude Include="Framework\Utils\MemoryExt.hpp" />
+    <ClInclude Include="Framework\Utils\MemoryOps.hpp" />
+    <ClInclude Include="Framework\Utils\Random.hpp" />
+    <ClInclude Include="Framework\Utils\Tuple.hpp" />
+    <ClInclude Include="Framework\Utils\VFormat.hpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
