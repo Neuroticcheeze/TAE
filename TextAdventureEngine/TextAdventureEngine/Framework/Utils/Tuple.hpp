@@ -53,7 +53,7 @@ struct Tuple4
 	T0 Value0;
 	T1 Value1;
 	T2 Value2;
-	T2 Value3;
+	T3 Value3;
 };
 
 #endif//TUPLE_H

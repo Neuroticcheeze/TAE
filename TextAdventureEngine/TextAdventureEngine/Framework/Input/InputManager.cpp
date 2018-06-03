@@ -1,6 +1,8 @@
 #include "InputManager.hpp"
 #include <Framework/Utils/MemoryOps.hpp>
-#include <SIGIL-0.9.0/sl.h>
+#include <SDL/SDL_keyboard.h>
+#include <SDL/SDL_keycode.h>
+#include <SDL/SDL_mouse.h>
 
 //=====================================================================================
 void InputManager::Init()
@@ -23,11 +25,19 @@ void InputManager::Finalise()
 //=====================================================================================
 void InputManager::Tick( float a_DeltaTime )
 {
+	int32_t kKeyboardNumKeys;
+	const uint8_t * kKeyboardState = SDL_GetKeyboardState( &kKeyboardNumKeys );
+	
+	int32_t kMouseX, kMouseY;
+	uint32_t kMouseState = SDL_GetMouseState( &kMouseX, &kMouseY );
+	m_MousePosition.x = kMouseX;
+	m_MousePosition.y = kMouseY;
+
 	for ( uint32_t i = 0; i < 512; ++i )
 	{
 		bool & f = m_KeyDownFlags[ i ];
 		bool & p = m_KeyDownPrevFlags[ i ];
-		f = slGetKey( i );
+		f = ( f >= kKeyboardNumKeys ) ? false : kKeyboardState[ i ];
 
 		if ( f != p )
 		{
@@ -40,17 +50,28 @@ void InputManager::Tick( float a_DeltaTime )
 					const StaticArray< IKeyEventListener *, MaxListenersPerEvent > & array = m_InputKeyEventListeners[ ( uint8_t)InputKeyEvent::ON_KEY_PRESSED ];
 					for ( uint32_t k = 0; k < array.Count(); ++k )
 					{
-						array[ k ]->OnKeyPressed( (Key)i );
+						array[ k ]->OnKeyPressed( ( Key )i );
 					}
 				}
-				else 
-				{
-					const char c = 'a';
 
-					const StaticArray< ICharEventListener *, MaxListenersPerEvent > & array = m_InputCharEventListeners[ ( uint8_t)InputCharEvent::ON_TEXTUAL_CHAR_TYPED ];
-					for ( uint32_t k = 0; k < array.Count(); ++k )
+				else
+				{
+					if ( i == KEYCODE_TAB )
 					{
-						array[ k ]->OnCharTyped( c );
+						for ( uint32_t k = 0; k < 4; ++k )
+						{
+							m_TextEvents.Push( ' ' );
+						}
+					}
+
+					if ( i == KEYCODE_RETURN || i == KEYCODE_RETURN2 )
+					{
+						m_TextEvents.Push( TEXTCODE_NEWLINE );
+					}
+
+					if ( i == KEYCODE_BACKSPACE )
+					{
+						m_TextEvents.Push( TEXTCODE_BACKSPACE );
 					}
 				}
 			}
@@ -86,11 +107,32 @@ void InputManager::Tick( float a_DeltaTime )
 		p = f;
 	}
 
+	if ( m_InTextualMode )
+	{
+		const StaticArray< ICharEventListener *, MaxListenersPerEvent > & array = m_InputCharEventListeners[ ( uint8_t)InputCharEvent::ON_TEXTUAL_CHAR_TYPED ];
+		while ( m_TextEvents.Count() > 0 )
+		{
+			char c = *m_TextEvents.Peek();
+			m_TextEvents.Pop();
+			for ( uint32_t k = 0; k < array.Count(); ++k )
+			{
+				array[ k ]->OnCharTyped( c );
+			}
+		}
+	}
+	else
+	{
+		while ( m_TextEvents.Count() > 0 )
+		{
+			m_TextEvents.Pop();
+		}
+	}
+
 	for ( uint32_t i = 0; i < MouseButtonCount; ++i )
 	{
 		bool & f = m_MouseDownFlags[ i ];
 		bool & p = m_MouseDownPrevFlags[ i ];
-		f = slGetMouseButton( i );
+		f = kMouseState & SDL_BUTTON( i + 1 );
 
 		if ( f != p )
 		{
@@ -149,7 +191,7 @@ InputManager::ButtonState InputManager::GetMouseButtonState( MouseButton a_Mouse
 //=====================================================================================
 Vector2 InputManager::GetMousePosition() const
 {
-	return Vector2( ( float )slGetMouseX(), ( float )slGetMouseY() );
+	return m_MousePosition;
 }
 
 //=====================================================================================

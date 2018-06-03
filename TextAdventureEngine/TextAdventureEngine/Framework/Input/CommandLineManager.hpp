@@ -56,6 +56,7 @@ class CommandLineManager final : public Manager< CommandLineManager, const char 
 public:
 
 	void Init( const char * a_CommandLine );
+	void Init( const char ** a_CommandLineArguments, uint32_t a_ArgNum );
 	void Finalise();
 
 	bool ArgumentExists( const char * a_Name ) const;

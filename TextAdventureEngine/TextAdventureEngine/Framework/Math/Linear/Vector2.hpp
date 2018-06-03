@@ -20,7 +20,8 @@ struct Vector2 final : public SerialisableStruct< Vector2 >,
 	Vector2 & operator=( const Vector2 & a_Other );
 	
 	CString ToString( const char * a_Parameter = "" ) const;
-	
+	bool FromString( const char * a_String, Vector2 & o_Result ) const override;
+
 	Vector2 operator-() const;
 
 	Vector2 operator+( const Vector2 & a_Other ) const;
@@ -50,6 +51,8 @@ struct Vector2 final : public SerialisableStruct< Vector2 >,
 	Vector2 Normalised() const;
 	float Length() const;
 	float LengthSqr() const;
+
+	Vector2 SmoothLerp( const Vector2 & a_Target, float a_Frac ) const;
 
 	float x;
 	float y;

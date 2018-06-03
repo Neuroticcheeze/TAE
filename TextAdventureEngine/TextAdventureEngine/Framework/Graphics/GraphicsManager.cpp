@@ -1,5 +1,5 @@
 #include "GraphicsManager.hpp"
-#include <SIGIL-0.9.0/sl.h>
+#include <Framework/Graphics/Graphics.hpp>
 
 //=====================================================================================
 void GraphicsManager::Init()
@@ -15,7 +15,7 @@ const GraphicsManager::Texture & GraphicsManager::LoadTexture( uint32_t a_HashNa
 {
 	if ( !m_Textures.Contains( a_HashName ) )
 	{
-		m_Textures.Put( a_HashName, slLoadTexture( a_Path ) );
+		m_Textures.Put( a_HashName, Graphics::LoadTexture( a_Path ) );
 	}
 	
 	return *m_Textures[ a_HashName ];
@@ -53,7 +53,7 @@ const GraphicsManager::Font & GraphicsManager::LoadFont( uint32_t a_HashName, co
 {
 	if ( !m_Fonts.Contains( a_HashName ) )
 	{
-		m_Fonts.Put( a_HashName, slLoadFont( a_Path ) );
+		m_Fonts.Put( a_HashName, Graphics::LoadFont( a_Path ) );
 	}
 	
 	return *m_Fonts[ a_HashName ];

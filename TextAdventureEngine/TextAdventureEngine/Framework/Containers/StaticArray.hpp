@@ -275,7 +275,7 @@ public:
 	{
 		for ( uint32_t t = 0; t < m_Length; ++t )
 		{
-			~( *( m_Data + t ) );
+			( *( m_Data + t ) ).~T();
 		}
 
 		m_Length = 0;

@@ -7,6 +7,7 @@
 #include <Framework/Math/Math.hpp>
 #include <Framework/Utils/Function.hpp>
 #include <Framework/Utils/Exception.hpp>
+#include <Framework/Utils/InitialiserList.hpp>
 #include <algorithm>
 
 //=====================================================================================
@@ -69,7 +70,7 @@ public:
 		, m_Length( 0 )
 		, m_Capacity( 0 )
 	{
-		if ( a_End == a_Begin || a_End == nullptr || a_Begin == nullptr )
+		if ( a_End <= a_Begin || a_End == nullptr || a_Begin == nullptr )
 		{
 			return;
 		}
@@ -81,12 +82,29 @@ public:
 		BCopy( a_Begin, m_Data, sizeof( T ) * m_Length );
 	}
 
+	//!	\brief Initialiser Constructor.
+	//!		   Construct an Array from an InisialiserList< T >
+	Array( const InitialiserList< T > & a_InitialiserList )
+		: Array( NBegin( a_InitialiserList ), NEnd( a_InitialiserList ) )
+	{
+
+	}
+
 	//!	\brief Destructor - deletes all elements and clears the capacity and length, before this object is deleted.
 	~Array()
 	{
 		CFree( m_Data );
 		m_Length = 0;
 		m_Capacity = 0;
+	}
+
+	//!	\brief Fill out this array so as to be constructed from the InisialiserList< T >
+	//!		   An allocation of the same size as another is made, and all element values are copied across.
+	//!	\param a_Other The Array we are cloning into this.
+	//!	\return A reference to this Array<T> object
+	Array< T > & operator=( const InitialiserList< T > & a_InitialiserList )
+	{
+		return *this = Array< T >( a_InitialiserList );
 	}
 
 	//!	\brief Fill out this array so as to be an exact clone of another, with a separate allocation.
@@ -252,6 +270,30 @@ public:
 		m_Data[ m_Length - 1 ] = a_Value;
 	}
 
+	//!	\brief Get a subarray of this one.
+	//!	\param a_StartingIndex The index of the element to set as the sub array's first element.
+	//!	\param a_Length How many consecutive elements after a_StartingIndex to copy to the sub array.
+	//!	\return The sub array.
+	Array< T > SubArray( uint32_t a_StartingIndex, uint32_t a_Length ) const
+	{
+		return Array< T >( Clamp( m_Data + a_StartingIndex, m_Data, End() ), 
+						   Clamp( m_Data + a_StartingIndex + a_Length, m_Data, End() ) );
+	}
+
+	//! \brief Append another array at the end of this one.
+	//! \param a_Array The array to append.
+	void Concat( const Array< T > & a_Array )
+	{
+		if ( a_Array.m_Length == 0 )
+		{
+			return;
+		}
+
+		uint32_t oldLen;
+		Resize( ( oldLen = m_Length ) + a_Array.m_Length );
+		BCopy( a_Array.First(), m_Data + oldLen, sizeof( T ) * a_Array.m_Length );
+	}
+
 	//! \brief Remove an element at the specified index.
 	//! \remark If the index is outside this Array's range, an OutOfRangeAccessException is thrown.
 	//! \param a_Index The index of the element we wish to remove.
@@ -355,6 +397,27 @@ public:
 	int32_t IndexOf( const T & a_Value ) const
 	{
 		const T * curr = First();
+
+		while ( curr != End() )
+		{
+			if ( *curr == a_Value )
+			{
+				return static_cast< int32_t >( curr - First() );
+			}
+
+			++curr;
+		}
+
+		return -1;
+	}
+
+	//! \brief Fetch the index of the first element in the array encountered that is equal to a specified value.
+	//! \param a_Value The value to look for.
+	//!	\return The index of the first element found.
+	template< typename U >
+	int32_t IndexOf( const U & a_Value ) const
+	{
+		T * curr = First();
 
 		while ( curr != End() )
 		{

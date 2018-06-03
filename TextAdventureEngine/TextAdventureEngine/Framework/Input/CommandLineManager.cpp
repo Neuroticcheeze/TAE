@@ -34,6 +34,46 @@ void CommandLineManager::Init( const char * a_CommandLine )
 }
 
 //=====================================================================================
+void CommandLineManager::Init( const char ** a_CommandLineArguments, uint32_t a_ArgNum )
+{
+	if ( !ASSERT( a_CommandLineArguments, "CommandLineManager: 'a_CommandLineArguments' was null" ) || a_ArgNum == 0 )
+	{
+		return;
+	}
+
+	for ( uint32_t i = 0; i < a_ArgNum; )
+	{
+		const CString & str = a_CommandLineArguments[ i ];
+
+		CLArg arg;
+
+		// Argument
+		if ( str.Length() > 2 && str.SubString( 0, 2 ) == "--" )
+		{
+			arg.m_Name = str.SubString( 2, str.Length() - 2 );
+			++i;
+
+			// Arg param
+			if ( i < a_ArgNum && str.Length() > 0 && str.SubString( 0, 2 ) != "--" )
+			{
+				arg.m_Parameter = str;
+				++i;
+			}
+		}
+
+		if ( arg.m_Name.Length() > 0 )
+		{ 
+			m_Arguments.Append( arg );
+		}
+
+		else
+		{
+			++i; // skip
+		}
+	}
+}
+
+//=====================================================================================
 void CommandLineManager::Finalise()
 {
 	m_CommandLine = nullptr;

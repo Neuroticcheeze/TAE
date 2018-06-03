@@ -70,13 +70,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)../Dependencies/LIBSNDFILE/include;$(SolutionDir)../Dependencies/PORTAUDIO/include;$(SolutionDir)../Dependencies/SIGIL-0.9.0/include;$(SolutionDir)TextAdventureEngine;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)../Dependencies/LIBSNDFILE/lib;$(SolutionDir)../Dependencies/PORTAUDIO/lib;$(SolutionDir)../Dependencies/SIGIL-0.9.0/lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <IncludePath>$(SolutionDir)../Dependencies/SDL2-2.0.8/include;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/include;$(SolutionDir)../Dependencies/LIBSNDFILE/include;$(SolutionDir)../Dependencies/PORTAUDIO/include;$(SolutionDir)../Dependencies/SIGIL-0.9.0/include;$(SolutionDir)TextAdventureEngine;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)../Dependencies/SDL2-2.0.8/lib/x86;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/lib;$(SolutionDir)../Dependencies/LIBSNDFILE/lib;$(SolutionDir)../Dependencies/PORTAUDIO/lib;$(SolutionDir)../Dependencies/SIGIL-0.9.0/lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
     <IntDir>$(SolutionDir)_Inter\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)../Dependencies/LIBSNDFILE/include;$(SolutionDir)../Dependencies/PORTAUDIO/include;$(SolutionDir)../Dependencies/SIGIL-0.9.0/include;$(SolutionDir)TextAdventureEngine;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)../Dependencies/LIBSNDFILE/lib;$(SolutionDir)../Dependencies/PORTAUDIO/lib;$(SolutionDir)../Dependencies/SIGIL-0.9.0/lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <IncludePath>$(SolutionDir)../Dependencies/SDL2-2.0.8/include;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/include;$(SolutionDir)../Dependencies/LIBSNDFILE/include;$(SolutionDir)../Dependencies/PORTAUDIO/include;$(SolutionDir)../Dependencies/SIGIL-0.9.0/include;$(SolutionDir)TextAdventureEngine;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)../Dependencies/SDL2-2.0.8/lib/x86;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/lib;$(SolutionDir)../Dependencies/LIBSNDFILE/lib;$(SolutionDir)../Dependencies/PORTAUDIO/lib;$(SolutionDir)../Dependencies/SIGIL-0.9.0/lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
     <IntDir>$(SolutionDir)_Inter\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -85,11 +85,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <ForcedIncludeFiles>cstdint;Framework/Platform/Platform.hpp;Framework/Utils/Debug.hpp;Framework/Utils/Enum.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles>cstdint;Framework/Math/Convert.hpp;Framework/Platform/Platform.hpp;Framework/Utils/Debug.hpp;Framework/Utils/Enum.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libsndfile-1.lib;sigil.lib;portaudio_x86_d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_mixer.lib;SDL2_image.lib;libsndfile-1.lib;sigil.lib;portaudio_x86_d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -108,13 +108,13 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <ForcedIncludeFiles>cstdint;Framework/Platform/Platform.hpp;Framework/Utils/Debug.hpp;Framework/Utils/Enum.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles>cstdint;Framework/Math/Convert.hpp;Framework/Platform/Platform.hpp;Framework/Utils/Debug.hpp;Framework/Utils/Enum.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>libsndfile-1.lib;sigil.lib;portaudio_x86.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_mixer.lib;SDL2_image.lib;libsndfile-1.lib;sigil.lib;portaudio_x86.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -137,25 +137,41 @@
     <ClCompile Include="Framework\Containers\CString.cpp" />
     <ClCompile Include="Framework\Containers\DataStream.cpp" />
     <ClCompile Include="Framework\Containers\WString.cpp" />
+    <ClCompile Include="Framework\Data\String\StringManager.cpp" />
+    <ClCompile Include="Framework\Data\String\StringTable.cpp" />
+    <ClCompile Include="Framework\Data\Xml\XmlObject.cpp" />
+    <ClCompile Include="Framework\Engine.cpp" />
     <ClCompile Include="Framework\Entity\EntitySystem.cpp" />
     <ClCompile Include="Framework\File\FileManager.cpp" />
-    <ClCompile Include="Framework\GameStructure\World\Locality.cpp" />
-    <ClCompile Include="Framework\GameStructure\Items\Inventory.cpp" />
-    <ClCompile Include="Framework\GameStructure\Items\Item.cpp" />
-    <ClCompile Include="Framework\GameStructure\Items\ItemGroup.cpp" />
-    <ClCompile Include="Framework\GameStructure\Items\ItemRegistry.cpp" />
-    <ClCompile Include="Framework\GameStructure\Player.cpp" />
-    <ClCompile Include="Framework\GameStructure\World\Nature\Meteorology2\Climatograph.cpp" />
-    <ClCompile Include="Framework\GameStructure\World\Nature\Meteorology2\WindSystem.cpp" />
-    <ClCompile Include="Framework\GameStructure\World\Nature\TimeFlow.cpp" />
-    <ClCompile Include="Framework\GameStructure\UI\FadeManager.cpp" />
-    <ClCompile Include="Framework\GameStructure\UI\Page.cpp" />
-    <ClCompile Include="Framework\GameStructure\UI\PageManager.cpp" />
-    <ClCompile Include="Framework\GameStructure\UI\PageItemInventory.cpp" />
-    <ClCompile Include="Framework\GameStructure\UI\ViewSprite.cpp" />
-    <ClCompile Include="Framework\GameStructure\UI\ViewText.cpp" />
-    <ClCompile Include="Framework\GameStructure\UI\View.cpp" />
-    <ClCompile Include="Framework\GameStructure\World\WorldManager.cpp" />
+    <ClCompile Include="Framework\File\Save\SaveManager.cpp" />
+    <ClCompile Include="Framework\Data\Xml\XmlManager.cpp" />
+    <ClCompile Include="Framework\Graphics\Graphics.cpp" />
+    <ClCompile Include="Framework\Template\Cloneable.hpp" />
+    <ClCompile Include="Framework\UI\Views\ViewButton.cpp" />
+    <ClCompile Include="Framework\UI\Views\ViewSlider.cpp" />
+    <ClCompile Include="Framework\UI\Views\ViewTextField.cpp" />
+    <ClCompile Include="Framework\UI\Views\ViewTickBox.cpp" />
+    <ClCompile Include="Framework\Utils\BlackBoard.cpp" />
+    <ClCompile Include="GameStructure\UI\Pages\PageWorldMap.cpp" />
+    <ClCompile Include="GameStructure\Items\Inventory.cpp" />
+    <ClCompile Include="GameStructure\Items\Item.cpp" />
+    <ClCompile Include="GameStructure\Items\ItemGroup.cpp" />
+    <ClCompile Include="GameStructure\Items\ItemRegistry.cpp" />
+    <ClCompile Include="GameStructure\Player.cpp" />
+    <ClCompile Include="GameStructure\World\Location\Location.cpp" />
+    <ClCompile Include="GameStructure\World\Nature\Meteorology2\ClimateSystem.cpp" />
+    <ClCompile Include="GameStructure\World\Nature\Meteorology2\Climatograph.cpp" />
+    <ClCompile Include="GameStructure\World\Nature\Meteorology2\MeteorologyUtils.cpp" />
+    <ClCompile Include="GameStructure\World\Nature\Meteorology2\WindSystem.cpp" />
+    <ClCompile Include="GameStructure\World\Nature\TimeFlow.cpp" />
+    <ClCompile Include="Framework\UI\FadeManager.cpp" />
+    <ClCompile Include="Framework\UI\Page.cpp" />
+    <ClCompile Include="Framework\UI\PageManager.cpp" />
+    <ClCompile Include="GameStructure\UI\Pages\PageItemInventory.cpp" />
+    <ClCompile Include="Framework\UI\Views\ViewSprite.cpp" />
+    <ClCompile Include="Framework\UI\Views\ViewText.cpp" />
+    <ClCompile Include="Framework\UI\View.cpp" />
+    <ClCompile Include="GameStructure\World\WorldManager.cpp" />
     <ClCompile Include="Framework\Graphics\GraphicsManager.cpp" />
     <ClCompile Include="Framework\Graphics\NineSpriteSheet.cpp" />
     <ClCompile Include="Framework\Graphics\Particles\Emitter.cpp" />
@@ -180,7 +196,7 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine.hpp" />
+    <ClInclude Include="Framework\Engine.hpp" />
     <ClInclude Include="Framework\Audio\AudioManager.hpp" />
     <ClInclude Include="Framework\Config\Config.hpp" />
     <ClInclude Include="Framework\Containers\Array.hpp" />
@@ -189,31 +205,55 @@
     <ClInclude Include="Framework\Containers\Dictionary.hpp" />
     <ClInclude Include="Framework\Containers\LinkedList.hpp" />
     <ClInclude Include="Framework\Containers\Queue.hpp" />
+    <ClInclude Include="Framework\Containers\Set.hpp" />
     <ClInclude Include="Framework\Containers\Stack.hpp" />
     <ClInclude Include="Framework\Containers\StaticArray.hpp" />
     <ClInclude Include="Framework\Containers\StaticDictionary.hpp" />
+    <ClInclude Include="Framework\Containers\Tree.hpp" />
     <ClInclude Include="Framework\Containers\WString.hpp" />
+    <ClInclude Include="Framework\Data\String\StringManager.hpp" />
+    <ClInclude Include="Framework\Data\String\StringTable.hpp" />
+    <ClInclude Include="Framework\Data\Xml\XmlObject.hpp" />
     <ClInclude Include="Framework\Entity\EntitySystem.hpp" />
     <ClInclude Include="Framework\File\FileManager.hpp" />
     <ClInclude Include="Framework\File\FileStream.hpp" />
-    <ClInclude Include="Framework\GameStructure\World\Locality.hpp" />
-    <ClInclude Include="Framework\GameStructure\Items\Inventory.hpp" />
-    <ClInclude Include="Framework\GameStructure\Items\Item.hpp" />
-    <ClInclude Include="Framework\GameStructure\Items\ItemGroup.hpp" />
-    <ClInclude Include="Framework\GameStructure\Items\ItemRegistry.hpp" />
-    <ClInclude Include="Framework\GameStructure\Player.hpp" />
-    <ClInclude Include="Framework\GameStructure\World\Nature\Meteorology2\Climatograph.hpp" />
-    <ClInclude Include="Framework\GameStructure\World\Nature\Meteorology2\WindSystem.hpp" />
-    <ClInclude Include="Framework\GameStructure\World\Nature\Meteorology2\MeteorologyUtils.hpp" />
-    <ClInclude Include="Framework\GameStructure\World\Nature\TimeFlow.hpp" />
-    <ClInclude Include="Framework\GameStructure\UI\FadeManager.hpp" />
-    <ClInclude Include="Framework\GameStructure\UI\Page.hpp" />
-    <ClInclude Include="Framework\GameStructure\UI\PageManager.hpp" />
-    <ClInclude Include="Framework\GameStructure\UI\PageItemInventory.hpp" />
-    <ClInclude Include="Framework\GameStructure\UI\ViewSprite.hpp" />
-    <ClInclude Include="Framework\GameStructure\UI\ViewText.hpp" />
-    <ClInclude Include="Framework\GameStructure\UI\View.hpp" />
-    <ClInclude Include="Framework\GameStructure\World\WorldManager.hpp" />
+    <ClInclude Include="Framework\File\Save\ISaveLoadListener.hpp" />
+    <ClInclude Include="Framework\File\Save\SaveManager.hpp" />
+    <ClInclude Include="Framework\Data\Xml\XmlManager.hpp" />
+    <ClInclude Include="Framework\Graphics\Graphics.hpp" />
+    <ClInclude Include="Framework\Math\Relationship\Graph.hpp" />
+    <ClInclude Include="Framework\UI\Views\ViewButton.hpp" />
+    <ClInclude Include="Framework\UI\Views\ViewSlider.hpp" />
+    <ClInclude Include="Framework\UI\Views\ViewTextField.hpp" />
+    <ClInclude Include="Framework\UI\Views\ViewTickBox.hpp" />
+    <ClInclude Include="Framework\Utils\BlackBoard.hpp" />
+    <ClInclude Include="Framework\Utils\TypeTraits.hpp" />
+    <ClInclude Include="GameStructure\PlayerSaveHandler.hpp" />
+    <ClInclude Include="GameStructure\UI\Pages\PageWorldMap.hpp" />
+    <ClInclude Include="GameStructure\Items\Inventory.hpp" />
+    <ClInclude Include="GameStructure\Items\Item.hpp" />
+    <ClInclude Include="GameStructure\Items\ItemGroup.hpp" />
+    <ClInclude Include="GameStructure\Items\ItemRegistry.hpp" />
+    <ClInclude Include="GameStructure\Player.hpp" />
+    <ClInclude Include="GameStructure\World\Location\Location.hpp" />
+    <ClInclude Include="GameStructure\World\Location\LocationInfo.hpp" />
+    <ClInclude Include="GameStructure\World\Location\RouteInfo.hpp" />
+    <ClInclude Include="GameStructure\World\Nature\Flora.hpp" />
+    <ClInclude Include="GameStructure\World\Nature\Meteorology2\ClimateSystem.hpp" />
+    <ClInclude Include="GameStructure\World\Nature\Meteorology2\Climatograph.hpp" />
+    <ClInclude Include="GameStructure\World\Nature\Meteorology2\PrecipitationSuspension.hpp" />
+    <ClInclude Include="GameStructure\World\Nature\Meteorology2\WeatherData.hpp" />
+    <ClInclude Include="GameStructure\World\Nature\Meteorology2\WindSystem.hpp" />
+    <ClInclude Include="GameStructure\World\Nature\Meteorology2\MeteorologyUtils.hpp" />
+    <ClInclude Include="GameStructure\World\Nature\TimeFlow.hpp" />
+    <ClInclude Include="Framework\UI\FadeManager.hpp" />
+    <ClInclude Include="Framework\UI\Page.hpp" />
+    <ClInclude Include="Framework\UI\PageManager.hpp" />
+    <ClInclude Include="GameStructure\UI\Pages\PageItemInventory.hpp" />
+    <ClInclude Include="Framework\UI\Views\ViewSprite.hpp" />
+    <ClInclude Include="Framework\UI\Views\ViewText.hpp" />
+    <ClInclude Include="Framework\UI\View.hpp" />
+    <ClInclude Include="GameStructure\World\WorldManager.hpp" />
     <ClInclude Include="Framework\Graphics\GraphicsManager.hpp" />
     <ClInclude Include="Framework\Graphics\NineSpriteSheet.hpp" />
     <ClInclude Include="Framework\Graphics\Particles\Emitter.hpp" />
@@ -224,6 +264,7 @@
     <ClInclude Include="Framework\Input\CommandLineManager.hpp" />
     <ClInclude Include="Framework\Input\InputManager.hpp" />
     <ClInclude Include="Framework\Math\Colour\Colour.hpp" />
+    <ClInclude Include="Framework\Math\Convert.hpp" />
     <ClInclude Include="Framework\Math\Curve\Bezier.hpp" />
     <ClInclude Include="Framework\Math\Gradient.hpp" />
     <ClInclude Include="Framework\Math\Linear\Vector2.hpp" />
@@ -258,6 +299,9 @@
     <ClInclude Include="Framework\Utils\Random.hpp" />
     <ClInclude Include="Framework\Utils\Tuple.hpp" />
     <ClInclude Include="Framework\Utils\VFormat.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Upcoming Feature List.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

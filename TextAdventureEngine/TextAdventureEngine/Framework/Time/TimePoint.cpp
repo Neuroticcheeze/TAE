@@ -92,7 +92,8 @@ TimePoint TimePoint::operator+( const TimeSpan & a_TimeSpan ) const
 	_tm.tm_min = tp.m_Minute;
 	_tm.tm_sec = tp.m_Second;
 
-	_tm.tm_sec += a_TimeSpan.GetSeconds();
+	_tm.tm_sec += static_cast< int32_t >( a_TimeSpan.GetSeconds() % ( 60 * 60 * 24 ) );
+	//_tm.tm_min += static_cast< int32_t >( a_TimeSpan.GetSeconds() % ( 60 * 24 ) );
 
 	mktime(&_tm);
 
@@ -124,7 +125,8 @@ TimePoint TimePoint::operator-( const TimeSpan & a_TimeSpan ) const
 	_tm.tm_min = tp.m_Minute;
 	_tm.tm_sec = tp.m_Second;
 
-	_tm.tm_sec -= a_TimeSpan.GetSeconds();
+	_tm.tm_sec -= static_cast< int32_t >( a_TimeSpan.GetSeconds() % ( 60 * 60 * 24 ) );
+	//_tm.tm_sec -= a_TimeSpan.GetSeconds();
 
 	mktime(&_tm);
 

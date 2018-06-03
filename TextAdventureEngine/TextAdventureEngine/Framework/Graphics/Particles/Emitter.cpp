@@ -26,7 +26,7 @@ void Emitter::Tick( float a_DeltaTime )
 	if ( StridedOverInterval( m_Info.m_Rate, prev, m_Time ) && m_Time > 0.0F )
 	{
 		uint32_t m = 1;
-		int p = 1.0F / a_DeltaTime;
+		int32_t p = static_cast< int32_t >( 1.0F / a_DeltaTime );
 		if ( m_Info.m_Rate > p )
 		{
 			m = Min( MAX_EMIT_PER_FRAME, ( uint32_t )( m_Info.m_Rate / p ) );

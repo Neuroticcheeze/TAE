@@ -33,6 +33,9 @@ inline T Abs( const T & a_Value )
 float Exp( float a_Value );
 
 //=====================================================================================
+double ExpD( double a_Value );
+
+//=====================================================================================
 uint32_t NextPowerOf2( uint32_t a_Value );
 
 //=====================================================================================
@@ -61,6 +64,9 @@ float ACos( float a_Value );
 
 //=====================================================================================
 float ATan( float a_Value );
+
+//=====================================================================================
+float ATan2F( float a_X, float a_Y );
 
 //=====================================================================================
 template< typename T >
@@ -115,19 +121,29 @@ inline float Clamp( const float & a_Value )
 
 //=====================================================================================
 template< typename T >
-inline bool InRange( const T & a_Value, const T & a_Min, const T & a_Max )
+inline bool InRange( T a_Value, T a_Min, T a_Max )
 {
 	return a_Value >= a_Min && a_Value <= a_Max;
 }
 
 //=====================================================================================
-inline bool StridedOverInterval( float a_Interval, float a_Prev, float a_Next )
+inline bool StridedOverInterval( float a_Interval, float a_Prev, float a_Next, float * o_T = nullptr )
 {
-	return ( Ceil( a_Prev * a_Interval ) / a_Interval ) <= a_Next;
+	if ( o_T )
+	{
+		float p = ( Ceil( a_Prev / a_Interval ) * a_Interval );
+		*o_T = ( p - a_Prev ) / ( a_Next - a_Prev );
+		return p <= ( a_Next );
+	}
+	
+	return ( Ceil( a_Prev / a_Interval ) * a_Interval ) <= ( a_Next );
 }
 
 //=====================================================================================
 float Pow( float a_Base, float a_Power );
+
+//=====================================================================================
+long double PowL( long double a_Base, long double a_Power );
 
 //=====================================================================================
 bool IsMultipleOf( uint32_t a_Value, uint32_t a_MultipleOf );
@@ -158,15 +174,15 @@ T Align( const T & a_Value, const T & a_Pow2Alignment = 256 )
 }
 
 //=====================================================================================
-template< typename T >
-inline T Lerp( const T & a_Left, const T & a_Right, const T & a_T )
+template< typename T, typename U >
+inline T Lerp( const T & a_Left, const T & a_Right, const U & a_T )
 {
 	return a_Left * ( 1.0F - a_T ) + a_Right * ( a_T );
 }
 
 //=====================================================================================
-template< typename T >
-inline T Lerp( const T & a_Left, const T & a_Middle, const T & a_Right, const T & a_T )
+template< typename T, typename U >
+inline T Lerp( const T & a_Left, const T & a_Middle, const T & a_Right, const U & a_T )
 {
 	T a = Clamp( 1.0F - a_T );
 	T b = Clamp( 1.0F - Abs( a_T - 1.0F ) );
@@ -174,5 +190,15 @@ inline T Lerp( const T & a_Left, const T & a_Middle, const T & a_Right, const T 
 
 	return a_Left * a + a_Middle * b + a_Right * c;
 }
+
+//=====================================================================================
+template< typename T >
+inline T ReMap( const T & a_Value, const T & a_InMin, const T & a_InMax, const T & a_OutMin, const T & a_OutMax )
+{
+	T c01 = ( a_Value - a_InMin ) / ( a_InMax - a_InMin );
+	T c2 = c01 * ( a_OutMax - a_OutMin ) + a_OutMin;
+	return c2;
+}
+
 
 #endif//MATH_H

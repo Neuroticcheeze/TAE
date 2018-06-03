@@ -24,6 +24,7 @@ public:
 	Dictionary< K, V > & operator=( const Dictionary< K, V > & a_Other )
 	{
 		m_Entries = a_Other.m_Entries;
+		return *this;
 	}
 
 	V * operator[]( K a_Key ) const

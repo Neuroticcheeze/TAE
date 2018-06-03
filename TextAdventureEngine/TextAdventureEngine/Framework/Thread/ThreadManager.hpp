@@ -48,6 +48,11 @@ public:
 	/* Will only return true if the task is complete, or the ticket has expired. */
 	bool ConditionalFlushTask( AsyncTicket & a_AsyncTicket );
 
+	inline bool IsTerminating() const
+	{
+		return m_TerminateRequested;
+	}
+
 	static void TerminateThread();
 	static void SleepThread( float a_Seconds );
 	

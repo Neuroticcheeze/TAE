@@ -12,6 +12,15 @@ class StringRepresentable
 public:
 
 	virtual CString ToString( const char * a_Parameter = "" ) const abstract;
+	virtual bool FromString( const char * a_String, T & o_Result ) const 
+	{ 
+		return false; 
+	}
+	
+	static bool Parse( const char * a_String, T & o_Result )
+	{
+		return o_Result.FromString( a_String, o_Result );
+	}
 };
 
 //=====================================================================================
@@ -21,6 +30,15 @@ struct StringRepresentableStruct
 public:
 
 	virtual CString ToString( const char * a_Parameter = "" ) const abstract;
+	virtual bool FromString( const char * a_String, T & o_Result ) const 
+	{ 
+		return false; 
+	}
+	
+	static bool Parse( const char * a_String, T & o_Result )
+	{
+		return o_Result.FromString( a_String, o_Result );
+	}
 };
 
 #endif//STRINGREPRESENTABLE_H

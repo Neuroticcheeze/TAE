@@ -1,7 +1,2 @@
-﻿  Main.cpp
-c:\users\neuro\desktop\text adventure engine\textadventureengine\textadventureengine\framework\gamestructure\world\nature\meteorology2\meteorologyutils.hpp(33): warning C4244: 'return': conversion from 'double' to 'Hygrology::gM3', possible loss of data
-c:\users\neuro\desktop\text adventure engine\textadventureengine\textadventureengine\main.cpp(103): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\neuro\desktop\text adventure engine\textadventureengine\textadventureengine\main.cpp(104): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\neuro\desktop\text adventure engine\textadventureengine\textadventureengine\main.cpp(105): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\neuro\desktop\text adventure engine\textadventureengine\textadventureengine\main.cpp(106): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  TextAdventureEngine.vcxproj -> C:\Users\Neuro\Desktop\Text Adventure Engine\TextAdventureEngine\Debug\TextAdventureEngine.exe
+﻿  ViewTextField.cpp
+  TextAdventureEngine.vcxproj -> C:\Users\Neuro\Desktop\Text Adventure Engine\TAE\TextAdventureEngine\Debug\TextAdventureEngine.exe

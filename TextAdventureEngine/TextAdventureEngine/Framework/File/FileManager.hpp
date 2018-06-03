@@ -22,7 +22,8 @@ public:
 		PICTURES,
 		MUSIC,
 		VIDEOS,
-		DESKTOP
+		DESKTOP,
+		EXECUTABLE,
 	};
 
 	ENUM( OpenFlags, uint8_t )

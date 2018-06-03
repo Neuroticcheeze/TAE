@@ -51,8 +51,8 @@ static int RealtimeCallback_StandardF32(
 	Stream * streamData = ( Stream* ) a_UserData;
 	sf_count_t numRead;
 	const sf_count_t numChannels = streamData->SourceFileData->Info.channels;
-	const uint32_t blockSize = a_FrameCount * numChannels;
-	const uint32_t blockSizeBytes = a_FrameCount * numChannels * sizeof( float );
+	const sf_count_t blockSize = a_FrameCount * numChannels;
+	const sf_count_t blockSizeBytes = a_FrameCount * numChannels * sizeof( float );
 
 	const float &	PARAM_vol = streamData->Params.Volume;
 	const float &	PARAM_pch = streamData->Params.Pitch;
@@ -60,7 +60,7 @@ static int RealtimeCallback_StandardF32(
 	const bool &	PARAM_rev = streamData->Params.Reverse;
 
 	// Clear the output buffer and read from loaded audiofile buffer
-	BSet( out, 0, blockSizeBytes );
+	BSet( out, 0, static_cast< uint32_t >( blockSizeBytes ) );
 	numRead = sf_read_float( streamData->SourceFileData->File, out, blockSize );
 
 	// Iterate over block and apply runtime parameters to the frames

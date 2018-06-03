@@ -1,7 +1,7 @@
 #include "ParticleSystem.hpp"
 #include "Emitter.hpp"
 #include <Framework/Containers/CString.hpp>
-#include <SIGIL-0.9.0\sl.h>
+#include <Framework/Graphics/Graphics.hpp>
 
 //=====================================================================================
 ParticleSystem::ParticleSystem( uint32_t a_MaxParticles, const ParticleInfo & a_ParticleInfo )
@@ -75,7 +75,7 @@ void ParticleSystem::Tick( float a_DeltaTime )
 		{
 			Emitter * emitter = m_Emitters[ (uint32_t)k ].Ptr();
 			
-			emitter->Tick( dt );
+			emitter->Tick( static_cast< float >( dt ) );
 
 			if ( emitter->m_Dead )
 			{
@@ -98,26 +98,24 @@ void ParticleSystem::Tick( float a_DeltaTime )
 			Particle & p = m_Particles[ (uint32_t)k ];
 			const double t = p.m_Time / p.m_Life;
 
-			Colour col = m_ParticleInfo.TintOverTime.Evaluate( t );
-			float scale = m_ParticleInfo.ScaleOverTime.Evaluate( t );
+			Colour col = m_ParticleInfo.TintOverTime.Evaluate( static_cast< float >( t ) );
+			float scale = m_ParticleInfo.ScaleOverTime.Evaluate( static_cast< float >( t ) );
 
-			slSetForeColor(col.r, col.g, col.b, col.a);
-			slPush();
-			slTranslate(p.m_Position.x, p.m_Position.y);
-			slRotate( p.m_Angle );
-			slScale(scale, scale);
-			m_ParticleInfo.Sprite.DrawSprite( t * m_ParticleInfo.Sprite.SpritesPerAxis().x * m_ParticleInfo.Sprite.SpritesPerAxis().y, Vector2::ZERO, Vector2::ONE );
-			slCircleFill( 0, 0, 0.2F, 5 );
-			slPop();
+			Graphics::SetForeColor( col );
+			Graphics::Push();
+			Graphics::Translate( p.m_Position );
+			Graphics::Rotate( p.m_Angle );
+			Graphics::Scale( scale );
+			m_ParticleInfo.Sprite.DrawSprite( static_cast< uint32_t >( t * m_ParticleInfo.Sprite.SpritesPerAxis().x * m_ParticleInfo.Sprite.SpritesPerAxis().y ), Vector2::ZERO, Vector2::ONE );
+			Graphics::DrawCircleFill( { 0, 0 }, 0.2F, 5 );
+			Graphics::Pop();
 
-			p.m_Angle += (double)p.m_Torque * dt;
-			p.m_Position.x += (double)p.m_Velocity.x * dt * (double)m_ParticleInfo.Density;
-			p.m_Position.y += (double)p.m_Velocity.y * dt * (double)m_ParticleInfo.Density;
-			p.m_Velocity.x += (double)m_ParticleInfo.Acceleration.x * dt * (double)m_ParticleInfo.Density;
-			p.m_Velocity.y += (double)m_ParticleInfo.Acceleration.y * dt * (double)m_ParticleInfo.Density;
-
-			p.m_Time += dt;
-
+			p.m_Angle += p.m_Torque * static_cast< float >( dt );
+			p.m_Position.x += p.m_Velocity.x * static_cast< float >( dt ) * m_ParticleInfo.Density;
+			p.m_Position.y += p.m_Velocity.y * static_cast< float >( dt ) * m_ParticleInfo.Density;
+			p.m_Velocity.x += m_ParticleInfo.Acceleration.x * static_cast< float >( dt ) * m_ParticleInfo.Density;
+			p.m_Velocity.y += m_ParticleInfo.Acceleration.y * static_cast< float >( dt ) * m_ParticleInfo.Density;
+			p.m_Time += static_cast< float >( dt );
 
 			if ( p.m_Time >= p.m_Life )
 			{

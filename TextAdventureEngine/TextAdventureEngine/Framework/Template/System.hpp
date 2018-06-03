@@ -7,7 +7,7 @@ template< typename T >
 class System
 {
 public:
-	virtual void Tick( float a_DeltaTime = 0.0F ) = 0;
+	virtual void Tick( float a_DeltaTime = 0.0F ) {}
 };
 
 #endif//SYSTEM_H

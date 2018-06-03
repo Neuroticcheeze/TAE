@@ -10,6 +10,8 @@ void VSOut( uint32_t a_Line, const char * a_FunctionName, const char * a_Msg, ..
 #define ASSERT( EXP, FMT, ... ) Assert( EXP, __LINE__, __FILE__, FMT, __VA_ARGS__ )
 bool Assert( bool a_Expression, uint32_t a_Line, const char * a_File, const char * a_Msg, ... );
 
+#define VERIFY( EXP, CONDITION, FMT, ... ) Assert( EXP CONDITION, __LINE__, __FILE__, FMT, __VA_ARGS__ )
+
 #define ASSERT_HRESULT( HRES, FMT, ... ) AssertHResult( HRES, __LINE__, __FILE__, FMT, __VA_ARGS__ )
 bool AssertHResult( long a_HResult, uint32_t a_Line, const char * a_File, const char * a_Msg, ... );
 
@@ -34,6 +36,7 @@ void PDump();
 #define PROFILE
 #define PROFILE_DUMP_RECORDINGS
 #define ASSERT( EXP ) EXP
+#define VERIFY( EXP, CONDITION ) EXP
 #endif
 
 #endif//DEBUG_H

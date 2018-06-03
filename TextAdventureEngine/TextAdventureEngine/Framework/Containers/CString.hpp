@@ -5,6 +5,7 @@
 #include <Framework/Containers/Array.hpp>
 #include <Framework/Template/Serialisable.hpp>
 #include <Framework/Template/StringRepresentable.hpp>
+#include <Framework/Utils/InitialiserList.hpp>
 
 //=====================================================================================
 class WString;
@@ -30,7 +31,6 @@ public:
 	//!	\param a_CharStr a const char pointer that is a char string.
 	//! \sa CString::operator=(const char* a_CharStr)
 	CString( const char * a_CharStr );
-
 	
 	//!	\brief Constructs a CString from a raw narrow char string between two addresses.
 	//!	\param a_Begin a const char pointer that starts the char string.
@@ -68,6 +68,12 @@ public:
 	//!	\return Returns a reference to this CString object.
 	CString & operator+=( const char * a_CharStr );
 
+	
+	//!	\brief Append a single character onto this CString.
+	//!	\param a_CharStr A character to append
+	//!	\return Returns a reference to this CString object.
+	CString & operator+=( char a_Char );
+
 	//!
 	bool operator==( const CString & a_Other ) const;
 	bool operator==( const char * a_CharStr ) const;
@@ -86,6 +92,9 @@ public:
 	friend
 	CString operator+( const CString & a_Left, const char * a_Right );
 
+	friend
+	CString operator+( const CString & a_Left, char a_Right );
+
 	/* Get a const pointer to the underlying character string. */
 	const char * Get() const;
 
@@ -102,7 +111,7 @@ public:
 	Array< int32_t > FindAll( const CString & a_SubString ) const;
 
 	/* Return the index of all occurrences of any substring specified. */
-	Array< int32_t > FindAll( const char ** const a_SubStrings, uint32_t a_Num ) const;
+	Array< int32_t > FindAll( InitialiserList< const char * > a_SubStrings ) const;
 
 	/* Replaces the first occurence of "from" with "to" inside this string. */
 	void Replace( const CString & a_From, const CString & a_To );
@@ -124,6 +133,10 @@ public:
 
 	/* Build this string with a format and arguments. */
 	CString & Format( const char * a_Format, ... );
+
+	CString TrimStart() const;
+	CString TrimEnd() const;
+	CString Trim() const;
 
 	static CString ToString( int8_t   a_Value );
 	static CString ToString( int16_t  a_Value );
@@ -155,7 +168,7 @@ public:
 	static bool Parse( const char * a_Value, int64_t & a_Out );
 	static bool Parse( const char * a_Value, uint8_t & a_Out );
 	static bool Parse( const char * a_Value, uint16_t & a_Out );
-	static bool Parse( const char * a_Value, uint32_t & a_Out );
+	static bool Parse( const char * a_Value, uint32_t & a_Out, bool a_Base16 = false );
 	static bool Parse( const char * a_Value, uint64_t & a_Out );
 	static bool Parse( const char * a_Value, float & a_Out );
 	static bool Parse( const char * a_Value, double & a_Out );

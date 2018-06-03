@@ -10,6 +10,12 @@ float Exp( float a_Value )
 }
 
 //=====================================================================================
+double ExpD( double a_Value )
+{
+	return exp( a_Value );
+}
+
+//=====================================================================================
 uint32_t NextPowerOf2( uint32_t a_Value )
 {
 	return static_cast< uint32_t >( pow( 2, ceil( log( a_Value ) / log( 2 ) ) ) );
@@ -70,9 +76,21 @@ float ATan( float a_Value )
 }
 
 //=====================================================================================
+float ATan2F( float a_X, float a_Y )
+{
+	return atan2f( a_Y, a_X );
+}
+
+//=====================================================================================
 float Pow( float a_Base, float a_Power )
 {
 	return powf( a_Base, a_Power );
+}
+
+//=====================================================================================
+long double PowL( long double a_Base, long double a_Power )
+{
+	return powl( a_Base, a_Power );
 }
 
 //=====================================================================================

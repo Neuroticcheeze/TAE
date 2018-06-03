@@ -60,10 +60,29 @@ void Vector2::Read( DataStream & a_Reader )
 //=====================================================================================
 CString Vector2::ToString( const char * a_Parameter ) const
 {
+	return CString( "FANCY" ) == a_Parameter ? 
+		CString().Format( "{ %f, %f }", x, y ) :
+		CString().Format( "%f,%f", x, y );
+}
 
-	return CString( "TINY" ) == a_Parameter ? 
-		CString().Format( "%.1f/%.1f", x, y ) :
-		CString().Format( "{ %f, %f }", x, y );
+//=====================================================================================
+bool Vector2::FromString( const char * a_String, Vector2 & o_Result ) const
+{
+	CString str = a_String;
+	uint32_t ind = -1;
+	if ( ( ind = str.Find( "," ) ) != -1 )
+	{
+		float x, y;
+		if ( CString::Parse( str.SubString( 0, ind ).Get(), x ) &&
+			 CString::Parse( str.SubString( ind + 1, str.Length() - ( ind + 1 ) ).Get(), y ) )
+		{
+			o_Result.x = x;
+			o_Result.y = y;
+			return true;
+		}
+	}
+
+	return false;
 }
 
 //=====================================================================================
@@ -228,6 +247,12 @@ float Vector2::Length() const
 float Vector2::LengthSqr() const
 {
 	return dot( Vector2( vthis ), Vector2( vthis ) );
+}
+
+//=====================================================================================
+Vector2 Vector2::SmoothLerp( const Vector2 & a_Target, float a_Frac ) const
+{
+	return Lerp( *this, a_Target, Clamp( a_Frac ) );
 }
 
 #undef dot

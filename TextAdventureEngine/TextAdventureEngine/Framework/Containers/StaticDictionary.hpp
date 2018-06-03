@@ -27,6 +27,32 @@ public:
 		BCopy( a_Other.m_Values, m_Values, m_Count );
 	}
 
+	const V * operator[]( K a_Key ) const
+	{
+		for ( uint32_t t = 0; t < m_Count; ++t )
+		{
+			if ( m_Keys[ t ] == a_Key )
+			{
+				return m_Values + t;
+			}
+		}
+
+		return nullptr;
+	}
+
+	const K * operator[]( V a_Value ) const
+	{
+		for ( uint32_t t = 0; t < m_Count; ++t )
+		{
+			if ( m_Values[ t ] == a_Value )
+			{
+				return m_Keys + t;
+			}
+		}
+
+		return nullptr;
+	}
+
 	V * operator[]( K a_Key )
 	{
 		for ( uint32_t t = 0; t < m_Count; ++t )
@@ -40,7 +66,7 @@ public:
 		return nullptr;
 	}
 
-	const K * operator[]( V a_Value )
+	K * operator[]( V a_Value )
 	{
 		for ( uint32_t t = 0; t < m_Count; ++t )
 		{

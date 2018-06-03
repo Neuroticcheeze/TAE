@@ -15,6 +15,11 @@ public:
 	FileStream() : DataStream() {}
 	FileStream( void * a_Buffer, uint32_t a_BufferLength ) : DataStream( a_Buffer, a_BufferLength ) {}
 
+	inline bool IsOpen() const
+	{
+		return m_FileHandle != 0;
+	}
+
 	void WriteText( const char * a_Text )
 	{
 		CString str = a_Text;

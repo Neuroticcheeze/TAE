@@ -10,21 +10,21 @@ using InitialiserList = std::initializer_list< T >;
 
 //=====================================================================================
 template< typename T >
-constexpr const T * Begin( const InitialiserList< T > & a_InitialiserList )
+constexpr const T * NBegin( const InitialiserList< T > & a_InitialiserList )
 {
 	return a_InitialiserList.begin();
 }
 
 //=====================================================================================
 template< typename T >
-constexpr const T * End( const InitialiserList< T > & a_InitialiserList )
+constexpr const T * NEnd( const InitialiserList< T > & a_InitialiserList )
 {
 	return a_InitialiserList.end();
 }
 
 //=====================================================================================
 template< typename T >
-constexpr uint32_t Size( const InitialiserList< T > & a_InitialiserList )
+constexpr uint32_t NSize( const InitialiserList< T > & a_InitialiserList )
 {
 	return a_InitialiserList.size();
 }

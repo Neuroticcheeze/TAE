@@ -5,6 +5,7 @@
 #include <Framework/Containers/WString.hpp>
 #include <Framework/Containers/DataStream.hpp>
 #include <stdarg.h>
+#include <sstream>
 #include <string>
 
 //=====================================================================================
@@ -183,6 +184,34 @@ CString & CString::operator+=( const char * a_CharStr )
 }
 
 //=====================================================================================
+CString & CString::operator+=( char a_Char )
+{
+	uint32_t oldLength = m_Length;
+	char * oldString = m_String;
+
+	++m_Length;
+	m_Capacity = NextPowerOf2( m_Length + 1 );
+
+	m_String = BAllocate< char >( m_Capacity );
+
+	// copy part 1
+	if ( oldString )
+	{
+		BCopy( oldString, m_String, oldLength );
+	}
+
+	m_String[ oldLength ] = a_Char;
+	m_String[ oldLength + 1 ] = '\0';
+
+	if ( oldString )
+	{
+		BFree( oldString );
+	}
+
+	return *this;
+}
+
+//=====================================================================================
 bool CString::operator==( const CString & a_Other ) const
 {
 	return *this == a_Other.m_String;
@@ -225,6 +254,13 @@ CString operator+( const CString & a_Left, const CString & a_Right )
 
 //=====================================================================================
 CString operator+( const CString & a_Left, const char * a_Right )
+{
+	CString result = a_Left;
+	return result += a_Right;
+}
+
+//=====================================================================================
+CString operator+( const CString & a_Left, char a_Right )
 {
 	CString result = a_Left;
 	return result += a_Right;
@@ -345,19 +381,20 @@ Array< int32_t > CString::FindAll( const CString & a_SubString ) const
 }
 
 //=====================================================================================
-Array< int32_t > CString::FindAll( const char ** const a_SubStrings, uint32_t a_Num ) const
+Array< int32_t > CString::FindAll( InitialiserList< const char * > a_SubStrings ) const
 {
 	PROFILE;
 
 	Array< int32_t > result;
 
-	for ( uint32_t j = 0; j < a_Num; ++j )
+	uint32_t num = NSize( a_SubStrings );
+	for ( uint32_t j = 0; j < num; ++j )
 	{
-		for ( uint32_t j2 = 0; j2 < a_Num; ++j2 )
+		for ( uint32_t j2 = 0; j2 < num; ++j2 )
 		{
 			if ( j != j2 )
 			{
-				if ( strcmp( a_SubStrings[ j ], a_SubStrings[ j2 ] ) == 0 )
+				if ( strcmp( *( NBegin( a_SubStrings ) + j ), *( NBegin( a_SubStrings ) + j2 ) ) == 0 )
 				{
 					// duplicate entries.
 				}
@@ -365,9 +402,9 @@ Array< int32_t > CString::FindAll( const char ** const a_SubStrings, uint32_t a_
 		}
 	}
 	
-	for ( uint32_t j = 0; j < a_Num; ++j )
+	for ( uint32_t j = 0; j < num; ++j )
 	{
-		const Array< int32_t > & list = FindAll( CString( a_SubStrings[ j ] ) );
+		const Array< int32_t > & list = FindAll( CString( *( NBegin( a_SubStrings ) + j ) ) );
 		const int32_t * it = list.First();
 		const int32_t * const end = list.End();
 
@@ -541,6 +578,63 @@ CString & CString::Format( const char * a_Format, ... )
 }
 
 //=====================================================================================
+CString CString::TrimStart() const
+{
+	if ( m_Length < 1 )
+	{
+		return *this;
+	}
+
+	char * p = m_String;
+	const char * end = m_String + m_Length;
+
+	while ( p != end )
+	{
+		if ( *p != ' ' && *p != '\t' )
+		{
+			break;
+		}
+
+		++p;
+	}
+
+	return SubString( p - m_String, m_Length - ( p - m_String ) );
+}
+
+//=====================================================================================
+CString CString::TrimEnd() const
+{
+	if ( m_Length < 1 )
+	{
+		return *this;
+	}
+
+	char * p = m_String + m_Length - 1;
+	const char * end = m_String - 1;
+
+	while ( p != end )
+	{
+		if ( *p != ' ' && *p != '\t' )
+		{
+			break;
+		}
+
+		--p;
+	}
+
+	return SubString( 0, p - m_String + 1 );
+
+}
+
+//=====================================================================================
+CString CString::Trim() const
+{
+	CString res = TrimStart();
+	res = res.TrimEnd();
+	return res;
+}
+
+//=====================================================================================
 CString::operator WString() const
 {
 	PROFILE;
@@ -679,8 +773,24 @@ bool CString::Parse( const char * a_Value, uint16_t & a_Out )
 }
 
 //=====================================================================================
-bool CString::Parse( const char * a_Value, uint32_t & a_Out )
+bool CString::Parse( const char * a_Value, uint32_t & a_Out, bool a_Base16 )
 {
+	if ( a_Base16 )
+	{
+		try
+		{
+			std::string ss( a_Value );
+			uint64_t ul = std::stoul( ss, nullptr, 16 );
+			a_Out = static_cast< uint32_t >( ul );
+			return true;
+		}
+
+		catch ( std::exception e )
+		{
+			return false;
+		}
+	}
+
 	a_Out = atoi( a_Value );
 	return true;
 }
@@ -714,19 +824,32 @@ bool CString::Parse( const char * a_Value, bool & a_Out )
 		return true;
 	}
 
+// Allow 0/1 to count as a parseable boolean value
+#ifdef CSTRING_PARSEBOOL_ALLOW_INTEGER
 	int32_t i;
 	bool result = Parse( a_Value, i );
 
 	a_Out = i != 0;
 
 	return result;
+#else
+	return false;
+#endif
 }
 
 //=====================================================================================
 bool CString::Parse( const char * a_Value, float & a_Out )
 {
-	a_Out = static_cast< float >( atof( a_Value ) );
-	return true;
+	try
+	{
+		a_Out = static_cast< float >( std::stof( a_Value ) );
+		return true;
+	}
+
+	catch ( std::invalid_argument e )
+	{
+		return false;
+	}
 }
 
 //=====================================================================================

@@ -10,6 +10,7 @@ class Manager : public Singleton< T >
 {
 public:
 	virtual void Init( PARAMS ... a_Parameters ) = 0;
+	virtual void InitPost() {}
 	virtual void Finalise() = 0;
 };
 

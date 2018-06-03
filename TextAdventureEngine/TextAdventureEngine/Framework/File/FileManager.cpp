@@ -90,6 +90,9 @@ bool FileManager::SetWorkingDirectory( UserLocation a_UserLocation, const char *
 		else return false;
 
 		break;
+	case FileManager::UserLocation::EXECUTABLE:
+		m_WorkingDirectory = "$";
+		break;
 	default:
 		break;
 	}
@@ -516,10 +519,17 @@ CString FileManager::ExpandPath( const char * a_Input ) const
 	PROFILE;
 
 	char full[ _MAX_PATH ];
-
-	if ( _fullpath( full, a_Input, _MAX_PATH ) != NULL )
+	char * tmp_ = NULL;
+	if ( ( tmp_ = _fullpath( full, a_Input, _MAX_PATH ) ) != NULL )
 	{
-		return FormatPath( full );
+		CString tmp( tmp_ );
+		if ( tmp.Length() > 1 && 
+			 tmp_[ tmp.Length() - 1 ] == '\\' && 
+			 tmp_[ tmp.Length() - 2 ] == '$' )
+		{
+			tmp_[ tmp.Length() - 2 ] = '\0';
+		}
+		return FormatPath( tmp_ );
 	}
 	
 	return CString( a_Input );

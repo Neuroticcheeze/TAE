@@ -91,7 +91,8 @@ uint32_t DataStream::Seek( int32_t a_Offset, SeekMode a_SeekMode )
 //=====================================================================================
 uint32_t DataStream::ReadRaw( uint32_t a_Size, void * a_Out )
 {
-	if ( !m_Begin )
+	if ( !ASSERT( m_Begin, "Invalid DataStream, beginning of memory block points to NULL." ) || 
+		 !ASSERT( m_Pointer < m_End && ( m_Pointer + a_Size ) <= m_End, "Read from DataStream failed, operation would have exceeded the end of the memory block." ) )
 	{
 		return 0;
 	}
@@ -104,7 +105,8 @@ uint32_t DataStream::ReadRaw( uint32_t a_Size, void * a_Out )
 //=====================================================================================
 uint32_t DataStream::WriteRaw( uint32_t a_Size, const void * a_In )
 {
-	if ( !m_Begin )
+	if ( !ASSERT( m_Begin, "Invalid DataStream, beginning of memory block points to NULL." ) || 
+		 !ASSERT( m_Pointer < m_End && ( m_Pointer + a_Size ) <= m_End, "Write to DataStream failed, operation would have exceeded the end of the memory block." ) )
 	{
 		return 0;
 	}

@@ -11,7 +11,7 @@ void ThreadManager::Init( uint32_t a_WorkerCount )
 {
 	if ( m_WorkerPool )
 	{
-		delete[] m_WorkerPool;
+		delete[] static_cast< std::thread* >( m_WorkerPool );
 		m_WorkerPool = nullptr;
 	}
 
@@ -80,17 +80,19 @@ void ThreadManager::Tick( float a_DeltaTime )
 //=====================================================================================
 void ThreadManager::Finalise()
 {
+	// set the global termination flag so any workers that are cycling will receive the command this way.
 	m_TerminateRequested = true;
+	m_WorkerCV.NotifyAll();
 
 	for ( uint32_t i = 0; i < m_WorkerPoolSize; ++i )
 	{
 		if ( WORKER( i ).joinable() )
 		{
-			WORKER(i).join();
+			WORKER( i ).join();
 		}
 	}
 
-	delete[] m_WorkerPool;
+	delete[] static_cast< std::thread* >( m_WorkerPool );
 	m_WorkerPool = nullptr;
 }
 
@@ -185,14 +187,20 @@ void ThreadManager::WorkerEntryPoint( ThreadManager * a_ThreadManager, uint32_t 
 			m_MainFlushCV.NotifyAll();// tell any threads waiting for us to complete the task that we're done.
 		}
 
-		
-		// time to go dormant until: we get worken up and we find a task ready at the door.
-		m_WorkerCV.Wait( []( void * a_OurTaskSlot )
+		struct Info
 		{
-			AsyncTask * task_ = static_cast< AsyncTask* >( a_OurTaskSlot );
-			return task_->m_Task != nullptr;
+			AsyncTask * _AsyncTaskPtr;
+		} info;
+		
+		info._AsyncTaskPtr = &task;
+
+		// time to go dormant until: we get worken up and we find a task ready at the door or we've been terminated.
+		m_WorkerCV.Wait( []( void * a_Info )
+		{
+			AsyncTask * task_ = static_cast< Info* >( a_Info )->_AsyncTaskPtr;
+			return ThreadManager::Instance().IsTerminating() || task_->m_Task != nullptr;
 		},
-		&task);
+		&info );
 	}
 }
 

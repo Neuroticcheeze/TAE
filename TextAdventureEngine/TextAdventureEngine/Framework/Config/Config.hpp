@@ -9,6 +9,7 @@ public:
 
 	static const uint32_t WINDOW_X;
 	static const uint32_t WINDOW_Y;
+	static const uint32_t SAVE_VERSION;
 };
 
 #endif//CONFIG_H
