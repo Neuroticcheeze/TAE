@@ -17,8 +17,6 @@ public:
 		TEXT_ALIGN_LEFT
 	END_ENUM;
 
-	static void CreateWindow( const char * a_Title, const Vector2 & a_Dimensions );
-	static void Render();
 	static void SetBackColor( const Colour & a_Colour );
 	static void SetForeColor( const Colour & a_Colour );
 	static void SetAdditiveBlend( bool a_Flag );

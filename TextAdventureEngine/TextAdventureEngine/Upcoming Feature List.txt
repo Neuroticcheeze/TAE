@@ -1,7 +1,4 @@
-1. add text input view & button view & improve string rendering to make use of formatting
-2. add sdl support
-3. traverse graph
-4. map ui
+1. improve string rendering to make use of formatting
 n. Add Regex feature to CString
 n+1. Copy featureset from CString into WString
 n+2. Add MB string interop between CString & WString

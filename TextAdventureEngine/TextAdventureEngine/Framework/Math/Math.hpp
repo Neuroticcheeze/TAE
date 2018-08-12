@@ -4,6 +4,7 @@
 
 //=====================================================================================
 #define PI		3.14159265359F
+#define PI2		6.28318530718F
 #define EULER	2.7182818284590452353602874713527F
 #define DEG2RAD 0.01745329251F
 #define RAD2DEG 57.2957795131F
@@ -33,7 +34,13 @@ inline T Abs( const T & a_Value )
 float Exp( float a_Value );
 
 //=====================================================================================
+float Mod( float a_Value, float a_Denom );
+
+//=====================================================================================
 double ExpD( double a_Value );
+
+//=====================================================================================
+bool ModInterval( float a_T, float a_Interval, float a_TFRatio = 0.5F );
 
 //=====================================================================================
 uint32_t NextPowerOf2( uint32_t a_Value );
@@ -79,7 +86,7 @@ inline T Floor( const T & a_Value )
 template< typename T >
 inline T Ceil( const T & a_Value )
 {
-	return Floor( a_Value ) + (T)1;
+	return Floor( a_Value ) + (T)( ( a_Value - Floor( a_Value ) ) > 0.0F ? 1 : 0 );
 }
 
 //=====================================================================================

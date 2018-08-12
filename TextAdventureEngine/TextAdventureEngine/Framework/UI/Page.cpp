@@ -1,20 +1,12 @@
 #include "Page.hpp"
-#include <Framework/Config/Config.hpp>
+#include <Framework/Engine.hpp>
 
 //=====================================================================================
 Page::ViewPage::ViewPage( const char * a_Name, Page * a_ContainerPage ) 
 	: View( a_Name, a_ContainerPage, nullptr, true )
 {
 	SetTint( Colour::WHITE );
-	UseExplicitSize( false );
-	SetSize( Vector2( ( float )Config::WINDOW_X, ( float )Config::WINDOW_Y ) );
-}
-
-//=====================================================================================
-Page::Page( const char * a_Name, const Pointer< View > & a_RootView  )
-	: m_Name( a_Name )
-	, m_RootView( a_RootView )
-{
+	SetBordersFromSizeAndOffset( Engine::Instance().GetDisplaySize() );
 }
 
 //=====================================================================================
@@ -22,8 +14,15 @@ Page::Page( const char * a_Name )
 	: m_Name( a_Name )
 	, m_FocusedView( 0 )
 {
-	m_RootView = Pointer< View >( ViewPage( a_Name, this ) );
+	m_RootView = new ViewPage( a_Name, this );
 	m_RootView->SetTint( Colour::WHITE );
+}
+
+//=====================================================================================
+Page::~Page()
+{
+	delete m_RootView;
+	m_RootView = nullptr;
 }
 
 //=====================================================================================

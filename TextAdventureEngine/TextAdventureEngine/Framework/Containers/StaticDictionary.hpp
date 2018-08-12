@@ -25,6 +25,8 @@ public:
 		m_Count = a_Other.m_Count;
 		BCopy( a_Other.m_Keys, m_Keys, m_Count );
 		BCopy( a_Other.m_Values, m_Values, m_Count );
+
+		return *this;
 	}
 
 	const V * operator[]( K a_Key ) const

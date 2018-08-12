@@ -59,6 +59,10 @@ public:
 	bool Delete( const char * a_Path );
 	Array< CString > FindAll( const char * a_Root = "", const char * a_WildCard = "*", IncludeFlags a_IncludeFlags = FILES_AND_FOLDERS, bool a_SearchSubdirs = false );
 
+	CString ReadAll( UserLocation a_UserLocation, const char * a_AppendPath, const char * a_Path );
+	CString ReadAll( UserLocation a_UserLocation, const char * a_Path );
+	CString ReadAll( const char * a_Path );
+
 private:
 
 	struct OpenedFile

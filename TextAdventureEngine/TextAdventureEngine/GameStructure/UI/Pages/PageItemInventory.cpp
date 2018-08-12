@@ -18,7 +18,7 @@ void PageItemInventory::OnEnterPage()
 		icon.SetBorder( View::Alignment::RIGHT, 1.0F - ( ITEM_START_TOP_LEFT + ICON_SCALE ) );
 		icon.SetBorder( View::Alignment::TOP, ITEM_START_HEIGHT + k * ( ICON_SCALE + ITEM_SPACING ) );
 		icon.SetBorder( View::Alignment::BOTTOM, 1.0F - ( ITEM_START_HEIGHT + k * ( ICON_SCALE + ITEM_SPACING ) + ICON_SCALE ) );
-		icon.SetupFromSpriteSheet( _GetSpriteSheet( "ITEMS" ) );
+		icon.SetupFromSpriteSheet( *_GetSpriteSheet( "ITEMS" ).Ptr() );
 		icon.SetZOrder( -1 );
 
 		ViewText & name = m_ItemNames[ k ];
@@ -28,7 +28,7 @@ void PageItemInventory::OnEnterPage()
 		name.SetBorder( View::Alignment::BOTTOM, 1.0F - ( ITEM_START_HEIGHT + k * ( ICON_SCALE + ITEM_SPACING ) + ICON_SCALE ) );
 		name.SetFont( _GetFont( "DEFAULT" ) );
 		name.SetWordWrap( false );
-		name.SetVAlign( ViewText::CENTER );
+		name.SetVAlign( GraphicsManager::TA_CENTER );
 		name.SetZOrder( -1 );
 	}
 
@@ -48,7 +48,7 @@ void PageItemInventory::OnEnterPage()
 	m_ItemDescription.SetFont( _GetFont( "DEFAULT" ) );
 	m_ItemDescription.SetFontSize( 38.0F );
 	m_ItemDescription.SetWordWrap( true );
-	m_ItemDescription.SetVAlign( ViewText::TOP );
+	m_ItemDescription.SetVAlign( GraphicsManager::TA_TOP );
 
 	m_SelectedItemIndex = 1; // To bypass sameval check inside 'SelectItem'
 	SelectItem( 0 );

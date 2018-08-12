@@ -6,7 +6,7 @@
 #include <Framework/Math/Colour/Colour.hpp>
 #include <Framework/Math/Gradient.hpp>
 #include <Framework/Math/RandomRange.hpp>
-#include <Framework/Graphics/SpriteSheet.hpp>
+#include <Framework/Graphics/GraphicsManager.hpp>
 
 //=====================================================================================
 struct ParticleInfo final
@@ -14,8 +14,13 @@ struct ParticleInfo final
 	Vector2 Acceleration;
 	Gradient< Colour > TintOverTime;
 	Gradient< float > ScaleOverTime;
-	//Gradient< float > AnimationOverTime;
-	SpriteSheet Sprite;
+	Gradient< float > AnimationOverTime;
+	Gradient< float > AdditiveBlendOverTime;
+	float AnimationSpeed = 1.0F;
+	enum { AW_CLAMP, AW_REPEAT, AW_MIRROR } AnimationWrap = AW_CLAMP;
+	enum { AF_AOT_FLOOR, AF_AOT_CEIL, AF_AOT_ROUND } AnimationFilter = AF_AOT_ROUND;
+	bool AnimationEnableFrameBlend = false;
+	GraphicsManager::TextureAtlas Sprite;
 	RandomRange Torque;
 	RandomRange Life;
 	float Density;
@@ -30,6 +35,7 @@ struct Particle final
 		m_Life = 0.0F;
 		m_Torque = 0.0F;
 		m_Angle = 0.0F;
+		m_PrevSprite = 0;
 	}
 
 private:
@@ -40,6 +46,7 @@ private:
 	float m_Angle;
 	Vector2 m_Position;
 	Vector2 m_Velocity;
+	int32_t m_PrevSprite;
 
 	friend class ParticleSystem;
 };

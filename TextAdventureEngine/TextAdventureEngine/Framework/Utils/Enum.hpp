@@ -2,8 +2,10 @@
 #ifndef ENUM_H
 #define ENUM_H
 
+#define ENUM_CONSTANT( VNAME, TYPE, VALUE ) enum : TYPE { VNAME = VALUE }
+
 #define ENUM( NAME, UNDERTYPE ) enum NAME : UNDERTYPE {
-#define END_ENUM };\
+#define END_ENUM };
 
 // Adds an enum value count constant
 #define END_ENUM_C( NAME, UNDERTYPE ) _NUM };\

@@ -7,6 +7,8 @@
 #include <Framework/UI/Views/ViewText.hpp>
 #include <Framework/UI/Views/ViewSprite.hpp>
 #include <Framework/UI/Views/ViewButton.hpp>
+#include <Framework/UI/Views/ViewTextField.hpp>
+#include <Framework/UI/Views/ViewTickBox.hpp>
 #include <Framework/Math/Curve/Bezier.hpp>
 
 //=====================================================================================
@@ -16,14 +18,35 @@ struct Colour;
 //=====================================================================================
 class PageWorldMap final : public Page
 						 , public View::IActionListener
+						 , public ViewSprite::IDrawOverrider
 {
 public:
 	PageWorldMap()
 		: Page( "WORLD_MAP" )
+		, m_Button( new ViewButton( "BackButton", this ) )
+		, m_TextField( new ViewTextField( "TextField", this ) )
+		, m_TextField2( new ViewTextField( "TextField2", this ) )
+		, m_Slider( new ViewSlider( "Slider", this ) )
+		, m_TickBox( new ViewTickBox( "TickBox", this ) )
 	{}
+
+	~PageWorldMap()
+	{
+		GetRootView()->DetatchChild( m_Button );
+		GetRootView()->DetatchChild( m_TextField );
+		GetRootView()->DetatchChild( m_TextField2 );
+		GetRootView()->DetatchChild( m_Slider );
+		GetRootView()->DetatchChild( m_TickBox );
+		delete m_Button;
+		delete m_TextField;
+		delete m_TextField2;
+		delete m_Slider;
+		delete m_TickBox;
+	}
 
 protected:
 
+	bool OnDraw( const ViewSprite & a_Owner, const Vector2 & a_Position, const Vector2 & a_Size );
 	void OnButtonPress( ViewButton & a_ViewButton );
 
 	void OnEnterPage() override;
@@ -53,8 +76,11 @@ private:
 
 	Vector2 m_Camera;
 
-	ViewButton m_Button = ViewButton( "BackButton", this );
-	ViewSlider m_TextField = ViewSlider( "TextField", this );
+	ViewButton		* m_Button;
+	ViewTextField	* m_TextField;
+	ViewTextField	* m_TextField2;
+	ViewSlider		* m_Slider;
+	ViewTickBox		* m_TickBox;
 
 	static const float DASH_DASHLENGTH;
 	static const float DASH_GAPLENGTH;

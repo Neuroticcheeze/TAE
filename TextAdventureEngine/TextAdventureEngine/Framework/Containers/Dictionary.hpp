@@ -64,7 +64,7 @@ public:
 	/* Get the number of elements in the array. */
 	uint32_t Count() const
 	{
-		return m_Entries.Length();
+		return m_Entries.Count();
 	}
 
 	void Put( const K & a_Key, const V & a_Value )

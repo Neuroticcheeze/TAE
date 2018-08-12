@@ -12,6 +12,7 @@ ViewSlider::ViewSlider( const char * a_Name, Page * a_ContainerPage, View * a_Pa
 	, m_Range( 0.0F, 1.0F )
 	, m_Background( "Background", a_ContainerPage, this )
 	, m_Slider( "Slider", a_ContainerPage, this )
+	, m_InitialTick( true )
 {
 	SetEnabled( true );
 	SetStep( 0.0F ); // will choose smallest possible incremental float value as our step
@@ -27,12 +28,19 @@ ViewSlider::ViewSlider( const char * a_Name, Page * a_ContainerPage, View * a_Pa
 
 	GetSlider().SetTint( Colour::WHITE );
 	AddChild( &GetSlider() );
+
 	UpdateSlider();
 }
 
 //=====================================================================================
 void ViewSlider::OnTick( float a_DeltaTime )
 {
+	if ( m_InitialTick )
+	{
+		SetValue( GetValue() );
+		m_InitialTick = false;
+	}
+
 	if ( GetEnabled() && IsBeingGrabbed() )
 	{
 		Vector2 mpos = InputManager::Instance().GetMousePosition();
@@ -49,13 +57,6 @@ void ViewSlider::OnTick( float a_DeltaTime )
 		}
 
 		SetValue( value );
-		
-
-		CString fpsString = CString().Format( "%.2f", GetValue() );
-		Graphics::SetFont( _GetFont( "DEFAULT" ) );
-		Graphics::SetForeColor( Colour::WHITE );
-		Graphics::SetTextAlign( Graphics::TEXT_ALIGN_LEFT );
-		Graphics::DrawText( mpos, fpsString.Get() );
 	}
 }
 

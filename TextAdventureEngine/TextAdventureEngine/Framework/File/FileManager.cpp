@@ -103,6 +103,8 @@ bool FileManager::SetWorkingDirectory( UserLocation a_UserLocation, const char *
 
 	if ( a_AppendPath )
 	{
+		m_WorkingDirectory = FormatPath( ( const char * )m_WorkingDirectory );
+		m_WorkingDirectory = ExpandPath( ( const char * )m_WorkingDirectory );
 		m_WorkingDirectory += a_AppendPath;
 		m_WorkingDirectory += "/";
 	}
@@ -533,4 +535,32 @@ CString FileManager::ExpandPath( const char * a_Input ) const
 	}
 	
 	return CString( a_Input );
+}
+
+//=====================================================================================
+CString FileManager::ReadAll( UserLocation a_UserLocation, const char * a_AppendPath, const char * a_Path )
+{
+	SetWorkingDirectory( a_UserLocation, a_AppendPath );
+	return ReadAll( a_Path );
+}
+
+//=====================================================================================
+CString FileManager::ReadAll( UserLocation a_UserLocation, const char * a_Path )
+{
+	SetWorkingDirectory( a_UserLocation );
+	return ReadAll( a_Path );
+}
+
+//=====================================================================================
+CString FileManager::ReadAll( const char * a_Path )
+{
+	FileStream stream = Open( a_Path, FileManager::OpenFlags::READ, 4096 );
+	if ( stream.IsOpen() )
+	{
+		CString text = stream.ReadText();
+		Close( stream );
+		return text;
+	}
+
+	return "";
 }

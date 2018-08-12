@@ -338,6 +338,9 @@ public:
 	void SetTextualMode( bool a_Flag = true );
 	bool InTextualMode() const;
 
+	const char * GetClipboard() const;
+	void SetClipboard( const char * a_String );
+
 	void AttachListener( InputKeyEvent a_Event, IKeyEventListener * a_EventListener );
 	void AttachListener( InputMouseEvent a_Event, IMouseEventListener * a_EventListener );
 	void AttachListener( InputCharEvent a_Event, ICharEventListener * a_EventListener );

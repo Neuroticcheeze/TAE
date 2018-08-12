@@ -11,7 +11,7 @@ ViewTickBox::ViewTickBox( const char * a_Name, Page * a_ContainerPage, View * a_
 	, m_Flag( false )
 {
 	SetEnabled( true );
-	
+
 	m_Sprites[ SPRITE_BACKGROUND ].SetBorder( View::Alignment::LEFT, 0.0F );
 	m_Sprites[ SPRITE_BACKGROUND ].SetBorder( View::Alignment::RIGHT, 0.0F );
 	m_Sprites[ SPRITE_BACKGROUND ].SetBorder( View::Alignment::TOP, 0.0F );
@@ -26,6 +26,8 @@ ViewTickBox::ViewTickBox( const char * a_Name, Page * a_ContainerPage, View * a_
 	m_Sprites[ SPRITE_TICKMARK ].SetBorder( View::Alignment::BOTTOM, 0.0F );
 	m_Sprites[ SPRITE_TICKMARK ].SetTint( Colour::WHITE );
 	AddChild( m_Sprites + SPRITE_TICKMARK );
+
+	SetValue( true );
 }
 
 //=====================================================================================
@@ -68,6 +70,7 @@ void ViewTickBox::SetValue( bool a_Value )
 	if ( m_Flag != a_Value )
 	{
 		m_Flag = a_Value;
+		m_Sprites[ SPRITE_TICKMARK ].SetTint( m_Flag ? Colour::WHITE : Colour::INVISIBLE );
 		GetParent()->OnTickBoxValueChanged( *this, a_Value );
 	}
 }

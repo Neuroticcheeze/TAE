@@ -2,14 +2,18 @@
 #ifndef SPRITESHEET_H
 #define SPRITESHEET_H
 
+#include <Framework/Utils/MemoryExt.hpp>
+#include <Framework/Utils/Tuple.hpp>
 #include <Framework/Math/Linear/Vector2.hpp>
 
 //=====================================================================================
 class SpriteSheet
 {
 public:
+	
+	typedef WeakPointer< Tuple3< void*, void*, uint8_t > > Texture;
 
-	SpriteSheet( int32_t a_Texture = -1, const Vector2 & a_SpritesPerAxis = Vector2::ZERO );
+	SpriteSheet( Texture a_Texture = nullptr, const Vector2 & a_SpritesPerAxis = Vector2::ZERO );
 
 	void ApplyUV( uint32_t a_SpriteIndex ) const;
 	void ApplyUV( uint32_t a_SpriteIndexX, uint32_t a_SpriteIndexY ) const;
@@ -19,7 +23,7 @@ public:
 
 private:
 
-	int32_t m_Texture;
+	Texture m_Texture;
 	Vector2 m_SpritesPerAxis;
 };
 

@@ -14,7 +14,7 @@ const Colour Colour::MAGENTA( 1.0F, 0.0F, 1.0F );
 const Colour Colour::BLACK( 0.0F, 0.0F, 0.0F );
 const Colour Colour::GRAY( 0.5F, 0.5F, 0.5F );
 const Colour Colour::WHITE( 1.0F, 1.0F, 1.0F );
-const Colour Colour::INVISIBLE( 0.0F, 0.0F, 0.0F, 0.0F );
+const Colour Colour::INVISIBLE( 1.0F, 1.0F, 1.0F, 0.0F );
 const Colour Colour::FLAT_NORMALMAP( 0.5F, 0.5F, 1.0F );
 
 //=====================================================================================

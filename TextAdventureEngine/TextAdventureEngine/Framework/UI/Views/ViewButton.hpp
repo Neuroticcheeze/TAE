@@ -35,7 +35,10 @@ public:
 protected:
 
 	void OnTick( float a_DeltaTime );
+	void OnMouseEnter( const Vector2 & m_MousePosition );
+	void OnMouseLeave( const Vector2 & m_MousePosition );
 	void OnMouseClick( const Vector2 & m_MousePosition, InputManager::MouseButton a_MouseButton );
+	void OnMouseReleased( const Vector2 & m_MousePosition, InputManager::MouseButton a_MouseButton );
 	void RequestInitialEvents( IActionListener * a_ActionListener );
 	
 private:

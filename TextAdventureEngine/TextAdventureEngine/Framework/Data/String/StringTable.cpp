@@ -98,10 +98,10 @@ StringEntry StringTable::Process( const char * a_String )
 #define STRING_TO_ENUM( ENUMVAL, PARAM )\
 if ( a1 == #ENUMVAL ) {\
 	symbol.Format_Type = StringEntry::Symbol::FormatType::ENUMVAL;\
-	PARAM;\
+	PARAM\
 } else
 				STRING_TO_ENUM( FONTSIZE, 
-					CString::Parse( a2.Get(), symbol.Format_Parameter.Number ) 
+					CString::Parse( a2.Get(), symbol.Format_Parameter.Number );
 				)
 				STRING_TO_ENUM( FONTCOLOUR, 
 					uint32_t hexval = 0xFFFFFFFF;
@@ -114,12 +114,12 @@ if ( a1 == #ENUMVAL ) {\
 						( hexval & 0xFF000000 ) >> 24 
 					);
 				)
-				STRING_TO_ENUM( BOLD )
-				STRING_TO_ENUM( UNDERLINE )
-				STRING_TO_ENUM( ITALICS )
-				STRING_TO_ENUM( STRIKETHROUGH )
-				STRING_TO_ENUM( SUPERSCRIPT )
-				STRING_TO_ENUM( SUBSCRIPT )
+				STRING_TO_ENUM( BOLD, {} )
+				STRING_TO_ENUM( UNDERLINE, {} )
+				STRING_TO_ENUM( ITALICS, {} )
+				STRING_TO_ENUM( STRIKETHROUGH, {} )
+				STRING_TO_ENUM( SUPERSCRIPT, {} )
+				STRING_TO_ENUM( SUBSCRIPT, {} )
 
 				// else
 				{

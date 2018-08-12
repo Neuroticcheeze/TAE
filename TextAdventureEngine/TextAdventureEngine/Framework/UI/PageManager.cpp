@@ -81,6 +81,8 @@ void PageManager::Tick( float a_DeltaTime )
 			}
 
 			Page & pageAt = **( it + i );
+
+			pageAt.m_IsBeingBlocked = false;
 			pageAt.Tick( a_DeltaTime );
 
 			for ( uint32_t k = 0; k < FadeManager::LayerCount; ++k )
@@ -92,6 +94,11 @@ void PageManager::Tick( float a_DeltaTime )
 					FadeManager::Instance().DrawLayer( ( FadeManager::Layer )k );
 				}
 			}
+		}
+		for ( uint32_t i = 0; i < topBlocker; ++i )
+		{
+			Page & pageAt = **( it + i );
+			pageAt.m_IsBeingBlocked = true;
 		}
 
 		InputManager::Instance().IgnoreInput( prevIgnoreInput );
@@ -123,7 +130,13 @@ uint32_t PageManager::NumActivePages() const
 //=====================================================================================
 Page * PageManager::Peek() const
 {
-	return *m_ActivePages.Peek();
+	auto peek = m_ActivePages.Peek();
+	if ( peek != nullptr )
+	{
+		return *peek;
+	}
+
+	return nullptr;
 }
 
 //=====================================================================================

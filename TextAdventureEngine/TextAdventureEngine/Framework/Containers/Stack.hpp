@@ -30,7 +30,7 @@ public:
 
 	~Stack()
 	{
-		BFree( m_Data );
+		delete[] m_Data;
 		m_Length = 0;
 		m_Capacity = 0;
 	}
@@ -47,7 +47,7 @@ public:
 
 		if ( m_Data )
 		{
-			BFree( m_Data );
+			delete[] m_Data;
 		}
 
 		if ( a_Other.m_Data )
@@ -55,9 +55,15 @@ public:
 			m_Length = a_Other.m_Length;
 			m_Capacity = a_Other.m_Capacity;
 
-			m_Data = BAllocate< T >( m_Capacity * sizeof(T) );
-			BCopy( a_Other.m_Data, m_Data, m_Length );
+			m_Data = new T[ m_Capacity ];
+
+			for ( uint32_t k = 0; k < m_Length; ++k )
+			{
+				m_Data[ k ] = a_Other.m_Data[ k ];
+			}
 		}
+
+		return *this;
 	}
 
 	T * Peek() const
@@ -105,23 +111,27 @@ private:
 		{
 			m_Length = 0;
 			m_Capacity = 0;
-			BFree( m_Data );
+			delete[] m_Data;
+			m_Data = nullptr;
 			return;
 		}
 
 		T* temp = m_Data;
-		uint32_t oldBLength = m_Length * sizeof( T );
+		uint32_t oldLength = m_Length;
 
 		m_Length = a_NewLength;
 		m_Capacity = NextPowerOf2( m_Length );
 
-		m_Data = BAllocate< T >( m_Capacity * sizeof( T ) );
+		m_Data = new T[ m_Capacity ];
 
-		BCopy( temp, m_Data, oldBLength );
+		for ( uint32_t k = 0; k < Min( m_Length, oldLength ); ++k )
+		{
+			m_Data[ k ] = temp[ k ];
+		}
 		
 		if ( temp )
 		{
-			BFree( temp );
+			delete[] temp;
 		}
 	}
 

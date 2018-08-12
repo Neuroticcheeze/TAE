@@ -1,8 +1,8 @@
 #include "SpriteSheet.hpp"
 #include <Framework/Math/Math.hpp>
-#include <Framework/Graphics/Graphics.hpp>
+#include <Framework/Graphics/GraphicsManager.hpp>
 
-SpriteSheet::SpriteSheet( int32_t a_Texture, const Vector2 & a_SpritesPerAxis )
+SpriteSheet::SpriteSheet( Texture a_Texture, const Vector2 & a_SpritesPerAxis )
 {
 	m_Texture = a_Texture;
 	m_SpritesPerAxis.x = Round( a_SpritesPerAxis.x );
@@ -20,26 +20,32 @@ void SpriteSheet::ApplyUV( uint32_t a_SpriteIndex ) const
 	float x = ( float )u / w;
 	float y = ( float )v / h;
 	
-	Graphics::SetSpriteScroll( { x, y } );
-	Graphics::SetSpriteTiling( Vector2( 1.0F ) / m_SpritesPerAxis );
+	GraphicsManager::Instance().GfxSetUV( { x, y },
+										  Vector2( 1.0F ) / m_SpritesPerAxis );
 }
 
 void SpriteSheet::ApplyUV( uint32_t a_SpriteIndexX, uint32_t a_SpriteIndexY ) const
 {
-	Graphics::SetSpriteScroll( Vector2( static_cast< float >( a_SpriteIndexX ), static_cast< float >( a_SpriteIndexY ) ) / m_SpritesPerAxis );
-	Graphics::SetSpriteTiling( Vector2( 1.0F ) / m_SpritesPerAxis );
+	GraphicsManager::Instance().GfxSetUV( Vector2( static_cast< float >( a_SpriteIndexX ), static_cast< float >( a_SpriteIndexY ) ) / m_SpritesPerAxis,
+										  Vector2( 1.0F ) / m_SpritesPerAxis );
 }
 
 void SpriteSheet::DrawSprite( uint32_t a_SpriteIndex, const Vector2 & a_Position, const Vector2 & a_Size ) const
 {
 	ApplyUV( a_SpriteIndex );
-	Graphics::DrawSprite( m_Texture, a_Position + a_Size * 0.5F, a_Size );
+	
+	int32_t s = GraphicsManager::Instance().SetTexture( m_Texture );
+	GraphicsManager::Instance().SetState( GraphicsManager::RS_TRANSPARENCY, true );
+	GraphicsManager::Instance().GfxDrawQuadTextured( a_Position, a_Size, s, true, 1.0F, { Vector2::UP, Vector2::ZERO, Vector2::RIGHT, Vector2::ONE } );
 }
 
 void SpriteSheet::DrawSprite( uint32_t a_SpriteIndexX, uint32_t a_SpriteIndexY, const Vector2 & a_Position, const Vector2 & a_Size ) const
 {
 	ApplyUV( a_SpriteIndexX, a_SpriteIndexY );
-	Graphics::DrawSprite( m_Texture, a_Position, a_Size );
+
+	int32_t s = GraphicsManager::Instance().SetTexture( m_Texture );
+	GraphicsManager::Instance().SetState( GraphicsManager::RS_TRANSPARENCY, true );
+	GraphicsManager::Instance().GfxDrawQuadTextured( a_Position, a_Size, s, true, 1.0F, { Vector2::UP, Vector2::ZERO, Vector2::RIGHT, Vector2::ONE } );
 }
 
 const Vector2 & SpriteSheet::SpritesPerAxis() const

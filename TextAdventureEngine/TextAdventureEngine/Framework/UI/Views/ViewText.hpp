@@ -4,38 +4,36 @@
 
 #include <Framework/UI/View.hpp>
 #include <Framework/Containers/Array.hpp>
+#include <Framework/Graphics/GraphicsManager.hpp>
 
 //=====================================================================================
 class ViewText final : public View
 {
 public:
 
-	ENUM( TextHAlignment, uint8_t )
-		LEFT, MIDDLE, RIGHT
-	END_ENUM;
-
-	ENUM( TextVAlignment, uint8_t )
-		TOP, CENTER, BOTTOM
-	END_ENUM;
-
 	ViewText( const char * a_Name, Page * a_ContainerPage, View * a_Parent = nullptr )
 		: View( a_Name, a_ContainerPage, a_Parent )
 		, m_Font( 0 )
 		, m_TextSize( 32.0F )
 		, m_WordWrap( false )
-		, m_LineSpacing( 10.0F )
+		, m_LineSpacing( 0.0F )
+		, m_MultiVAlign( true )
+		, m_HAlign( GraphicsManager::TA_LEFT )
+		, m_VAlign( GraphicsManager::TA_TOP )
 	{
 	}
 	
 	void SetText( const char * a_String );
 	
-	inline const CString & GetText() const
+	const char * GetText() const
 	{
-		return m_Text;
+		return m_Text.Get();
 	}
 
 	void SetFontSize( float a_FontSize )
 	{
+		ASSERT_WARN( m_Font != nullptr, "Setting fontsize for Font, but we're not using fonts; perhaps a call to SetBitmapFont was recently made?" );
+
 		const bool changed = !Approximate( m_TextSize, a_FontSize );
 		
 		m_TextSize = Max( 0.0F, a_FontSize );
@@ -61,39 +59,66 @@ public:
 		return m_LineSpacing;
 	}
 
-	void SetFont( uint32_t a_Font )
+	void SetFont( GraphicsManager::Font a_Font )
 	{
 		const bool changed = a_Font != m_Font;
 
 		m_Font = a_Font;
 		
+		if ( m_Font != nullptr )
+		{
+			m_BitmapFont = nullptr;
+		}
+
 		if ( changed )
 		{
 			RecalculateTextSegs();
 		}
 	}
-	
-	uint32_t GetFont() const
+
+	void SetBitmapFont( GraphicsManager::BitmapFont a_BitmapFont )
+	{
+		const bool changed = a_BitmapFont != m_BitmapFont;
+
+		m_BitmapFont = a_BitmapFont;
+
+		if ( m_BitmapFont != nullptr )
+		{
+			m_Font = nullptr;
+		}
+
+		if ( changed )
+		{
+			RecalculateTextSegs();
+		}
+	}
+
+	GraphicsManager::Font GetFont() const
 	{
 		return m_Font;
 	}
 
-	inline void SetHAlign( TextHAlignment a_TextAlignment )
+	GraphicsManager::BitmapFont GetBitmapFont() const
+	{
+		return m_BitmapFont;
+	}
+
+	inline void SetHAlign( GraphicsManager::TextAlignment a_TextAlignment )
 	{
 		m_HAlign = a_TextAlignment;
 	}
 
-	inline void SetVAlign( TextVAlignment a_TextAlignment )
+	inline void SetVAlign( GraphicsManager::TextAlignment a_TextAlignment )
 	{
 		m_VAlign = a_TextAlignment;
 	}
 
-	inline TextHAlignment GetHAlign() const
+	inline GraphicsManager::TextAlignment GetHAlign() const
 	{
 		return m_HAlign;
 	}
 
-	inline TextVAlignment GetVAlign() const
+	inline GraphicsManager::TextAlignment GetVAlign() const
 	{
 		return m_VAlign;
 	}
@@ -114,6 +139,26 @@ public:
 		return m_WordWrap;
 	}
 
+	inline void SetSkew( bool a_Flag )
+	{
+		m_Skew = a_Flag;
+	}
+
+	inline float GetSkew() const
+	{
+		return m_Skew;
+	}
+
+	void SetMultiVAlign( bool a_Flag )
+	{
+		m_MultiVAlign = a_Flag;
+	}
+
+	inline bool GetMultiVAlign() const
+	{
+		return m_MultiVAlign;
+	}
+
 protected:
 
 	void OnReset();
@@ -122,17 +167,25 @@ protected:
 	
 private:
 
+	bool UsingBitmapFont() const
+	{
+		return m_BitmapFont != nullptr;
+	}
+
 	void RecalculateTextSegs();
 
 	CString m_Text;
 	Array< CString > m_TextLines;
 
 	float m_TextSize;
-	uint32_t m_Font;
-	TextHAlignment m_HAlign;
-	TextVAlignment m_VAlign;
+	GraphicsManager::Font m_Font;
+	GraphicsManager::BitmapFont m_BitmapFont;
+	GraphicsManager::TextAlignment m_HAlign;
+	GraphicsManager::TextAlignment m_VAlign;
 	bool m_WordWrap;
 	float m_LineSpacing;
+	bool m_MultiVAlign;
+	bool m_Skew;
 };
 
 #endif//VIEWTEXT_H

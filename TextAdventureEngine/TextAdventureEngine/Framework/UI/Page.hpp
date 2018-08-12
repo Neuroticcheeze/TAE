@@ -25,8 +25,9 @@ public:
 
 public:
 
-	Page( const char * a_Name, const Pointer< View > & a_RootView );
 	Page( const char * a_Name = "" );
+	~Page();
+
 	void Tick( float a_DeltaTime );
 
 	inline const char * GetName() const
@@ -39,9 +40,14 @@ public:
 		return true;
 	}
 
-	inline Pointer< View > GetRootView() const
+	inline View * GetRootView() const
 	{
 		return m_RootView;
+	}
+
+	inline bool IsBeingBlocked() const
+	{
+		return m_IsBeingBlocked;
 	}
 
 protected:
@@ -53,7 +59,8 @@ protected:
 
 private:
 
-	Pointer< View > m_RootView;
+	bool m_IsBeingBlocked = false;
+	ViewPage * m_RootView;
 	View * m_FocusedView;
 	CString m_Name;
 };

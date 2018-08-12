@@ -198,7 +198,7 @@ public:
 	//! \remark Only if a_NewLength is less than or equal to the previous pow-of-2 value of Capacity
 	//!			or greater than the current Capacity will a new allocation be performed.
 	//! \remark If a_NewLength is 0, the allocation is deleted and the array is cleared out entirely.
-	void Resize( uint32_t a_NewLength )
+	void Resize( uint32_t a_NewLength, bool a_ExplicitDelete = true )
 	{
 		PROFILE;
 
@@ -235,7 +235,7 @@ public:
 			}
 		}
 
-		else if ( m_Length < oldLength )
+		else if ( m_Length < oldLength && a_ExplicitDelete )
 		{
 			for ( uint32_t p = m_Length; p < oldLength; ++p )
 			{
@@ -305,7 +305,7 @@ public:
 		}
 
 		m_Data[ a_Index ] = m_Data[ m_Length - 1 ];
-		Resize( m_Length - 1 );
+		Resize( m_Length - 1, false );
 	}
 
 	//! \brief Remove an element given the specified value.
@@ -317,8 +317,8 @@ public:
 		{
 			if ( & m_Data[ i ] == a_Element )
 			{
-				BCopy( &m_Data[ m_Length - 1 ], &m_Data[ i ], sizeof( T ) );
-				Resize( m_Length - 1 );
+				m_Data[ i ] = m_Data[ m_Length - 1 ];
+				Resize( m_Length - 1, false );
 
 				return true;
 			}
@@ -338,8 +338,8 @@ public:
 		{
 			if ( m_Data[ i ] == a_Value)
 			{
-				BCopy( &m_Data[ m_Length - 1 ], &m_Data[ i ], sizeof( T ) );
-				Resize( m_Length - 1 );
+				m_Data[ i ] = m_Data[ m_Length - 1 ];
+				Resize( m_Length - 1, false );
 
 				return true;
 			}

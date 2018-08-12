@@ -9,10 +9,28 @@ float Exp( float a_Value )
 	return expf( a_Value );
 }
 
+
+//=====================================================================================
+float Mod( float a_Value, float a_Denom )
+{
+	return modf( a_Value, &a_Denom );
+}
+
 //=====================================================================================
 double ExpD( double a_Value )
 {
 	return exp( a_Value );
+}
+
+//=====================================================================================
+bool ModInterval( float a_T, float a_Interval, float a_TFRatio )
+{
+	ASSERT( a_Interval > 0.0F, "ModInterval(..) 'a_Interval' MUST be greater than 0.0!" );
+
+	float k = a_T / a_Interval;
+	k -= Floor( k );
+	
+	return k >= a_TFRatio;
 }
 
 //=====================================================================================

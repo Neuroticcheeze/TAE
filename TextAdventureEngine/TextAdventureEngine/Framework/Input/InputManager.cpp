@@ -1,8 +1,10 @@
 #include "InputManager.hpp"
+#include <Framework/Engine.hpp>
 #include <Framework/Utils/MemoryOps.hpp>
 #include <SDL/SDL_keyboard.h>
 #include <SDL/SDL_keycode.h>
 #include <SDL/SDL_mouse.h>
+#include <SDL/SDL_clipboard.h>
 
 //=====================================================================================
 void InputManager::Init()
@@ -30,14 +32,14 @@ void InputManager::Tick( float a_DeltaTime )
 	
 	int32_t kMouseX, kMouseY;
 	uint32_t kMouseState = SDL_GetMouseState( &kMouseX, &kMouseY );
-	m_MousePosition.x = kMouseX;
-	m_MousePosition.y = kMouseY;
+	m_MousePosition.x = static_cast< float >( kMouseX );
+	m_MousePosition.y = Engine::Instance().GetDisplaySize().y - static_cast< float >( kMouseY );
 
 	for ( uint32_t i = 0; i < 512; ++i )
 	{
 		bool & f = m_KeyDownFlags[ i ];
 		bool & p = m_KeyDownPrevFlags[ i ];
-		f = ( f >= kKeyboardNumKeys ) ? false : kKeyboardState[ i ];
+		f = ( static_cast< int32_t >( i ) >= kKeyboardNumKeys ) ? false : ( kKeyboardState[ i ] > 0 );
 
 		if ( f != p )
 		{
@@ -45,7 +47,7 @@ void InputManager::Tick( float a_DeltaTime )
 			{
 				m_KeyStates[ i ] = ButtonState::PRESSED;
 
-				if ( !m_InTextualMode )
+				if ( !m_IgnoreInput )
 				{
 					const StaticArray< IKeyEventListener *, MaxListenersPerEvent > & array = m_InputKeyEventListeners[ ( uint8_t)InputKeyEvent::ON_KEY_PRESSED ];
 					for ( uint32_t k = 0; k < array.Count(); ++k )
@@ -54,7 +56,7 @@ void InputManager::Tick( float a_DeltaTime )
 					}
 				}
 
-				else
+				if ( m_InTextualMode )
 				{
 					if ( i == KEYCODE_TAB )
 					{
@@ -68,11 +70,6 @@ void InputManager::Tick( float a_DeltaTime )
 					{
 						m_TextEvents.Push( TEXTCODE_NEWLINE );
 					}
-
-					if ( i == KEYCODE_BACKSPACE )
-					{
-						m_TextEvents.Push( TEXTCODE_BACKSPACE );
-					}
 				}
 			}
 
@@ -80,7 +77,7 @@ void InputManager::Tick( float a_DeltaTime )
 			{
 				m_KeyStates[ i ] = ButtonState::RELEASED;
 
-				if ( !m_InTextualMode )
+				if ( !m_IgnoreInput )
 				{
 					const StaticArray< IKeyEventListener *, MaxListenersPerEvent > & array = m_InputKeyEventListeners[ ( uint8_t)InputKeyEvent::ON_KEY_RELEASED ];
 					for ( uint32_t k = 0; k < array.Count(); ++k )
@@ -140,10 +137,13 @@ void InputManager::Tick( float a_DeltaTime )
 			{
 				m_MouseStates[ i ] = ButtonState::PRESSED;
 
-				const StaticArray< IMouseEventListener *, MaxListenersPerEvent > & array = m_InputMouseEventListeners[ ( uint8_t)InputMouseEvent::ON_MOUSE_PRESSED ];
-				for ( uint32_t k = 0; k < array.Count(); ++k )
+				if ( !m_IgnoreInput )
 				{
-					array[ k ]->OnMousePressed( (MouseButton)i );
+					const StaticArray< IMouseEventListener *, MaxListenersPerEvent > & array = m_InputMouseEventListeners[ ( uint8_t)InputMouseEvent::ON_MOUSE_PRESSED ];
+					for ( uint32_t k = 0; k < array.Count(); ++k )
+					{
+						array[ k ]->OnMousePressed( (MouseButton)i );
+					}
 				}
 			}
 
@@ -151,10 +151,13 @@ void InputManager::Tick( float a_DeltaTime )
 			{
 				m_MouseStates[ i ] = ButtonState::RELEASED;
 				
-				const StaticArray< IMouseEventListener *, MaxListenersPerEvent > & array = m_InputMouseEventListeners[ ( uint8_t)InputMouseEvent::ON_MOUSE_RELEASED ];
-				for ( uint32_t k = 0; k < array.Count(); ++k )
+				if ( !m_IgnoreInput )
 				{
-					array[ k ]->OnMouseReleased( (MouseButton)i );
+					const StaticArray< IMouseEventListener *, MaxListenersPerEvent > & array = m_InputMouseEventListeners[ ( uint8_t)InputMouseEvent::ON_MOUSE_RELEASED ];
+					for ( uint32_t k = 0; k < array.Count(); ++k )
+					{
+						array[ k ]->OnMouseReleased( (MouseButton)i );
+					}
 				}
 			}
 		}
@@ -179,7 +182,7 @@ void InputManager::Tick( float a_DeltaTime )
 //=====================================================================================
 InputManager::ButtonState InputManager::GetKeyState( KeyCode a_Key )
 {
-	return m_IgnoreInput ? ButtonState::UP : ( m_InTextualMode ? ButtonState::UP : m_KeyStates[ a_Key ] );
+	return m_IgnoreInput ? ButtonState::UP : m_KeyStates[ a_Key ];
 }
 
 //=====================================================================================
@@ -204,6 +207,18 @@ void InputManager::SetTextualMode( bool a_Flag )
 bool InputManager::InTextualMode() const
 {
 	return m_InTextualMode;
+}
+
+//=====================================================================================
+const char * InputManager::GetClipboard() const
+{
+	return SDL_HasClipboardText() ? SDL_GetClipboardText() : "";
+}
+
+//=====================================================================================
+void InputManager::SetClipboard( const char * a_String )
+{
+	SDL_SetClipboardText( a_String );
 }
 
 //=====================================================================================

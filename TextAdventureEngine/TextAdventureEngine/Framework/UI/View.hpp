@@ -85,34 +85,21 @@ public:
 	void SetBorder( Alignment a_Alignment, float a_Amount );
 	float GetBorder( Alignment a_Alignment );
 
-	inline void SetSize( const Vector2 & a_Size )
-	{
-		m_TrueSize = a_Size;
-	}
+	void SetBordersFromSizeAndOffset( const Vector2 & a_Size, const Vector2 & a_Offset = Vector2::ZERO );
 
-	inline void UseExplicitSize( bool a_Flag = true )
-	{
-		m_ExplicitSize = a_Flag;
-	}
-	
-	inline bool IsUsingExplicitSize() const
-	{
-		return m_ExplicitSize;
-	}
-	
 	inline const Vector2 & GetPosition() const
 	{
-		return m_TrueOffset;
+		return m_Offset;
 	}
 
 	inline const Vector2 & GetSize() const
 	{
-		return m_TrueSize;
+		return m_Size;
 	}
 
 	inline Vector2 GetCenter() const
 	{
-		return m_TrueOffset + m_TrueSize * 0.5F;
+		return m_Offset + m_Size * 0.5F;
 	}
 
 	inline bool AddChild( View * a_ChildView )
@@ -127,6 +114,7 @@ public:
 
 		a_ChildView->SetZOrder( a_ChildView->GetZOrder() + 1 );
 		a_ChildView->SetZOrder( a_ChildView->GetZOrder() - 1 );
+		a_ChildView->OnParentRectangleChanged( m_Offset, m_Size, this );
 
 		return true;
 	}
@@ -171,10 +159,21 @@ public:
 		return !( *this == a_Other );
 	}
 
+	inline View * GetParentView()
+	{
+		return m_ParentView;
+	}
+
+	inline const View * GetParentView() const
+	{
+		return m_ParentView;
+	}
+
 protected:
 
 	virtual void OnReset() {}
 	virtual void OnTick( float a_DeltaTime ) {}
+	virtual void OnTickPost( float a_DeltaTime ) {}
 	virtual void OnMouseEnter( const Vector2 & m_MousePosition ) {}
 	virtual void OnMouseLeave( const Vector2 & m_MousePosition ) {}
 	virtual void OnMouseClick( const Vector2 & m_MousePosition, InputManager::MouseButton a_MouseButton ) {}
@@ -214,9 +213,8 @@ private:
 	void RecalculateTrueRectangle();
 	CString m_Name;
 	float m_Borders[ AlignmentCount ];
-	bool m_ExplicitSize;
-	Vector2 m_TrueOffset;
-	Vector2 m_TrueSize;
+	Vector2 m_Offset;
+	Vector2 m_Size;
 	Array< View * > m_ChildrenViews;
 	View * m_ParentView;
 	Page * m_ContainerPage;

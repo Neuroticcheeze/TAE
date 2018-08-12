@@ -1,7 +1,8 @@
 #include "View.hpp"
 #include "Page.hpp"
-#include <Framework/Graphics/Graphics.hpp>
+#include <Framework/Graphics/GraphicsManager.hpp>
 #include <Framework/Input/InputManager.hpp>
+#include <Framework/UI/PageManager.hpp>
 #include <Framework/Utils/Hash.hpp>
 
 //=====================================================================================
@@ -16,7 +17,6 @@ View::View( const char * a_Name, Page * a_ContainerPage, View * a_Parent, bool a
 	, m_ParentView( a_Parent )
 	, m_ContainerPage( a_ContainerPage )
 	, m_ZOrder( -1 )
-	, m_ExplicitSize( false )
 	, m_PrevMouseEntered( false )
 	, m_CanFocus( a_CanFocus )
 	, m_IsGrabbed( false )
@@ -51,10 +51,13 @@ View::~View()
 
 	Destruct();
 
-	View *& focus = m_ContainerPage->m_FocusedView;
-	if ( focus == this )
+	if ( m_ContainerPage != nullptr )
 	{
-		m_ContainerPage->m_FocusedView = nullptr;
+		View *& focus = m_ContainerPage->m_FocusedView;
+		if ( focus == this )
+		{
+			m_ContainerPage->m_FocusedView = nullptr;
+		}
 	}
 
 	InputManager::Instance().DetatchListener( InputManager::InputMouseEvent::ON_MOUSE_PRESSED, this );
@@ -64,6 +67,11 @@ View::~View()
 //=====================================================================================
 void View::OnMousePressed( InputManager::MouseButton a_MouseButton )
 {
+	if ( !m_ContainerPage || m_ContainerPage->IsBeingBlocked() )
+	{
+		return;
+	}
+
 	if ( m_PrevMouseEntered )
 	{
 		View *& focus = m_ContainerPage->m_FocusedView;
@@ -86,6 +94,11 @@ void View::OnMousePressed( InputManager::MouseButton a_MouseButton )
 //=====================================================================================
 void View::OnMouseReleased( InputManager::MouseButton a_MouseButton )
 {
+	if ( !m_ContainerPage || m_ContainerPage->IsBeingBlocked() )
+	{
+		return;
+	}
+
 	if ( m_IsGrabbed )
 	{
 		m_IsGrabbed = false;
@@ -130,6 +143,27 @@ float View::GetBorder( Alignment a_Alignment )
 }
 
 //=====================================================================================
+void View::SetBordersFromSizeAndOffset( const Vector2 & a_Size, const Vector2 & a_Offset )
+{
+	if ( m_ParentView )
+	{
+		Vector2 o = a_Offset / m_ParentView->m_Offset;
+		Vector2 s = a_Size / m_ParentView->m_Size;
+
+		SetBorder( Alignment::BOTTOM, o.y );
+		SetBorder( Alignment::LEFT, o.x );
+		SetBorder( Alignment::TOP, 1.0F - ( o.y + s.y ) );
+		SetBorder( Alignment::RIGHT, 1.0F - ( o.x + s.x ) );
+	}
+
+	else
+	{
+		m_Offset = a_Offset;
+		m_Size = a_Size;
+	}
+}
+
+//=====================================================================================
 void View::Tick( float a_DeltaTime )
 {
 	const Vector2 & mpos = InputManager::Instance().GetMousePosition();
@@ -153,12 +187,13 @@ void View::Tick( float a_DeltaTime )
 		m_PrevMouseEntered = minside;
 	}
 
+
 //#define DEBUG_VIEWS
 #ifdef DEBUG_VIEWS
 	if ( m_ParentView )
 	{
-		Graphics::SetForeColor( minside ? Colour::GREEN : Colour::RED );
-		Graphics::DrawRectangleOutline( GetCenter(), GetSize() );
+		GraphicsManager::Instance().SetColour( minside ? Colour::GREEN : Colour::RED, GraphicsManager::COL_PRIMARY );
+		GraphicsManager::Instance().GfxDrawQuad( GetPosition(), GetSize() );
 	}
 #endif
 
@@ -169,7 +204,7 @@ void View::Tick( float a_DeltaTime )
 		tint *= m_ParentView->m_Tint;
 	}
 
-	Graphics::SetForeColor( tint );
+	GraphicsManager::Instance().SetColour( tint, GraphicsManager::COL_PRIMARY );
 	OnTick( a_DeltaTime );
 
 	if ( m_ChildrenViews.Count() > 0 )
@@ -181,6 +216,8 @@ void View::Tick( float a_DeltaTime )
 			childView->Tick( a_DeltaTime );
 		}
 	}
+
+	OnTickPost( a_DeltaTime );
 }
 
 //=====================================================================================
@@ -190,11 +227,12 @@ void View::OnChildZOrderChanged( const View * a_Child, uint32_t a_ZOrder )
 }
 
 //=====================================================================================
-void View::OnParentRectangleChanged( const Vector2 & a_TrueOffset, const Vector2 & a_TrueSize, const View * a_Parent )
+void View::OnParentRectangleChanged( const Vector2 & a_Offset, const Vector2 & a_Size, const View * a_Parent )
 {
 	RecalculateTrueRectangle();
 }
 
+//=====================================================================================
 void View::RecalculateTrueRectangle()
 {
 	const float & l = m_Borders[ ( uint32_t )Alignment::LEFT ];
@@ -202,19 +240,15 @@ void View::RecalculateTrueRectangle()
 	const float & t = m_Borders[ ( uint32_t )Alignment::TOP ];
 	const float & b = m_Borders[ ( uint32_t )Alignment::BOTTOM ];
 
-	m_TrueOffset = m_ParentView->m_TrueOffset + m_ParentView->m_TrueSize * Vector2( l, b );
-
-	if ( !m_ExplicitSize )
-	{
-		m_TrueSize = m_ParentView->m_TrueSize * Vector2( 1.0F - Clamp( l + r ), 1.0F - Clamp( t + b ) );
-	}
+	m_Offset = m_ParentView->m_Offset + m_ParentView->m_Size * Vector2( l, b );
+	m_Size = m_ParentView->m_Size * Vector2( 1.0F - Clamp( l + r ), 1.0F - Clamp( t + b ) );
 
 	for ( int32_t c = 0; c < static_cast< int32_t >( m_ChildrenViews.Count() ); ++c )
 	{
-		m_ChildrenViews[ ( uint32_t )c ]->OnParentRectangleChanged( m_TrueOffset, m_TrueSize, this );
+		m_ChildrenViews[ ( uint32_t )c ]->OnParentRectangleChanged( m_Offset, m_Size, this );
 	}
 
-	OnRectangleChanged( m_TrueOffset, m_TrueSize );
+	OnRectangleChanged( m_Offset, m_Size );
 }
 
 //=====================================================================================

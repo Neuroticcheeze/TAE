@@ -10,7 +10,7 @@ class NineSpriteSheet : protected SpriteSheet
 {
 public:
 
-	NineSpriteSheet( int32_t a_Texture = -1, float a_EdgeSize = 50.0F );
+	NineSpriteSheet( SpriteSheet::Texture a_Texture = nullptr, float a_EdgeSize = 50.0F );
 
 	inline void SetEdgeSize( float a_EdgeSize )
 	{

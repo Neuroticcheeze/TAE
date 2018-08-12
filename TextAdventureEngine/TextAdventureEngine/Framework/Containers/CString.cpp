@@ -7,6 +7,8 @@
 #include <stdarg.h>
 #include <sstream>
 #include <string>
+#include <regex>
+#include <stdlib.h>
 
 //=====================================================================================
 CString::CString()
@@ -41,13 +43,16 @@ CString::CString( const char * a_Begin, const char * a_End )
 	, m_Length( 0 )
 	, m_Capacity( 0 )
 {
-	if ( ASSERT( a_Begin < a_End, "Failed to construct CString with invalid start & end addresses: [%u/%u]", a_Begin, a_End ) )
+	if ( ASSERT( a_Begin <= a_End, "Failed to construct CString with invalid start & end addresses: [%u/%u]", a_Begin, a_End ) )
 	{
-		m_Length = a_End - a_Begin;
-		m_Capacity = NextPowerOf2( m_Length );
-		m_String = BAllocate< char >( m_Length + 1 );
-		BCopy( a_Begin, m_String, ( m_Length ) * sizeof( char ) );
-		m_String[ m_Length ] = '\0';
+		if ( a_Begin < a_End )
+		{
+			m_Length = a_End - a_Begin;
+			m_Capacity = NextPowerOf2( m_Length );
+			m_String = BAllocate< char >( m_Length + 1 );
+			BCopy( a_Begin, m_String, ( m_Length ) * sizeof( char ) );
+			m_String[ m_Length ] = '\0';
+		}
 	}
 }
 
@@ -85,21 +90,7 @@ void CString::Read( DataStream & a_Reader )
 //=====================================================================================
 CString & CString::operator=( const CString & a_Other )
 {
-	if ( m_String )
-	{
-		BFree( m_String );
-	}
-
-	m_Length = a_Other.m_Length;
-	m_Capacity = a_Other.m_Capacity;
-
-	if ( a_Other.m_String )
-	{
-		m_String = BAllocate< char >( m_Capacity );
-		BCopy( a_Other.m_String, m_String, m_Length + 1 ); // don't forget null terminator
-	}
-
-	return *this;
+	return *this = a_Other.Get();
 }
 
 //=====================================================================================
@@ -357,6 +348,30 @@ int32_t CString::Find( const CString & a_SubString, uint32_t a_StartIndex ) cons
 }
 
 //=====================================================================================
+int32_t CString::FindLast( const CString & a_SubString, uint32_t a_StartBackIndex ) const
+{
+	PROFILE;
+
+	auto occurrences = FindAll( a_SubString );
+
+	if ( occurrences.Count() > 0 )
+	{
+		auto it = occurrences.Last();
+		const auto end = occurrences.First() - 1;
+		while ( it != end )
+		{
+			if ( static_cast< uint32_t >( *it ) <= a_StartBackIndex )
+			{
+				return *it;
+			}
+
+			--it;
+		}
+	}
+	return -1;
+}
+
+//=====================================================================================
 Array< int32_t > CString::FindAll( const CString & a_SubString ) const
 {
 	PROFILE;
@@ -448,8 +463,8 @@ void CString::ReplaceAll( const CString & a_From, const CString & a_To )
 	{
 		if ( starts[ t ] != -1 )
 		{
-			CString pre = SubString( 0, starts[ t ] );
-			CString post = SubString( starts[ t ] + length, m_Length - ( starts[ t ] + length ) );
+			CString pre = SubString( 0, starts[ t ] + offset );
+			CString post = SubString( starts[ t ] + length + offset, m_Length - ( starts[ t ] + length ) - offset );
 
 			offset += a_To.Length() - a_From.Length();
 			*this = pre + a_To + post;
@@ -524,6 +539,50 @@ Array< CString > CString::Split( const char ** a_Delimiters, uint32_t a_NumDelim
 	while ( true );
 
 	return cuts;
+}
+
+//=====================================================================================
+Array< CString::RegexMatch > CString::Regex( const char * a_Pattern ) const
+{
+	std::regex reg = std::regex( "." );
+
+	try
+	{
+		reg = std::regex( a_Pattern );
+	}
+	
+	catch ( const std::regex_error & err )
+	{
+		PRINT( "CString Regex Error: %s", err.what() );
+	}
+	
+	std::string var = m_String;
+	std::regex_iterator<std::string::const_iterator> end;
+	std::sregex_iterator iter( var.begin(), var.end(), reg );
+
+	Array< RegexMatch > matches;
+	int32_t ind = 0;
+	while ( iter != end )
+	{
+		std::string str = iter->str();
+		CString cstr = str.c_str();
+		ind = Find( cstr, ind );
+		
+		Array< CString > captures;
+		for ( uint32_t l = 0; l < ( *iter ).size(); ++l )
+		{
+			captures.Append( ( *iter )[ l ].str().c_str() );
+		}
+
+		matches.Append( { 
+			static_cast< uint32_t >( ind ), 
+			static_cast< uint32_t >( iter->length() ), 
+			captures
+		} );
+		++iter;
+	}
+
+	return matches;
 }
 
 //=====================================================================================
@@ -840,15 +899,28 @@ bool CString::Parse( const char * a_Value, bool & a_Out )
 //=====================================================================================
 bool CString::Parse( const char * a_Value, float & a_Out )
 {
-	try
+	float f = 0.0F;
+
+	// returned 0..? Might be the correct value or incorrect value...
+	if ( ( f = atof( a_Value ) ) == 0.0F )
 	{
-		a_Out = static_cast< float >( std::stof( a_Value ) );
-		return true;
+		const char * c = a_Value;
+		while ( c != '\0' || ( c - a_Value ) > 128 )
+		{
+			// If contains a non-zero digit, then the string cannot represent zero
+			if ( *c > '0' || *c <= '9' )
+			{
+				// String is non-zero, yet we got a value 
+				// of zero from atof() ..., therefore atof() must have failed
+				return false;
+			}
+		}
 	}
 
-	catch ( std::invalid_argument e )
+	else
 	{
-		return false;
+		a_Out = f;
+		return true;
 	}
 }
 

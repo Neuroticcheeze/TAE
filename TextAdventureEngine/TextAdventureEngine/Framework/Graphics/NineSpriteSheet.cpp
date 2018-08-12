@@ -1,7 +1,7 @@
 #include "NineSpriteSheet.hpp"
 
 //=====================================================================================
-NineSpriteSheet::NineSpriteSheet( int32_t a_Texture, float a_EdgeSize )
+NineSpriteSheet::NineSpriteSheet( SpriteSheet::Texture a_Texture, float a_EdgeSize )
 	: SpriteSheet( a_Texture, Vector2( 3 ) )
 	, m_EdgeSize( a_EdgeSize )
 {

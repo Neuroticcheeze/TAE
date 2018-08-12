@@ -52,7 +52,7 @@ public:
 		return m_KeyFrames.Count();
 	}
 	
-	T Evaluate( float a_T )
+	T Evaluate( float a_T, float * o_LocalT = nullptr )
 	{
 		if ( m_KeyFrames.Count() == 0 )
 		{
@@ -91,6 +91,11 @@ public:
 			const KeyFrame & left = m_KeyFrames[ i - 1 ];
 			const KeyFrame & right = m_KeyFrames[ i ];
 			float k = ( a_T - left.Value0 ) / ( right.Value0 - left.Value0 );
+
+			if ( o_LocalT )
+			{
+				*o_LocalT = k;
+			}
 
 			return ( ( T )left.Value1 ) * ( 1.0F - k ) + ( ( T )right.Value1 ) * k;
 		}

@@ -17,6 +17,8 @@ class CString final : public Serialisable< CString >
 {
 public:
 
+	struct RegexMatch;
+
 	//!	\brief Default Constructor.
 	//!		   Constructs an empty CString with no allocation footprint in memory.
 	CString();
@@ -107,6 +109,9 @@ public:
 	/* Return the index of the first occurrence of the substring, or -1 if not found. */
 	int32_t Find( const CString & a_SubString, uint32_t a_StartIndex = 0 ) const;
 
+	/* Return the index of the last occurrence of the substring, or -1 if not found. */
+	int32_t FindLast( const CString & a_SubString, uint32_t a_StartBackIndex = UINT_MAX ) const;
+
 	/* Return the index of all occurrences of the substring. */
 	Array< int32_t > FindAll( const CString & a_SubString ) const;
 
@@ -124,6 +129,9 @@ public:
 
 	/* Splits this string up using any of the specified delimeters. */
 	Array< CString > Split( const char ** a_Delimiters, uint32_t a_NumDelimeters ) const;
+	
+	/* Search for and return all string segments that satisfy the regular expression. */
+	Array< RegexMatch > Regex( const char * a_Pattern ) const;
 
 	/* Changes all letters to their uppercase equivalent. */
 	void ToUpper() const;
@@ -182,6 +190,16 @@ private:
 	char * m_String;
 	uint32_t m_Length;
 	uint32_t m_Capacity;
+};
+
+//=====================================================================================
+//!	\brief A struct used in regex matching. Stores the start of the match in 
+//!		   our string, and the length of the match.
+struct CString::RegexMatch final
+{
+	uint32_t Start;
+	uint32_t Length;
+	Array< CString > GroupCaptures;
 };
 
 #endif//CSTRING_H

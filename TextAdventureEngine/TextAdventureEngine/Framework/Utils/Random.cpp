@@ -30,6 +30,24 @@ Random::~Random()
 }
 
 //=====================================================================================
+Random & Random::operator=( const Random & a_Other )
+{
+	m_Seed = a_Other.m_Seed;
+
+	if ( m_Generator )
+	{
+		delete GENERATOR;
+		m_Generator = nullptr;
+	}
+
+	std::random_device rd;
+	m_Generator = new std::mt19937_64( rd() );
+	GENERATOR->seed( m_Seed );
+
+	return *this;
+}
+
+//=====================================================================================
 int32_t Random::Range( const int32_t & a_Min, const int32_t & a_Max ) const
 {
 	std::uniform_int_distribution< int32_t >  distr( a_Min, a_Max );

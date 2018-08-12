@@ -74,6 +74,8 @@ private:
 	float	   m_Value;
 	ViewSprite m_Background;
 	ViewSprite m_Slider;
+
+	bool m_InitialTick;
 };
 
 #endif//VIEWSLIDER_H

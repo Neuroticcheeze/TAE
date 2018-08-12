@@ -17,6 +17,8 @@ private:
 
 	void * Add( void * a_Pointer )
 	{
+		PROFILE;
+
 		PtrMeta * meta = m_Refs[ a_Pointer ];
 
 		if ( meta )
@@ -37,6 +39,8 @@ private:
 
 	void * AddWeak( void * a_Pointer, void * a_Weak )
 	{
+		PROFILE;
+
 		PtrMeta * meta = m_Refs[ a_Pointer ];
 
 		if ( meta && a_Weak )
@@ -57,6 +61,11 @@ private:
 
 public:
 
+	bool HasRef( void * a_Ptr )
+	{
+		return m_Refs[ a_Ptr ] != nullptr;
+	}
+
 	template< typename T >
 	class WeakPointer;
 
@@ -66,6 +75,8 @@ public:
 		friend class GlobalPtrTable;
 
 	public:
+
+		typedef T PtrType;
 	
 		operator bool() const
 		{
@@ -95,12 +106,12 @@ public:
 			return static_cast< T* >( m_Value );
 		}
 
-		bool operator==( const WeakPointer< T > & a_Other )
+		bool operator==( const WeakPointer< T > & a_Other ) const
 		{
 			return m_Value == a_Other.Ptr();
 		}
 
-		bool operator!=( const WeakPointer< T > & a_Other )
+		bool operator!=( const WeakPointer< T > & a_Other ) const
 		{
 			return m_Value != a_Other.Ptr();
 		}
@@ -135,6 +146,11 @@ public:
 			m_Value = GlobalPtrTable::Instance().Add( new T( a_Value ) );
 		}
 
+		explicit Pointer( T* a_Value )
+		{
+			m_Value = GlobalPtrTable::Instance().Add( a_Value );
+		}
+
 		Pointer()
 			: m_Value( nullptr )
 		{
@@ -159,6 +175,8 @@ public:
 		friend class GlobalPtrTable;
 		friend class Pointer< T >;
 	
+		typedef T PtrType;
+
 		operator bool() const
 		{
 			return m_Value != nullptr;
@@ -169,12 +187,33 @@ public:
 			return static_cast< T* >( m_Value );
 		}
 
-		bool operator==( const Pointer< T > & a_Other )
+		WeakPointer( std::nullptr_t )
+		{
+			*this = WeakPointer< T >();
+		}
+
+		WeakPointer< T > & operator=( std::nullptr_t )
+		{
+			*this = WeakPointer< T >();
+			return *this;
+		}
+
+		bool operator==( const WeakPointer< T > & a_Other ) const
 		{
 			return m_Value == a_Other.m_Value;
 		}
 
-		bool operator!=( const Pointer< T > & a_Other )
+		bool operator!=( const WeakPointer< T > & a_Other ) const
+		{
+			return m_Value != a_Other.m_Value;
+		}
+
+		bool operator==( const Pointer< T > & a_Other ) const
+		{
+			return m_Value == a_Other.m_Value;
+		}
+
+		bool operator!=( const Pointer< T > & a_Other ) const
 		{
 			return m_Value != a_Other.m_Value;
 		}
@@ -190,6 +229,13 @@ public:
 			{
 				m_Value = nullptr;
 			}
+		}
+
+		static WeakPointer< T > Grab( T * a_ParentPtr )
+		{
+			WeakPointer< T > wp;
+			wp.m_Value = GlobalPtrTable::Instance().AddWeak( a_ParentPtr, &wp );
+			return wp;
 		}
 
 		WeakPointer< T > & operator=( const WeakPointer< T > & a_Other )
@@ -209,7 +255,15 @@ public:
 
 		WeakPointer( const WeakPointer< T > & a_Other )
 		{
-			*this = a_Other;
+			if ( a_Other )
+			{
+				m_Value = GlobalPtrTable::Instance().AddWeak( a_Other.m_Value, this );
+			}
+	
+			else
+			{
+				m_Value = nullptr;
+			}
 		}
 
 		WeakPointer()
@@ -244,6 +298,8 @@ public:
 template< typename U >
 void * GlobalPtrTable::Rem( void * a_Pointer )
 {
+	PROFILE;
+
 	PtrMeta * meta = m_Refs[ a_Pointer ];
 
 	if ( meta )

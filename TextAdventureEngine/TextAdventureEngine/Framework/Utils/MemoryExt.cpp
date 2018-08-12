@@ -2,6 +2,8 @@
 
 void GlobalPtrTable::RemWeak( void * a_UnderlyingPtr, void * a_Weak )
 {
+	PROFILE;
+
 	PtrMeta * meta = m_Refs[ a_UnderlyingPtr ];
 
 	if ( meta )

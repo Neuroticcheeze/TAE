@@ -1,2 +1,3 @@
 ﻿  ViewTextField.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\framework\ui\views\viewtextfield.cpp(223): warning C4018: '<': signed/unsigned mismatch
   TextAdventureEngine.vcxproj -> C:\Users\Neuro\Desktop\Text Adventure Engine\TAE\TextAdventureEngine\Debug\TextAdventureEngine.exe

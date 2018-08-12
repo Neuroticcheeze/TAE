@@ -37,7 +37,10 @@ public:
 			Seek( curr, SeekMode::BEGIN );
 			uint32_t len = Min( a_MaxLength, end - curr );
 
-			ReadRaw( len, str );
+			if ( len > 0 )
+			{
+				ReadRaw( len, str );
+			}
 
 			str[ len ] = '\0';
 

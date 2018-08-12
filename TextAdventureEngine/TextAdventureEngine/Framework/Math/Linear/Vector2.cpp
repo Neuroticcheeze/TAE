@@ -62,7 +62,7 @@ CString Vector2::ToString( const char * a_Parameter ) const
 {
 	return CString( "FANCY" ) == a_Parameter ? 
 		CString().Format( "{ %f, %f }", x, y ) :
-		CString().Format( "%f,%f", x, y );
+		CString().Format( "%.2f,%.2f", x, y );
 }
 
 //=====================================================================================

@@ -1,6 +1,6 @@
 #include "Debug.hpp"
 
-#ifdef _DEBUG
+#if defined( _DEBUG ) || defined( ALWAYS_DEBUG )
 
 #include <Windows.h>
 #include <iostream>
@@ -14,6 +14,8 @@
 #include <functional>
 #include <assert.h>
 #include <comdef.h>
+
+bool g_StartProfiling = false;
 
 void VSOut( uint32_t a_Line, const char * a_FunctionName, const char * a_Msg, ... )
 {
@@ -36,7 +38,7 @@ void VSOut( uint32_t a_Line, const char * a_FunctionName, const char * a_Msg, ..
 }
 
 
-bool Assert( bool a_Expression, uint32_t a_Line, const char * a_File, const char * a_Msg, ... )
+bool Assert( bool a_Fatal, bool a_Expression, uint32_t a_Line, const char * a_File, const char * a_Msg, ... )
 {
 	char buff[ 4096 ];
 	wchar_t wbuff[ 4096 ];
@@ -63,7 +65,17 @@ bool Assert( bool a_Expression, uint32_t a_Line, const char * a_File, const char
 		}
 		wfile[ flen ] = L'\0';
 
+#ifdef USE_WASSERT
 		_wassert( wbuff, wfile, a_Line );
+#else
+
+		{
+			std::ostringstream oss;
+			oss << "\n\n\n\n======== ASSERT FAILED [" << a_File << ":" << a_Line << "] ========\n" << buff << "\n===============================\n";
+			OutputDebugString(oss.str().c_str());
+			if ( a_Fatal ) exit( 1 );
+		}
+#endif
 	}
 
 	return a_Expression;
@@ -146,7 +158,8 @@ private:
 	int32_t count;
 };
 
-std::map< const char *, avg > profiler;
+std::map< const char *, avg > gProfiler;
+bool gProfilerComplete = false;
 
 using namespace std::chrono;
 typedef time_point< steady_clock > tp;
@@ -159,12 +172,23 @@ _ScopedProfiler_::_ScopedProfiler_( const char * a_Name )
 
 _ScopedProfiler_::~_ScopedProfiler_()
 {
+	if ( !g_StartProfiling )
+	{
+		return;
+	}
+
 	auto diff = high_resolution_clock::now() - *static_cast< tp* >( m_Start );
 	delete m_Start;
 
-	duration< double, std::milli > ms = duration< double, std::milli >( diff );
+	// We're too late, profiler has finished. 
+	// This can fail if our scope is global or within the same block containing a call to PDump.
+	if ( gProfilerComplete )
+	{
+		return;
+	}
 
-	profiler[ m_Name ] += ms.count();
+	duration< double, std::milli > ms = duration< double, std::milli >( diff );
+	gProfiler[ m_Name ] += ms.count();
 }
 
 
@@ -180,11 +204,11 @@ void PDump()
 {
 	OutputDebugString("\n//------------------------ PROFILER ------------------------\n");
 
-	std::set< pair, cmp > profilerSet( profiler.begin(), profiler.end(), cmp_ );
+	std::set< pair, cmp > gProfilerSet( gProfiler.begin(), gProfiler.end(), cmp_ );
 
-	auto it = profilerSet.cbegin();
+	auto it = gProfilerSet.cbegin();
 
-	while ( it != profilerSet.cend() )
+	while ( it != gProfilerSet.cend() )
 	{
 		std::ostringstream oss;
 
@@ -198,6 +222,7 @@ void PDump()
 	}
 
 	OutputDebugString("//---------------------- END PROFILER ----------------------\n");
+	gProfilerComplete = true;
 }
 
 #endif

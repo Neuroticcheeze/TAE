@@ -1,7 +1,7 @@
 #include "FadeManager.hpp"
 #include <Framework/Containers/CString.hpp>
-#include <Framework/Graphics/Graphics.hpp>
-#include <Framework/Config/Config.hpp>
+#include <Framework/Graphics/GraphicsManager.hpp>
+#include <Framework/Engine.hpp>
 #include <Framework/Math/Linear/Vector2.hpp>
 
 //=====================================================================================
@@ -21,7 +21,7 @@ bool FadeManager::FadeLayerData::Tick( float a_DeltaTime, Colour & a_Result )
 	float t = Clamp( m_CurrentTime / m_FadeTime );
 	a_Result = m_Source.Lerp( m_Target, t );
 	m_CurrentTime += a_DeltaTime;
-	return m_CurrentTime >= m_FadeTime + m_HoldTime;
+	return m_CurrentTime > ( m_FadeTime + m_HoldTime + a_DeltaTime );
 }
 
 //=====================================================================================
@@ -124,10 +124,10 @@ void FadeManager::ListenForFadeBarrier( Layer a_Layer, uint32_t a_FadeBarrierID,
 //=====================================================================================
 void FadeManager::DrawLayer( Layer a_Layer ) const
 {
-	Graphics::SetForeColor( m_LayerResults[ a_Layer ] );
-	Graphics::DrawRectangleFill( 
-		{ ( float )( Config::WINDOW_X >> 1 ), 
-		  ( float )( Config::WINDOW_Y >> 1 ) }, 
-		{ ( float )( Config::WINDOW_X ), 
-		  ( float )( Config::WINDOW_Y ) } );
+	GraphicsManager::Instance().SetState( GraphicsManager::RS_TRANSPARENCY, true );
+	GraphicsManager::Instance().SetColour( m_LayerResults[ a_Layer ], GraphicsManager::COL_PRIMARY );
+	GraphicsManager::Instance().GfxDrawQuad(
+		Vector2::ZERO, 
+		{ Engine::Instance().GetDisplaySize().x,
+		  Engine::Instance().GetDisplaySize().y } );
 }
