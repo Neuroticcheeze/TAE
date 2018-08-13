@@ -2,6 +2,12 @@
 #ifndef FUNCTION_H
 #define FUNCTION_H
 
+#include <functional>
+
+//=====================================================================================
+template< typename Signature >
+using Functor = std::function< Signature >;
+
 //=====================================================================================
 typedef void ( *Event )();			/*A function that just fires without any inputs or outputs.*/
 

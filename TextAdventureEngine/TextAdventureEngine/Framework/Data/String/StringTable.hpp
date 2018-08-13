@@ -14,7 +14,7 @@ class StringEntry final
 	friend class StringManager;
 	friend class Iterator;
 
-private:
+public:
 
 	struct Symbol final
 	{
@@ -87,6 +87,8 @@ private:
 		}
 	};
 
+private:
+
 	StaticArray< Symbol, 16 > Symbols;
 
 public:
@@ -105,8 +107,10 @@ public:
 		return RawString == a_Other.RawString;
 	}
 
-	typedef Action< void, StringEntry::Symbol::FormatType /*a_FormatType*/, StringEntry::Symbol::ExtendedFormatType /*a_ExtendedFormatType*/, const StringEntry::Symbol::FormatParameter & /*a_FormatParameter*/ > FormatPushHandler;
-	typedef Action< void, StringEntry::Symbol::FormatType /*a_FormatType*/, StringEntry::Symbol::ExtendedFormatType /*a_ExtendedFormatType*/ > FormatPopHandler;
+	typedef Functor< void( StringEntry::Symbol::FormatType /*a_FormatType*/, StringEntry::Symbol::ExtendedFormatType /*a_ExtendedFormatType*/, const StringEntry::Symbol::FormatParameter & /*a_FormatParameter*/ ) > FormatPushHandler;
+	typedef Functor< void( StringEntry::Symbol::FormatType /*a_FormatType*/, StringEntry::Symbol::ExtendedFormatType /*a_ExtendedFormatType*/ ) > FormatPopHandler;
+	typedef Functor< void( const CString & /*a_StringData*/ ) > StringHandler;
+	typedef Functor< void( uint32_t /*a_Token*/ ) > TokenHandler;
 
 	//iterator to iterate over each token
 	class Iterator final
@@ -115,11 +119,13 @@ public:
 
 	private:
 
-		Iterator( const Symbol * a_Begin, const Symbol * a_End, FormatPushHandler a_FormatPushHandler, FormatPopHandler a_FormatPopHandler )
+		Iterator( const Symbol * a_Begin, const Symbol * a_End, const FormatPushHandler & a_FormatPushHandler, const FormatPopHandler & a_FormatPopHandler, const StringHandler & a_StringHandler, const TokenHandler & a_TokenHandler )
 			: m_It( a_Begin )
 			, m_End( a_End )
 			, m_FormatPushHandler( a_FormatPushHandler )
 			, m_FormatPopHandler( a_FormatPopHandler )
+			, m_StringHandler( a_StringHandler )
+			, m_TokenHandler( a_TokenHandler )
 		{
 			ASSERT( m_It && m_End && m_It < m_End, "StringEntry::Iterator invalid Array of StringEntry::Symbol" );
 		}
@@ -128,6 +134,8 @@ public:
 		const Symbol * const	m_End;
 		FormatPushHandler		m_FormatPushHandler;
 		FormatPopHandler		m_FormatPopHandler;
+		StringHandler			m_StringHandler;
+		TokenHandler			m_TokenHandler;
 
 	public:
 		
@@ -165,6 +173,26 @@ public:
 						}
 					}
 				}
+				else if ( m_It->Type == Symbol::Type::TOKEN )
+				{
+					if ( m_TokenHandler )
+					{
+						m_TokenHandler( m_It->Token_StringID );
+					}
+				}
+
+				else if ( m_It->Type == Symbol::Type::STRING_DATA )
+				{
+					if ( m_StringHandler )
+					{
+						m_StringHandler( m_It->StringData_String );
+					}
+				}
+
+				else
+				{
+					ASSERT( false, "%s [FATAL ERROR] -> Found unknown symbol type! THis should not be possible..", __FUNCTION__ );
+				}
 			}
 		}
 
@@ -179,9 +207,9 @@ public:
 		}
 	};
 
-	Iterator GetIterator( FormatPushHandler a_FormatPushHandler, FormatPopHandler a_FormatPopHandler ) const
+	Iterator GetIterator( const FormatPushHandler & a_FormatPushHandler, const FormatPopHandler & a_FormatPopHandler, const StringHandler & a_StringHandler, const TokenHandler & a_TokenHandler ) const
 	{
-		return Iterator( Symbols.First(), Symbols.End(), a_FormatPushHandler, a_FormatPopHandler );
+		return Iterator( Symbols.First(), Symbols.End(), a_FormatPushHandler, a_FormatPopHandler, a_StringHandler, a_TokenHandler );
 	}
 };
 

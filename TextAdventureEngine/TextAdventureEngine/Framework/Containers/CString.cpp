@@ -94,7 +94,7 @@ CString & CString::operator=( const CString & a_Other )
 }
 
 //=====================================================================================
-CString & CString::operator=( const char * a_CharStr)
+CString & CString::operator=( const char * a_CharStr )
 {
 	if ( m_String )
 	{
@@ -103,23 +103,34 @@ CString & CString::operator=( const char * a_CharStr)
 
 	if ( a_CharStr )
 	{
-		m_Length = 0;
-
-		const char * nextChar = a_CharStr;
-
-		while ( *nextChar != '\0' )
+		if ( strcmp( a_CharStr, "" ) == 0 )
 		{
-			++m_Length;
-			++nextChar;
+			m_String = nullptr;
+			m_Length = 0;
+			m_Capacity = 0;
 		}
-		
-		m_Capacity = NextPowerOf2( m_Length + 1 );
-		m_String = BAllocate< char >( m_Capacity );
-		BCopy( a_CharStr, m_String, m_Length + 1 ); // don't forget null terminator
+
+		else
+		{
+			m_Length = 0;
+
+			const char * nextChar = a_CharStr;
+
+			while ( *nextChar != '\0' )
+			{
+				++m_Length;
+				++nextChar;
+			}
+			
+			m_Capacity = NextPowerOf2( m_Length + 1 );
+			m_String = BAllocate< char >( m_Capacity );
+			BCopy( a_CharStr, m_String, m_Length + 1 ); // don't forget null terminator
+		}
 	}
 
 	else
 	{
+		m_String = nullptr;
 		m_Capacity = 0;
 		m_Length = 0;
 	}

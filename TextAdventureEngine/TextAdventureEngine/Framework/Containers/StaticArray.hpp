@@ -127,6 +127,20 @@ public:
 		return true;
 	}
 
+	bool RemoveLast()
+	{
+		if ( m_Length == 0 )
+		{
+			return false;
+		}
+
+		else
+		{
+			*Last() = T();
+			--m_Length;
+		}
+	}
+
 	bool Remove( const T * a_Element )
 	{
 		for ( uint32_t i = 0; i < m_Length; ++i )

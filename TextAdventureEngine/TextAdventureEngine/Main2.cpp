@@ -1,5 +1,15 @@
 /*
 
+TODO:
+	- Formatted string display
+	- Blackboard extension to accept "Compound"s
+	- 
+
+
+
+
+
+
 REGIONS:
 
 

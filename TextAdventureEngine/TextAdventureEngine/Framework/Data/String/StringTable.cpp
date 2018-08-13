@@ -81,11 +81,18 @@ StringEntry StringTable::Process( const char * a_String )
 
 			const CString & inner = string.SubString( symbolOpenIdx + 2, symbolCloseIdx - ( symbolOpenIdx + 2 ) ).Trim();
 			Array< CString > splits = inner.Split( " " );
-			if ( splits.Count() == 1 || splits.Count() == 2 )
+
+			if ( inner.Length() > 0 && inner.Get()[ 0 ] == '/' )
+			{
+				a1 = inner.SubString( 1, inner.Length() - 1 );
+				PRINT( "StringTable::Process -> Found: FORMAT POP (@ %u): %s", symbolOpenIdx, a1.Get() );
+			}
+
+			else if ( splits.Count() == 1 || splits.Count() == 2 )
 			{
 				push = true;
 				a1 = splits[ 0U ];
-				a2 = splits[ 1U ];
+				a2 = splits.Count() == 1 ? "" : splits[ 1U ];
 
 				PRINT( "StringTable::Process -> Found: FORMAT (@ %u): %s [%s]", symbolOpenIdx, a1.Get(), a2.Get() );
 			}
@@ -108,10 +115,10 @@ if ( a1 == #ENUMVAL ) {\
 					a2.Replace( "#", "0x" );
 					CString::Parse( a2.Get(), hexval, true );
 					symbol.Format_Parameter.Colour = ColourI( 
-						( hexval & 0xFF ), 
-						( hexval & 0xFF00 ) >> 8, 
+						( hexval & 0xFF000000 ) >> 24,
 						( hexval & 0xFF0000 ) >> 16, 
-						( hexval & 0xFF000000 ) >> 24 
+						( hexval & 0xFF00 ) >> 8, 
+						( hexval & 0xFF )
 					);
 				)
 				STRING_TO_ENUM( BOLD, {} )
@@ -164,5 +171,22 @@ if ( a1 == #ENUMVAL ) {\
 		}
 	}
 
-	return result;
+	StringEntry result2;
+	result2.RawString = result.RawString;
+
+	auto it = result.Symbols.First();
+	auto end = result.Symbols.End();
+
+	while ( it != end )
+	{
+		if ( it->Type != StringEntry::Symbol::Type::STRING_DATA ||
+			 it->StringData_String.Length() > 0 )
+		{
+			result2.Symbols.Append( *it );
+		}
+
+		++it;
+	}
+
+	return result2;
 }

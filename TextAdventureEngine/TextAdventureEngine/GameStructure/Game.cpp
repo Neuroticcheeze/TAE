@@ -19,6 +19,8 @@ PageOptions * Game::m_Options = nullptr;
 #include <Framework/Graphics/Particles/Particle.hpp>
 #include <Framework/Graphics/Particles/Emitter.hpp>
 #include <Framework/Graphics/Particles/EmitterInfo.hpp>
+#include <Framework/Utils/BlackBoard.hpp>
+#include <Framework/Data/String/StringTable.hpp>
 static ParticleSystem psys;
 WeakPointer< Emitter > emitter;
 #include <GameStructure/World/Parallax.hpp>
@@ -36,6 +38,12 @@ class Listener : public Parallax::Layer::IListener
 	}
 } myListener;
 
+
+#include <functional>
+
+void foo(const std::function< void() > & func) { func(); }
+
+
 //=====================================================================================
 void Game::Initialise()
 {
@@ -49,9 +57,42 @@ void Game::Initialise()
 
 	PageManager::Instance().Push( Game::GetMainMenuUI() );
 
+	StringTable tbl;
+	tbl.PutEntry(WSID("Test"), "[[FONTCOLOUR #FFA500FF]Red text![[/FONTCOLOUR][MYTOKEN]\n[[FONTCOLOUR #00FF00FF][[FONTSIZE 32]Large green text.");
+	
+	auto iter = tbl[WSID("Test")].GetIterator(
+		[](StringEntry::Symbol::FormatType a_FormatType, StringEntry::Symbol::ExtendedFormatType a_ExtendedFormatType, const StringEntry::Symbol::FormatParameter & a_FormatParameter )
+	{
+		switch (a_FormatType)
+		{
+		case StringEntry::Symbol::FONTCOLOUR:
+			PRINT("Test: FONTCOLOUR = %s", a_FormatParameter.Colour.ToString().Get());
+			break;
+		}
+	}, 
+		[](StringEntry::Symbol::FormatType a_FormatType, StringEntry::Symbol::ExtendedFormatType a_ExtendedFormatType)
+	{
+		PRINT("Test: FMT_POP");
+	},
+		[](const CString & a_String)
+	{
+		PRINT("Test: STRING = %s", a_String.Get());
+	}, 
+		[](uint32_t a_TokenID)
+	{
+		PRINT("Test: TOKEN = %u", a_TokenID);
+	});
+
+	while ( iter )
+	{
+		iter.Handle();
+		++iter;
+	}
 
 
-
+	BlackBoard bb;
+	bb.Push( WSID( "MyVal" ), 3.0F );
+	float p = bb.Query( WSID( "MyVal" ) );
 
 
 	parallax[0].SetDistance( 0.0F );
@@ -97,8 +138,8 @@ void Game::Initialise()
 void Game::Tick( float a_DeltaTime )
 {
 	//parallax.SetBackScale( 1.0F + Sin( Engine::Instance().GetTime() ) * 0.5F + 0.5F );
-	parallax.SetCameraOffset( ( InputManager::Instance().GetMousePosition() - Engine::Instance().GetDisplaySize() / 2 ) * 0.001F );
-	parallax.DrawComposite( a_DeltaTime );
+	//parallax.SetCameraOffset( ( InputManager::Instance().GetMousePosition() - Engine::Instance().GetDisplaySize() / 2 ) * 0.001F );
+	//parallax.DrawComposite( a_DeltaTime );
 }
 
 //=====================================================================================

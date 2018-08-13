@@ -122,6 +122,7 @@ bool BlackBoard::Contains( uint32_t a_Id ) const
 	return m_Values.Contains( a_Id );
 }
 
+//=====================================================================================
 void BlackBoard::AddValueEventListener( IBlackBoardListener * a_Listener )
 {
 	if ( !a_Listener )
@@ -133,6 +134,7 @@ void BlackBoard::AddValueEventListener( IBlackBoardListener * a_Listener )
 	m_Listeners.Insert( a_Listener );
 }
 
+//=====================================================================================
 void BlackBoard::RemoveValueEventListener( IBlackBoardListener * a_Listener )
 {
 	m_ListenerLock.Lock();
