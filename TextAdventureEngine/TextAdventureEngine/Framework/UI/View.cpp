@@ -192,8 +192,11 @@ void View::Tick( float a_DeltaTime )
 #ifdef DEBUG_VIEWS
 	if ( m_ParentView )
 	{
-		GraphicsManager::Instance().SetColour( minside ? Colour::GREEN : Colour::RED, GraphicsManager::COL_PRIMARY );
-		GraphicsManager::Instance().GfxDrawQuad( GetPosition(), GetSize() );
+		GraphicsManager::Instance().SetColour( minside ? Colour::GREEN : Colour::RED, GraphicsManager::COL_SECONDARY );
+		GraphicsManager::Instance().SetColour( Colour::INVISIBLE, GraphicsManager::COL_PRIMARY);
+		GraphicsManager::Instance().GfxDrawQuad( GetPosition(), GetSize(), 1.0F );
+		GraphicsManager::Instance().GfxDrawQuad( GetPosition(), GetSize() * 0.5F, 1.0F );
+		GraphicsManager::Instance().GfxDrawQuad( GetPosition() + GetSize() * 0.5F, GetSize() * 0.5F, 1.0F );
 	}
 #endif
 

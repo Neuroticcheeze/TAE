@@ -2,13 +2,14 @@
 #include <Framework/Graphics/Graphics.hpp>
 
 //=====================================================================================
-void ViewText::SetText( const char * a_String )
+void ViewText::SetText( const char * a_String, bool a_Formatted )
 {
-	const bool changed = m_Text != a_String;
-	m_Text = a_String;
+	const bool changed = m_Text != a_String || m_Formatted != a_Formatted;
 
 	if ( changed )
 	{
+		m_Formatted = a_Formatted;
+		m_Text = a_String;
 		RecalculateTextSegs();
 	}
 }
@@ -30,9 +31,11 @@ void ViewText::OnTick( float a_DeltaTime )
 	float x = GetPosition().x;
 	float y = GetPosition().y;
 
+	Array< float > lineWidths;
+
 	float firstLineHeight = !UsingBitmapFont() 
-								? GraphicsManager::Instance().QueryTextSize( m_TextLines.First()->Get(), m_Font, m_TextSize ).y
-								: GraphicsManager::Instance().QueryTextSize( m_TextLines.First()->Get(), m_BitmapFont ).y;
+								? GraphicsManager::Instance().QueryTextSize( m_TextLines.First()->UnformattedString.Get(), m_Font, m_TextSize ).y
+								: GraphicsManager::Instance().QueryTextSize( m_TextLines.First()->UnformattedString.Get(), m_BitmapFont ).y;
 	float stringHeight = 0.0F;	
 	{
 		auto it = m_TextLines.First();
@@ -40,11 +43,13 @@ void ViewText::OnTick( float a_DeltaTime )
 		{
 			const uint32_t p = it - m_TextLines.First();
 			
-			const float height = !UsingBitmapFont() 
-									? GraphicsManager::Instance().QueryTextSize( it->Get(), m_Font, m_TextSize ).y
-									: GraphicsManager::Instance().QueryTextSize( it->Get(), m_BitmapFont ).y;
+			Vector2 size = !UsingBitmapFont() 
+									? GraphicsManager::Instance().QueryTextSize( it->UnformattedString.Get(), m_Font, m_TextSize )
+									: GraphicsManager::Instance().QueryTextSize( it->UnformattedString.Get(), m_BitmapFont );
 
-			stringHeight += ( height + m_LineSpacing );
+			lineWidths.Append( size.x );
+
+			stringHeight += ( size.y + m_LineSpacing );
 			++it;
 		}
 	}
@@ -93,24 +98,79 @@ void ViewText::OnTick( float a_DeltaTime )
 		{
 			const uint32_t p = it - m_TextLines.First();
 			const float height = !UsingBitmapFont() 
-									? GraphicsManager::Instance().QueryTextSize( it->Get(), m_Font, m_TextSize ).y
-									: GraphicsManager::Instance().QueryTextSize( it->Get(), m_BitmapFont ).y;
+									? GraphicsManager::Instance().QueryTextSize( it->UnformattedString.Get(), m_Font, m_TextSize ).y
+									: GraphicsManager::Instance().QueryTextSize( it->UnformattedString.Get(), m_BitmapFont ).y;
+
+			float lineAlignment = 0.0F;
+
+			if ( m_HAlign == GraphicsManager::TA_CENTER )
+			{
+				lineAlignment = -lineWidths[ static_cast< uint32_t >( it - m_TextLines.First() ) ] * 0.5F;
+			}
+
+			else if ( m_HAlign == GraphicsManager::TA_RIGHT )
+			{
+				lineAlignment = -lineWidths[ static_cast< uint32_t >( it - m_TextLines.First() ) ];
+			}
 
 			GraphicsManager::Instance().TfPush();
-			GraphicsManager::Instance().TfTranslate( { x + xx, y + hh - h } );
+			GraphicsManager::Instance().TfTranslate( { x + xx + lineAlignment, y + hh - h } );
 			
 			if ( m_Skew )
 			{
 				GraphicsManager::Instance().TfShear( Vector2( 0.0F, 0.4F ) );
 			}
 			
-			if ( UsingBitmapFont() )
+			Vector2 textSize;
+
+			if ( it->RawString.Length() > 0 )
 			{
-				GraphicsManager::Instance().GfxDrawText( it->Get(), m_BitmapFont, m_HAlign, m_VAlign );
-			}
-			else
-			{
-				GraphicsManager::Instance().GfxDrawText( it->Get(), m_Font, m_TextSize, m_HAlign, m_VAlign );
+				StringEntry::Iterator seIter = it->GetIterator(
+					[]( StringEntry::Symbol::FormatType a_FormatType, 
+						StringEntry::Symbol::ExtendedFormatType a_ExtendedFormatType, 
+						const StringEntry::Symbol::FormatParameter & a_FormatParameter )
+					{
+						switch ( a_FormatType )
+						{
+						case StringEntry::Symbol::FONTCOLOUR:
+							GraphicsManager::Instance().SetColour( a_FormatParameter.Colour, GraphicsManager::COL_PRIMARY );
+							break;
+						}
+					},
+					[&]( StringEntry::Symbol::FormatType a_FormatType, 
+							StringEntry::Symbol::ExtendedFormatType a_ExtendedFormatType )
+					{
+						switch ( a_FormatType )
+						{
+						case StringEntry::Symbol::FONTCOLOUR:
+							GraphicsManager::Instance().SetColour( GetTint(), GraphicsManager::COL_PRIMARY );
+							break;
+						}
+					},
+					[&]( const CString & a_String )
+					{
+						GraphicsManager::Instance().TfTranslate( Vector2( textSize.x, 0.0F ) );
+
+						if ( UsingBitmapFont() )
+						{
+							textSize = GraphicsManager::Instance().GfxDrawText( a_String.Get(), m_BitmapFont, GraphicsManager::TextAlignment::TA_LEFT, m_VAlign );
+						}
+						else
+						{
+							textSize = GraphicsManager::Instance().GfxDrawText( a_String.Get(), m_Font, m_TextSize, GraphicsManager::TextAlignment::TA_LEFT, m_VAlign );
+						}
+					}, 
+					[]( uint32_t a_TokenID )
+					{
+					} 
+				);
+
+				// Actually process the symbols per-line
+				while ( seIter )
+				{
+					seIter.Handle();
+					++seIter;
+				}
 			}
 
 			GraphicsManager::Instance().TfPop();
@@ -179,9 +239,21 @@ void ViewText::RecalculateTextSegs()
 			// Per segment/word
 			{
 				segmentStr = CString( locPtLeft, locPtRight ).Get();
+				CString unformattedStr;
+				
+				if ( m_Formatted )
+				{
+					unformattedStr = StringTable::Process( segmentStr.Get() ).UnformattedString;
+				}
+
+				else
+				{
+					unformattedStr = segmentStr;
+				}
+				
 				segmentSize = !UsingBitmapFont()
-								? GraphicsManager::Instance().QueryTextSize( segmentStr.Get(), m_Font, m_TextSize )
-								: GraphicsManager::Instance().QueryTextSize( segmentStr.Get(), m_BitmapFont );
+								? GraphicsManager::Instance().QueryTextSize( unformattedStr.Get(), m_Font, m_TextSize )
+								: GraphicsManager::Instance().QueryTextSize( unformattedStr.Get(), m_BitmapFont );
 
 				// Time to push onto new line?
 				if ( ( lineSize.x + segmentSize.x ) >= lineWidthMax )
@@ -215,12 +287,24 @@ void ViewText::RecalculateTextSegs()
 		str2.ReplaceAll( " \n", "\n" );
 	}
 
-	m_TextLines = str2.Split( "\n" );
+	Array< CString > lines = str2.Split( "\n" );
 
-	auto it = m_TextLines.First();
-	while ( it != m_TextLines.End() )
+	m_TextLines.Clear();
+
+	auto it = lines.First();
+	while ( it != lines.End() )
 	{
-		it++;
+		if ( m_Formatted )
+		{
+			m_TextLines.Append( StringTable::Process( it->Get() ) );
+		}
+		
+		else
+		{
+			m_TextLines.Append( StringTable::ProcessUnformatted( it->Get() ) );
+		}
+
+		++it;
 	}
 
 #undef WORD_SEPARATORS

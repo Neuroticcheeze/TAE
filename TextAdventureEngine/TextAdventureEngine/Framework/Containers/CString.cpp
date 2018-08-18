@@ -555,6 +555,11 @@ Array< CString > CString::Split( const char ** a_Delimiters, uint32_t a_NumDelim
 //=====================================================================================
 Array< CString::RegexMatch > CString::Regex( const char * a_Pattern ) const
 {
+	if ( m_Length == 0 )
+	{
+		return Array< CString::RegexMatch >();
+	}
+
 	std::regex reg = std::regex( "." );
 
 	try

@@ -180,9 +180,6 @@
     <ClCompile Include="Framework\Template\Cloneable.hpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\Utils\BlackBoard.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Framework\UI\Views\ViewButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -247,6 +244,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameStructure\Globals.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Utils\Blackboard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStructure\Dialogue\Dialogue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -539,9 +542,6 @@
     <ClInclude Include="Framework\Containers\Set.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Framework\Utils\BlackBoard.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Framework\UI\Views\ViewButton.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -621,6 +621,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameStructure\Globals.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Utils\Blackboard.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStructure\Dialogue\Dialogue.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

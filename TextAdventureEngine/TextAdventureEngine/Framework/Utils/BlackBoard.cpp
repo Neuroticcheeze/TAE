@@ -1,142 +1,296 @@
-#include "BlackBoard.hpp"
+#include "Blackboard.hpp"
+#include <Framework/Utils/Hash.hpp>
 
 //=====================================================================================
-Value::Value()
-	: m_Type( Value::Type::NIL )
-{}
+const uint64_t Blackboard::Value::NIL = UINT64_MAX;
 
 //=====================================================================================
-Value::Value( const Value & a_Other )
+void Blackboard::Value::SetType( Type a_ValueType )
 {
-	*this = a_Other;
-}
-
-//=====================================================================================
-Value & Value::operator=( const Value & a_Other )
-{ 
-	m_Type = a_Other.m_Type;
-
-	switch ( m_Type )
+	if ( m_ValueType != a_ValueType )
 	{
-#define ASSIGN_UNION( K ) m_Value.K = a_Other.m_Value.K
-
-	case Value::Type::BOOL:
-		ASSIGN_UNION( b );
-		break;
-	case Value::Type::CHAR:
-		ASSIGN_UNION( c );
-		break;
-	case Value::Type::INT32:
-		ASSIGN_UNION( si );
-		break;
-	case Value::Type::FLOAT:
-		ASSIGN_UNION( f );
-		break;
-	case Value::Type::STRING:
-		ASSIGN_UNION( str );
-		break;
-
-#undef ASSIGN_UNION
-	}
-	
-	return *this; 
-}
-
-bool Value::operator==( const Value & a_Other ) const
-{
-	if ( m_Type == a_Other.m_Type )
-	{
-		switch ( m_Type )
+		if ( m_ValueType != VT_NIL )
 		{
-#define CHECK_UNION( K ) if ( m_Value.K == a_Other.m_Value.K ) return true;
-	
-		case Value::Type::BOOL:
-			CHECK_UNION( b );
+			PRINT( "Blackboard: Value changed type, any data associated with previous type has been erased." );
+		}
+
+		switch ( m_ValueType )
+		{
+		case Blackboard::Value::VT_NIL:
+			BSet( &m_VTypeData, 0, sizeof( decltype( m_VTypeData ) ) );
+			m_StringData = "";
+			m_CompoundData.GetEntries().Clear();
 			break;
-		case Value::Type::CHAR:
-			CHECK_UNION( c );
+		case Blackboard::Value::VT_FLOAT:
+			m_VTypeData.Float = 0.0F;
 			break;
-		case Value::Type::INT32:
-			CHECK_UNION( si );
+		case Blackboard::Value::VT_INT32:
+			m_VTypeData.Int32 = 0;
 			break;
-		case Value::Type::FLOAT:
-			CHECK_UNION( f );
+		case Blackboard::Value::VT_BOOL:
+			m_VTypeData.Bool = false;
 			break;
-		case Value::Type::STRING:
-			CHECK_UNION( str );
+		case Blackboard::Value::VT_STRING:
+			m_StringData = "";
 			break;
-	
-#undef CHECK_UNION
+		case Blackboard::Value::VT_COMPOUND:
+			m_CompoundData.GetEntries().Clear();
+			break;
+		default:
+			break;
+		}
+
+		m_ValueType = a_ValueType;
+	}
+}
+
+//=====================================================================================
+Blackboard::Value::operator float &()
+{
+	SetType( VT_FLOAT );
+	return m_VTypeData.Float;
+}
+
+//=====================================================================================
+Blackboard::Value::operator const float &() const
+{
+	static const float def = 0.0F;
+	return m_ValueType == VT_FLOAT ? m_VTypeData.Float : def;
+}
+
+//=====================================================================================
+Blackboard::Value & Blackboard::Value::operator=( float a_Value )
+{
+	SetType( VT_FLOAT );
+	m_VTypeData.Float = a_Value;
+	return *this;
+}
+
+//=====================================================================================
+Blackboard::Value::operator int32_t &()
+{
+	SetType( VT_INT32 );
+	return m_VTypeData.Int32;
+}
+
+//=====================================================================================
+Blackboard::Value::operator const int32_t &() const
+{
+	static const int32_t def = 0;
+	return m_ValueType == VT_INT32 ? m_VTypeData.Int32 : def;
+}
+
+//=====================================================================================
+Blackboard::Value & Blackboard::Value::operator=( int32_t a_Value )
+{
+	SetType( VT_INT32 );
+	m_VTypeData.Int32 = a_Value;
+	return *this;
+}
+
+//=====================================================================================
+Blackboard::Value::operator bool &()
+{
+	SetType( VT_BOOL );
+	return m_VTypeData.Bool;
+}
+
+//=====================================================================================
+Blackboard::Value::operator const bool &() const
+{
+	static const bool def = false;
+	return m_ValueType == VT_BOOL ? m_VTypeData.Bool : def;
+}
+
+//=====================================================================================
+Blackboard::Value & Blackboard::Value::operator=( bool a_Value )
+{
+	SetType( VT_BOOL );
+	m_VTypeData.Bool = a_Value;
+	return *this;
+}
+
+//=====================================================================================
+Blackboard::Value::operator CString &()
+{
+	SetType( VT_STRING );
+	return m_StringData;
+}
+
+//=====================================================================================
+Blackboard::Value::operator const CString &() const
+{
+	static const CString def = "";
+	return m_ValueType == VT_STRING ? m_StringData : def;
+}
+
+//=====================================================================================
+Blackboard::Value & Blackboard::Value::operator=( const CString & a_Value )
+{
+	SetType( VT_STRING );
+	m_StringData = a_Value;
+	return *this;
+}
+
+//=====================================================================================
+bool Blackboard::Value::HasValue( const Name & a_Name )
+{
+	return m_ValueType == VT_COMPOUND && m_CompoundData.Contains( a_Name );
+}
+
+//=====================================================================================
+Blackboard::Value & Blackboard::Value::PutValue( const char * a_Name, const Blackboard::Value & a_Value )
+{
+	Value val = a_Value;
+	val.m_CompoundEntryName = a_Name;
+
+	SetType( VT_COMPOUND );
+	m_CompoundData.Put( WSID( a_Name ), val );
+
+	auto it = m_CompoundData.GetEntries().Last();
+	auto begin1n = m_CompoundData.GetEntries().First() - 1;
+
+	while ( it != begin1n )
+	{
+		if ( it->Value.IsNil() )
+		{
+			m_CompoundData.Remove( it->Key );
+		}
+
+		--it;
+	}
+
+	return *this;
+}
+
+//=====================================================================================
+Blackboard::Value & Blackboard::Value::GetValue( const Name & a_Name )
+{
+	if ( m_ValueType == VT_COMPOUND )
+	{
+		auto data = m_CompoundData[ a_Name ];
+
+		if ( data != nullptr )
+		{
+			return *data;
+		}
+
+		throw OutOfRangeAccessException( CString().Format( __FUNCTION__ " -- Compound Value Ref Accessor FAILURE: Value [COMPOUND] does not contain {%d}", a_Name ).Get() );
+	}
+
+	throw OutOfRangeAccessException( __FUNCTION__ " -- Compound Value Ref Accessor FAILURE: Value is not of type [COMPOUND]" );
+}
+
+//=====================================================================================
+const Blackboard::Value & Blackboard::Value::GetValue( const Name & a_Name ) const
+{
+	static const Value NilVal = Value( NIL );
+
+	if ( m_ValueType == VT_COMPOUND )
+	{
+		auto data = m_CompoundData[ a_Name ];
+
+		if ( data != nullptr )
+		{
+			return *data;
 		}
 	}
 
-	return false;
+	return NilVal;
 }
 
 //=====================================================================================
-void BlackBoard::Push( uint32_t a_Id, Value a_Value )
+uint32_t Blackboard::Value::Count() const
 {
-	m_Lock.Lock();
-
-	const bool contains = m_Values.Contains( a_Id );
-	const bool newval = contains ? ( *m_Values[ a_Id ] == a_Value ) : false;
-	m_Values.Put( a_Id, a_Value );
-
-	if ( !contains || newval )
+	if ( m_ValueType == VT_COMPOUND )
 	{
-		auto it = m_Listeners.First();
-		const auto end = m_Listeners.End();
+		return m_CompoundData.Count();
+	}
+
+	return 0;
+}
+
+//=====================================================================================
+Dictionary< Name, Blackboard::Value > & Blackboard::Value::GetData()
+{
+	SetType( VT_COMPOUND );
+	return m_CompoundData;
+}
+
+//=====================================================================================
+const Dictionary< Name, Blackboard::Value > & Blackboard::Value::GetData() const
+{
+	return m_CompoundData;
+}
+
+//=====================================================================================
+Blackboard::Value & Blackboard::Value::operator=( uint64_t a_Value )
+{
+	if ( a_Value == NIL )
+	{
+		SetType( VT_NIL );
+	}
+
+	else
+	{
+		SetType( VT_INT32 );
+		m_VTypeData.Int32 = static_cast< int32_t >( a_Value & 0x7FFFFFFF );
+	}
+
+	return *this;
+}
+
+//=====================================================================================
+CString Blackboard::Value::ToString( const char * a_Parameter ) const
+{
+	return ToStringV( 0 );
+}
+
+//=====================================================================================
+CString Blackboard::Value::ToStringV( uint32_t a_Level ) const
+{
+	CString string;
+
+	switch ( m_ValueType )
+	{
+	case Blackboard::Value::VT_NIL:
+		string = "[VT_NIL]";
+		break;
+	case Blackboard::Value::VT_FLOAT:
+		string = CString().Format( "[VT_FLOAT]: %f", m_VTypeData.Float );
+		break;
+	case Blackboard::Value::VT_INT32:
+		string = CString().Format( "[VT_INT32]: %i", m_VTypeData.Int32 );
+		break;
+	case Blackboard::Value::VT_BOOL:
+		string = CString().Format( "[VT_BOOL]: %s", m_VTypeData.Bool ? "true" : "false" );
+		break;
+	case Blackboard::Value::VT_STRING:
+		string = CString().Format( "[VT_STRING]: \"%s\"", m_StringData.Get() );
+		break;
+	case Blackboard::Value::VT_COMPOUND:
+		string = CString().Format( "[VT_COMPOUND]: (%u values)", m_CompoundData.Count() );
+
+		auto it = m_CompoundData.GetEntries().First();
+		auto end = m_CompoundData.GetEntries().End();
+
 		while ( it != end )
 		{
-			( *it )->OnValueEvent( newval ? ValueEvent::EV_PUSH_VALUE_CHANGED 
-										  : ValueEvent::EV_PUSH_VALUE_ADDED, 
-								   a_Id, 
-								   a_Value );
+			string += it->Value.ToStringV( a_Level + 1 );
 			++it;
 		}
+
+		break;
 	}
-}
 
-//=====================================================================================
-const Value & BlackBoard::Query( uint32_t a_Id ) const
-{
-	static const Value NIL = Value();
+	CString pre = "\n";
 
-	m_Lock.Lock();
-
-	const Value * val = m_Values[ a_Id ];
-
-	if ( val )
+	for ( uint32_t lvl = 0; lvl < a_Level; ++lvl )
 	{
-		return *val;
+		pre += "              ";
 	}
 
-	return NIL;
-}
+	pre += CString().Format( "|------ \"%s\" ---> ", m_CompoundEntryName.Get() );
 
-//=====================================================================================
-bool BlackBoard::Contains( uint32_t a_Id ) const
-{
-	m_Lock.Lock();
-	
-	return m_Values.Contains( a_Id );
-}
-
-//=====================================================================================
-void BlackBoard::AddValueEventListener( IBlackBoardListener * a_Listener )
-{
-	if ( !a_Listener )
-	{
-		return;
-	}
-
-	m_ListenerLock.Lock();
-	m_Listeners.Insert( a_Listener );
-}
-
-//=====================================================================================
-void BlackBoard::RemoveValueEventListener( IBlackBoardListener * a_Listener )
-{
-	m_ListenerLock.Lock();
-	m_Listeners.Remove( a_Listener );
+	return pre + string;
 }

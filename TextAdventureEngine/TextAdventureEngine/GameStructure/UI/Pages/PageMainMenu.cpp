@@ -17,7 +17,7 @@ void PageMainMenu::SetupUI()
 	m_Title->SetHAlign( GraphicsManager::TA_CENTER );
 	m_Title->SetVAlign( GraphicsManager::TA_CENTER );
 	m_Title->SetBitmapFont( GraphicsManager::Instance().GetBitmapFont( BF_LETTERS_AND_DIGITS_DefaultHeading ) );
-	m_Title->SetText( "<TITLE>" );
+	m_Title->SetText( "TITLE"  );
 	GetRootView()->AddChild( m_Title );
 
 	m_Version->SetBorder( View::Alignment::LEFT, 0.0F );
@@ -56,8 +56,7 @@ void PageMainMenu::SetupUI()
 	m_Options->GetLabel().SetTint( Colour::WHITE );
 	m_Options->GetLabel().SetText( "Options" );
 	GetRootView()->AddChild( m_Options );
-	//m_Options->SetEnabled( false ); // No functionality for this yet
-
+	
 	m_Quit->SetBorder( View::Alignment::LEFT, 0.275F );
 	m_Quit->SetBorder( View::Alignment::RIGHT, 0.275F );
 	m_Quit->SetBorder( View::Alignment::TOP, 0.7F );

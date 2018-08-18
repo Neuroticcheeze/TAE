@@ -94,6 +94,7 @@ private:
 public:
 
 	CString RawString;
+	CString UnformattedString;
 
 	StringEntry()
 	{}
@@ -211,6 +212,11 @@ public:
 	{
 		return Iterator( Symbols.First(), Symbols.End(), a_FormatPushHandler, a_FormatPopHandler, a_StringHandler, a_TokenHandler );
 	}
+
+	Iterator * GetIteratorAlloc( const FormatPushHandler & a_FormatPushHandler, const FormatPopHandler & a_FormatPopHandler, const StringHandler & a_StringHandler, const TokenHandler & a_TokenHandler ) const
+	{
+		return new Iterator( Symbols.First(), Symbols.End(), a_FormatPushHandler, a_FormatPopHandler, a_StringHandler, a_TokenHandler );
+	}
 };
 
 //=====================================================================================
@@ -225,12 +231,18 @@ public:
 	uint32_t GetMemoryFootprint() const;
 	const StringEntry & operator[]( uint32_t a_Hash ) const;
 	static const StringEntry NULL_STRING_ENTRY;
+	
+	static StringEntry Process( const char * a_String );
+	static StringEntry ProcessUnformatted( const char * a_String );
 
 private:
 
-	static StringEntry Process( const char * a_String );
 	uint32_t m_MemoryFootPrint;
 	Dictionary< uint32_t, StringEntry > m_Entries;
 };
+
+//=====================================================================================
+#define FONTCOLOUR_TAG( COL ) "[[FONTCOLOUR #" #COL "]"
+#define FONTCOLOUR_POP		  "[[/FONTCOLOUR]"
 
 #endif//STRINGTABLE_H

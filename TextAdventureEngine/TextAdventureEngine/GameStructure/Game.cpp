@@ -19,8 +19,9 @@ PageOptions * Game::m_Options = nullptr;
 #include <Framework/Graphics/Particles/Particle.hpp>
 #include <Framework/Graphics/Particles/Emitter.hpp>
 #include <Framework/Graphics/Particles/EmitterInfo.hpp>
-#include <Framework/Utils/BlackBoard.hpp>
+#include <Framework/Utils/Blackboard.hpp>
 #include <Framework/Data/String/StringTable.hpp>
+#include <GameStructure/Dialogue/Dialogue.hpp>
 static ParticleSystem psys;
 WeakPointer< Emitter > emitter;
 #include <GameStructure/World/Parallax.hpp>
@@ -42,7 +43,9 @@ class Listener : public Parallax::Layer::IListener
 #include <functional>
 
 void foo(const std::function< void() > & func) { func(); }
-
+StringTable tbl;
+StringEntry::Iterator * iter;
+Vector2 formattedTextOffset = Vector2::ZERO;
 
 //=====================================================================================
 void Game::Initialise()
@@ -57,42 +60,8 @@ void Game::Initialise()
 
 	PageManager::Instance().Push( Game::GetMainMenuUI() );
 
-	StringTable tbl;
-	tbl.PutEntry(WSID("Test"), "[[FONTCOLOUR #FFA500FF]Red text![[/FONTCOLOUR][MYTOKEN]\n[[FONTCOLOUR #00FF00FF][[FONTSIZE 32]Large green text.");
-	
-	auto iter = tbl[WSID("Test")].GetIterator(
-		[](StringEntry::Symbol::FormatType a_FormatType, StringEntry::Symbol::ExtendedFormatType a_ExtendedFormatType, const StringEntry::Symbol::FormatParameter & a_FormatParameter )
-	{
-		switch (a_FormatType)
-		{
-		case StringEntry::Symbol::FONTCOLOUR:
-			PRINT("Test: FONTCOLOUR = %s", a_FormatParameter.Colour.ToString().Get());
-			break;
-		}
-	}, 
-		[](StringEntry::Symbol::FormatType a_FormatType, StringEntry::Symbol::ExtendedFormatType a_ExtendedFormatType)
-	{
-		PRINT("Test: FMT_POP");
-	},
-		[](const CString & a_String)
-	{
-		PRINT("Test: STRING = %s", a_String.Get());
-	}, 
-		[](uint32_t a_TokenID)
-	{
-		PRINT("Test: TOKEN = %u", a_TokenID);
-	});
-
-	while ( iter )
-	{
-		iter.Handle();
-		++iter;
-	}
 
 
-	BlackBoard bb;
-	bb.Push( WSID( "MyVal" ), 3.0F );
-	float p = bb.Query( WSID( "MyVal" ) );
 
 
 	parallax[0].SetDistance( 0.0F );
@@ -132,14 +101,75 @@ void Game::Initialise()
 	emitter = psys.CreateEmitter(emitterInfo);
 	
 	parallax[2].RegisterListener(myListener);
+
+	
+
+	Blackboard::Value blackboard;
+	Blackboard::Value playerDataCompound;
+	playerDataCompound.PutValue("Health", Blackboard::Value().PutValue("Current", 33.0F).PutValue("Prev", 32.0F));
+	playerDataCompound.PutValue("Position", Blackboard::Value().PutValue("InWater", true).PutValue("X", -500.0F).PutValue("Y", 21200.0F));
+	blackboard.PutValue("PlayerData", playerDataCompound);
+	blackboard.GetValue(WSID("PlayerData")).PutValue("Health", Blackboard::Value::NIL);
+	PRINT( blackboard.ToString().Get() );
+
+	{
+		StringTable strings;
+		strings.PutEntry(WSID("Generic_Merchant_Greeting"), "Hello, there.");
+		strings.PutEntry(WSID("Generic_Merchant_About"), "Well, there's not much to say.");
+		strings.PutEntry(WSID("Response_About_S"), "About");
+		strings.PutEntry(WSID("Response_About"), "Tell me about yourself..");
+
+		Dictionary< DialogueID, Dialogue > dialogues;
+
+		{
+			Dialogue dialogue;
+			dialogue.DialogueStringID = WSID("Generic_Merchant_Greeting");
+			dialogue.Responses.Append(WSID("About"));
+			dialogues.Put(WSID("Entry"), dialogue);
+		}
+		{
+			Dialogue dialogue;
+			dialogue.DialogueStringID = WSID("Generic_Merchant_About");
+			dialogues.Put(WSID("TalkAboutSelf"), dialogue);
+		}
+
+		Dictionary< ResponseID, Response > responses;
+		{
+			Response response;
+			response.ShorthandStringID = WSID("Response_About_S");
+			response.ResponseStringID = WSID("Response_About");
+			response.LinkToDialogueID = WSID("TalkAboutSelf");
+			responses.Put(WSID("About"), response);
+		}
+
+		DialogueID entry = WSID("Entry");
+
+		Conversation convo1 = Conversation::Create(dialogues, responses, entry);
+
+		do
+		{
+			CString cstr = strings[convo1.GetCurrentDialogue().DialogueStringID].RawString;
+			PRINT("Merchant: %s", cstr.Get());
+
+			for ( int p = 0; p < convo1.GetCurrentDialogue().Responses.Count(); ++p)
+			{
+				PRINT("Response: %s -- \"%s\"", 
+					strings[convo1.GetResponses()[ convo1.GetCurrentDialogue().Responses[p]]->ShorthandStringID].RawString.Get(),
+					strings[convo1.GetResponses()[ convo1.GetCurrentDialogue().Responses[p]]->ResponseStringID].RawString.Get());
+			}
+
+			convo1.SelectResponseIndex(convo1.GetCurrentDialogue().Responses.Count()-1);
+
+		} while (true);
+	}
 }
 
 //=====================================================================================
 void Game::Tick( float a_DeltaTime )
 {
 	//parallax.SetBackScale( 1.0F + Sin( Engine::Instance().GetTime() ) * 0.5F + 0.5F );
-	//parallax.SetCameraOffset( ( InputManager::Instance().GetMousePosition() - Engine::Instance().GetDisplaySize() / 2 ) * 0.001F );
-	//parallax.DrawComposite( a_DeltaTime );
+	parallax.SetCameraOffset( ( InputManager::Instance().GetMousePosition() - Engine::Instance().GetDisplaySize() / 2 ) * 0.001F );
+	parallax.DrawComposite( a_DeltaTime );
 }
 
 //=====================================================================================

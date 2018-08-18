@@ -5,6 +5,7 @@
 #include <Framework/UI/View.hpp>
 #include <Framework/Containers/Array.hpp>
 #include <Framework/Graphics/GraphicsManager.hpp>
+#include <Framework/Data/String/StringTable.hpp>
 
 //=====================================================================================
 class ViewText final : public View
@@ -13,21 +14,29 @@ public:
 
 	ViewText( const char * a_Name, Page * a_ContainerPage, View * a_Parent = nullptr )
 		: View( a_Name, a_ContainerPage, a_Parent )
-		, m_Font( 0 )
+		, m_Font( nullptr )
+		, m_BitmapFont( nullptr )
 		, m_TextSize( 32.0F )
 		, m_WordWrap( false )
 		, m_LineSpacing( 0.0F )
+		, m_Skew( false )
 		, m_MultiVAlign( true )
 		, m_HAlign( GraphicsManager::TA_LEFT )
 		, m_VAlign( GraphicsManager::TA_TOP )
+		, m_Formatted( false )
 	{
 	}
-	
-	void SetText( const char * a_String );
-	
-	const char * GetText() const
+
+	void SetText( const char * a_String, bool a_Formatted = false );
+
+	CString GetText() const
 	{
-		return m_Text.Get();
+		if ( m_Formatted )
+		{
+			return StringTable::Process( m_Text.Get() ).UnformattedString.Get();
+		}
+
+		return StringTable::ProcessUnformatted( m_Text.Get() ).RawString.Get();
 	}
 
 	void SetFontSize( float a_FontSize )
@@ -175,7 +184,7 @@ private:
 	void RecalculateTextSegs();
 
 	CString m_Text;
-	Array< CString > m_TextLines;
+	Array< StringEntry > m_TextLines;
 
 	float m_TextSize;
 	GraphicsManager::Font m_Font;
@@ -186,6 +195,7 @@ private:
 	float m_LineSpacing;
 	bool m_MultiVAlign;
 	bool m_Skew;
+	bool m_Formatted;
 };
 
 #endif//VIEWTEXT_H

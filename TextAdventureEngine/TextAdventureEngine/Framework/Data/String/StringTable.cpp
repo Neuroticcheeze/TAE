@@ -45,6 +45,23 @@ const StringEntry & StringTable::operator[]( uint32_t a_Hash ) const
 }
 
 //=====================================================================================
+StringEntry StringTable::ProcessUnformatted( const char * a_String )
+{
+	StringEntry result;
+	StringEntry::Symbol symbol;
+
+	symbol.Type = StringEntry::Symbol::STRING_DATA;
+	
+	symbol.StringData_String = a_String;
+	result.RawString = a_String;
+	result.UnformattedString = a_String;
+
+	result.Symbols.Append( symbol );
+
+	return result;
+}
+
+//=====================================================================================
 StringEntry StringTable::Process( const char * a_String )
 {
 	StringEntry result;
@@ -67,8 +84,20 @@ StringEntry StringTable::Process( const char * a_String )
 		int32_t symbolOpenIdx = symbolsIdx[ k ];
 		int32_t symbolCloseIdx = string.Find( "]", symbolOpenIdx );
 		int32_t nextIdx = ( symbolCloseIdx != -1 && ( ( k + 1 ) < symbolsIdx.Count() ) ) ? ( symbolsIdx[ k + 1 ] ) : ( string.Length() );
-		if ( symbolCloseIdx == -1 )
+		
+		if ( symbolCloseIdx == -1 || ( symbolOpenIdx > 0 && string[ symbolOpenIdx - 1 ] == '\\' ) )
 		{
+			{	// add string
+				StringEntry::Symbol symbol;
+				symbol.Type = StringEntry::Symbol::Type::STRING_DATA;
+				symbol.StringData_String = string.SubString( symbolOpenIdx, nextIdx - symbolOpenIdx );
+				result.Symbols.Append( symbol );
+
+				if ( symbol.StringData_String.Length() > 0 )
+				{
+					PRINT( "StringTable::Process -> Found: STRING_DATA (@ %u): %s", symbolOpenIdx, symbol.StringData_String.Get() );
+				}
+			}
 			continue;
 		}
 		
@@ -105,7 +134,7 @@ StringEntry StringTable::Process( const char * a_String )
 #define STRING_TO_ENUM( ENUMVAL, PARAM )\
 if ( a1 == #ENUMVAL ) {\
 	symbol.Format_Type = StringEntry::Symbol::FormatType::ENUMVAL;\
-	PARAM\
+	if ( push ) { PARAM }\
 } else
 				STRING_TO_ENUM( FONTSIZE, 
 					CString::Parse( a2.Get(), symbol.Format_Parameter.Number );
@@ -145,6 +174,11 @@ if ( a1 == #ENUMVAL ) {\
 				symbol.Type = StringEntry::Symbol::Type::STRING_DATA;
 				symbol.StringData_String = string.SubString( symbolCloseIdx + 1, nextIdx - ( symbolCloseIdx + 1 ) );
 				result.Symbols.Append( symbol );
+
+				if ( symbol.StringData_String.Length() > 0 )
+				{
+					PRINT( "StringTable::Process -> Found: STRING_DATA (@ %u): %s", symbolCloseIdx + 1, symbol.StringData_String.Get() );
+				}
 			}
 		}
 
@@ -167,6 +201,11 @@ if ( a1 == #ENUMVAL ) {\
 				symbol.Type = StringEntry::Symbol::Type::STRING_DATA;
 				symbol.StringData_String = string.SubString( symbolCloseIdx + 1, nextIdx - ( symbolCloseIdx + 1 ) );
 				result.Symbols.Append( symbol );
+
+				if ( symbol.StringData_String.Length() > 0 )
+				{
+					PRINT( "StringTable::Process -> Found: STRING_DATA (@ %u): %s", symbolCloseIdx + 1, symbol.StringData_String.Get() );
+				}
 			}
 		}
 	}
@@ -185,8 +224,14 @@ if ( a1 == #ENUMVAL ) {\
 			result2.Symbols.Append( *it );
 		}
 
+		if ( it->Type == StringEntry::Symbol::Type::STRING_DATA &&
+			 it->StringData_String.Length() > 0 )
+		{
+			result2.UnformattedString += it->StringData_String;
+		}
+
 		++it;
 	}
-
+	
 	return result2;
 }

@@ -6,98 +6,95 @@
 #include <Framework/Containers/CString.hpp>
 #include <Framework/Thread/Mutex.hpp>
 #include <Framework/Containers/Set.hpp>
+#include <Framework/Template/StringRepresentable.hpp>
 
 //=====================================================================================
-struct Value final
+typedef uint32_t Name;
+
+//=====================================================================================
+union PackedVTypes
 {
-	ENUMCLASS( Type, int8_t )
-		NIL = -1,
-		BOOL,
-		CHAR,
-		INT32,
-		FLOAT,
-		STRING,
-	END_ENUMCLASS( Type, int8_t );
-
-private:
-
-	friend class BlackBoard;
-
-	union V
-	{
-		V() {}
-		~V() {}
-
-		bool		b = false;
-		char		c;
-		int32_t		si;
-		float		f;
-		CString		str;
-	}
-	m_Value;
-	Type m_Type;
-
-public:
-
-#define GET( TYPE, ENUMV, FIELD, DEFAULT ) operator TYPE() const { return m_Type == Type::ENUMV ? m_Value.FIELD : DEFAULT; }
-#define SET( TYPE, ENUMV, FIELD )\
-	Value( TYPE a_Value ) { *this = a_Value; }\
-	Value & operator=( const TYPE & a_Value ) { m_Type = Type::ENUMV; m_Value.FIELD = a_Value; return *this; }
-
-	GET( bool, BOOL, b, false )
-	GET( char, CHAR, c, 0 )
-	GET( int32_t, INT32, si, 0 )
-	GET( float, FLOAT, f, 0.0F )
-	GET( const CString &, STRING, str, "" )
-
-	SET( bool, BOOL, b )
-	SET( char, CHAR, c )
-	SET( int32_t, INT32, si )
-	SET( float, FLOAT, f )
-	SET( CString, STRING, str )
-
-	Value();
-	Value( const Value & a_Other );
-	Value & operator=( const Value & a_Other );
-
-	bool operator==( const Value & a_Other ) const;
-
-#undef GET
-#undef SET
+	float	Float;
+	int32_t Int32;
+	bool	Bool;
 };
 
 //=====================================================================================
-class BlackBoard final
+class Blackboard final
 {
 public:
 
-	ENUM( ValueEvent, uint8_t )
-		EV_PUSH_VALUE_CHANGED,
-		EV_PUSH_VALUE_ADDED,
-	END_ENUM;
-
-	void Push( uint32_t a_Id, Value a_Value );
-	const Value & Query( uint32_t a_Id ) const;
-	bool Contains( uint32_t a_Id ) const;
-
-	class IBlackBoardListener abstract
+	struct Value final : public StringRepresentableStruct< Value >
 	{
-		friend class BlackBoard;
-
+		friend class Blackboard;
+	
+	public:
+	
+		static const uint64_t NIL;
+	
+		ENUM( Type, uint8_t )
+			VT_NIL,
+			VT_FLOAT,
+			VT_INT32,
+			VT_BOOL,
+			VT_STRING,
+			VT_COMPOUND,
+		END_ENUM;
+	
+	public:
+	
+		Value() : m_ValueType( VT_NIL ) {}
+	
+		Type GetType() const { return m_ValueType; }
+		bool IsNil() const { return m_ValueType == VT_NIL; }
+	
+		// Generic Converters
+		operator float &();
+		operator const float &() const;
+		Value & operator=( float a_Value );
+		Value( float a_Value ) { *this = a_Value; }
+		operator int32_t &();
+		operator const int32_t &() const;
+		Value & operator=( int32_t a_Value );
+		Value( int32_t a_Value ) { *this = a_Value; }
+		operator bool &();
+		operator const bool &() const;
+		Value & operator=( bool a_Value );
+		Value( bool a_Value ) { *this = a_Value; }
+		operator CString &();
+		operator const CString &() const;
+		Value & operator=( const CString & a_Value );
+		Value( const CString & a_Value ) { *this = a_Value; }
+	
+		Value & operator=( uint64_t a_Value );
+		Value( uint64_t a_Value ) { *this = a_Value; }
+	
+		// Compound
+		bool HasValue( const Name & a_Name );
+		Value & PutValue( const char * a_Name, const Value & a_Value ); // The compound returns itself for chaining
+		Value & GetValue( const Name & a_Name );
+		const Value & GetValue( const Name & a_Name ) const;
+		uint32_t Count() const;
+		Dictionary< Name, Value > & GetData();
+		const Dictionary< Name, Value > & GetData() const;
+	
+		CString ToString( const char * a_Parameter = "" ) const override;
+	
 	private:
-
-		virtual void OnValueEvent( ValueEvent a_ValueEvent, uint32_t a_ValueId, const Value & a_Value ) abstract;
+	
+		CString ToStringV( uint32_t a_Level ) const;
+	
+		// Value Type
+		Type m_ValueType = VT_NIL;
+		void SetType( Type a_ValueType );
+		
+		// Data Storage
+		PackedVTypes			  m_VTypeData;
+		CString					  m_StringData;
+		Dictionary< Name, Value > m_CompoundData;
+	
+		CString m_CompoundEntryName;
 	};
-
-	void AddValueEventListener( IBlackBoardListener * a_Listener );
-	void RemoveValueEventListener( IBlackBoardListener * a_Listener );
-
-private:
-
-	Set< IBlackBoardListener * > m_Listeners;
-	Dictionary< uint32_t, Value > m_Values;
-	mutable Mutex m_Lock;
-	mutable Mutex m_ListenerLock;
 };
 
-#endif//BLACKBOARD_H
+#endif//Blackboard_H

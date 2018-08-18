@@ -173,6 +173,11 @@ public:
 		return m_Entries;
 	}
 
+	inline const Array< Pair > & GetEntries() const
+	{
+		return m_Entries;
+	}
+
 private:
 	Array< Pair > m_Entries;
 };

@@ -222,7 +222,8 @@
     <ClCompile Include="Framework\UI\Views\ViewSlider.cpp" />
     <ClCompile Include="Framework\UI\Views\ViewTextField.cpp" />
     <ClCompile Include="Framework\UI\Views\ViewTickBox.cpp" />
-    <ClCompile Include="Framework\Utils\BlackBoard.cpp" />
+    <ClCompile Include="Framework\Utils\Blackboard.cpp" />
+    <ClCompile Include="GameStructure\Dialogue\Dialogue.cpp" />
     <ClCompile Include="GameStructure\Game.cpp" />
     <ClCompile Include="GameStructure\Globals.cpp" />
     <ClCompile Include="GameStructure\UI\Pages\PageMainMenu.cpp" />
@@ -317,9 +318,10 @@
     <ClInclude Include="Framework\UI\Views\ViewSlider.hpp" />
     <ClInclude Include="Framework\UI\Views\ViewTextField.hpp" />
     <ClInclude Include="Framework\UI\Views\ViewTickBox.hpp" />
-    <ClInclude Include="Framework\Utils\BlackBoard.hpp" />
+    <ClInclude Include="Framework\Utils\Blackboard.hpp" />
     <ClInclude Include="Framework\Utils\Shorthand.hpp" />
     <ClInclude Include="Framework\Utils\TypeTraits.hpp" />
+    <ClInclude Include="GameStructure\Dialogue\Dialogue.hpp" />
     <ClInclude Include="GameStructure\Game.hpp" />
     <ClInclude Include="GameStructure\Globals.hpp" />
     <ClInclude Include="GameStructure\PlayerSaveHandler.hpp" />
