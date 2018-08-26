@@ -35,24 +35,16 @@ public:
 		m_SpriteSheetIndex = a_SpriteSheetIndex;
 	}
 
-	class IDrawOverrider abstract
-	{
-		friend class ViewSprite;
-
-	protected:
-
-		virtual bool OnDraw( const ViewSprite & a_Owner, const Vector2 & a_Position, const Vector2 & a_Size ) abstract;
-	};
-
-	void SetDrawOverrider( IDrawOverrider * a_Overrider );
-
+	typedef Functor< bool( const ViewSprite & a_Owner, const Vector2 & a_Position, const Vector2 & a_Size ) > DrawOverrider; 
+	void SetDrawOverrider( DrawOverrider a_Overrider );
+	
 protected:
 
 	void OnTick( float a_DeltaTime );
 	
 private:
 
-	IDrawOverrider * m_Overrider;
+	DrawOverrider m_Overrider;
 
 	SpriteType m_SpriteType;
 	uint32_t m_SpriteSheetIndex;

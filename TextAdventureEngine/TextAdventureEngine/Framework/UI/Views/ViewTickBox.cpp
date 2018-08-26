@@ -10,6 +10,7 @@ ViewTickBox::ViewTickBox( const char * a_Name, Page * a_ContainerPage, View * a_
 	, m_Enabled( false )
 	, m_Flag( false )
 {
+	SetIsInteractible( true );
 	SetEnabled( true );
 
 	m_Sprites[ SPRITE_BACKGROUND ].SetBorder( View::Alignment::LEFT, 0.0F );

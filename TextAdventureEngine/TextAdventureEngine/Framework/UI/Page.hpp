@@ -63,6 +63,8 @@ private:
 	ViewPage * m_RootView;
 	View * m_FocusedView;
 	CString m_Name;
+
+	Array< View* > m_AllViews;
 };
 
 #endif//PAGE_H

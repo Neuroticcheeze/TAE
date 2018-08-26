@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug - [Tool] Dialogue Editor|Win32">
+      <Configuration>Debug - [Tool] Dialogue Editor</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug - [Tool] Dialogue Editor|x64">
+      <Configuration>Debug - [Tool] Dialogue Editor</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug - [Tool] Scene Editor|Win32">
       <Configuration>Debug - [Tool] Scene Editor</Configuration>
       <Platform>Win32</Platform>
@@ -12,6 +20,14 @@
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release - [Tool] Dialogue Editor|Win32">
+      <Configuration>Release - [Tool] Dialogue Editor</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release - [Tool] Dialogue Editor|x64">
+      <Configuration>Release - [Tool] Dialogue Editor</Configuration>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
@@ -45,6 +61,19 @@
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug - [Tool] Dialogue Editor|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - [Tool] Dialogue Editor|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
@@ -59,6 +88,18 @@
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug - [Tool] Scene Editor|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug - [Tool] Dialogue Editor|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - [Tool] Dialogue Editor|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
@@ -82,6 +123,12 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug - [Tool] Scene Editor|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug - [Tool] Dialogue Editor|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release - [Tool] Dialogue Editor|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -89,6 +136,12 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug - [Tool] Scene Editor|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug - [Tool] Dialogue Editor|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release - [Tool] Dialogue Editor|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -101,6 +154,16 @@
     <IntDir>$(SolutionDir)_Inter\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug - [Tool] Scene Editor|Win32'">
+    <IncludePath>$(SolutionDir)../Dependencies/PCRE;$(SolutionDir)../Dependencies/GLM;$(SolutionDir)../Dependencies/GLEW-2.1.0/include;$(SolutionDir)../Dependencies/SDL2-2.0.8/include;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/include;$(SolutionDir)../Dependencies/LIBSNDFILE/include;$(SolutionDir)../Dependencies/PORTAUDIO/include;$(SolutionDir)../Dependencies/SIGIL-0.9.0/include;$(SolutionDir)TextAdventureEngine;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)../Dependencies/GLEW-2.1.0/lib;$(SolutionDir)../Dependencies/SDL2-2.0.8/lib/x86;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/lib;$(SolutionDir)../Dependencies/LIBSNDFILE/lib;$(SolutionDir)../Dependencies/PORTAUDIO/lib;$(SolutionDir)../Dependencies/SIGIL-0.9.0/lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <IntDir>$(SolutionDir)_Inter\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug - [Tool] Dialogue Editor|Win32'">
+    <IncludePath>$(SolutionDir)../Dependencies/PCRE;$(SolutionDir)../Dependencies/GLM;$(SolutionDir)../Dependencies/GLEW-2.1.0/include;$(SolutionDir)../Dependencies/SDL2-2.0.8/include;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/include;$(SolutionDir)../Dependencies/LIBSNDFILE/include;$(SolutionDir)../Dependencies/PORTAUDIO/include;$(SolutionDir)../Dependencies/SIGIL-0.9.0/include;$(SolutionDir)TextAdventureEngine;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)../Dependencies/GLEW-2.1.0/lib;$(SolutionDir)../Dependencies/SDL2-2.0.8/lib/x86;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/lib;$(SolutionDir)../Dependencies/LIBSNDFILE/lib;$(SolutionDir)../Dependencies/PORTAUDIO/lib;$(SolutionDir)../Dependencies/SIGIL-0.9.0/lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <IntDir>$(SolutionDir)_Inter\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - [Tool] Dialogue Editor|Win32'">
     <IncludePath>$(SolutionDir)../Dependencies/PCRE;$(SolutionDir)../Dependencies/GLM;$(SolutionDir)../Dependencies/GLEW-2.1.0/include;$(SolutionDir)../Dependencies/SDL2-2.0.8/include;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/include;$(SolutionDir)../Dependencies/LIBSNDFILE/include;$(SolutionDir)../Dependencies/PORTAUDIO/include;$(SolutionDir)../Dependencies/SIGIL-0.9.0/include;$(SolutionDir)TextAdventureEngine;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)../Dependencies/GLEW-2.1.0/lib;$(SolutionDir)../Dependencies/SDL2-2.0.8/lib/x86;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/lib;$(SolutionDir)../Dependencies/LIBSNDFILE/lib;$(SolutionDir)../Dependencies/PORTAUDIO/lib;$(SolutionDir)../Dependencies/SIGIL-0.9.0/lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
     <IntDir>$(SolutionDir)_Inter\$(Configuration)\</IntDir>
@@ -138,6 +201,41 @@
       <SubSystem>NotSet</SubSystem>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug - [Tool] Dialogue Editor|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <ForcedIncludeFiles>cstdint;Framework/Utils/Shorthand.hpp;Framework/Math/Convert.hpp;Framework/Platform/Platform.hpp;Framework/Utils/Debug.hpp;Framework/Utils/Enum.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <PreprocessorDefinitions>APP_IS_DIALOGUE_EDITOR;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_mixer.lib;SDL2_image.lib;libsndfile-1.lib;sigil.lib;portaudio_x86_d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>NotSet</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release - [Tool] Dialogue Editor|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <ForcedIncludeFiles>cstdint;Framework/Utils/Shorthand.hpp;Framework/Math/Convert.hpp;Framework/Platform/Platform.hpp;Framework/Utils/Debug.hpp;Framework/Utils/Enum.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <PreprocessorDefinitions>APP_IS_DIALOGUE_EDITOR;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <OmitFramePointers>true</OmitFramePointers>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_mixer.lib;SDL2_image.lib;libsndfile-1.lib;sigil.lib;portaudio_x86_d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>NotSet</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -150,6 +248,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug - [Tool] Scene Editor|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>NotSet</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug - [Tool] Dialogue Editor|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>NotSet</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release - [Tool] Dialogue Editor|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
@@ -219,6 +339,11 @@
     <ClCompile Include="Framework\Graphics\Vector\VectorShape.cpp" />
     <ClCompile Include="Framework\Template\Cloneable.hpp" />
     <ClCompile Include="Framework\UI\Views\ViewButton.cpp" />
+    <ClCompile Include="Framework\UI\Views\ViewDraggable.cpp" />
+    <ClCompile Include="Framework\UI\Views\ViewDropTarget.cpp" />
+    <ClCompile Include="Framework\UI\Views\ViewListSelector.cpp" />
+    <ClCompile Include="Framework\UI\Views\ViewRectangles.cpp" />
+    <ClCompile Include="Framework\UI\Views\ViewSizer.cpp" />
     <ClCompile Include="Framework\UI\Views\ViewSlider.cpp" />
     <ClCompile Include="Framework\UI\Views\ViewTextField.cpp" />
     <ClCompile Include="Framework\UI\Views\ViewTickBox.cpp" />
@@ -226,6 +351,7 @@
     <ClCompile Include="GameStructure\Dialogue\Dialogue.cpp" />
     <ClCompile Include="GameStructure\Game.cpp" />
     <ClCompile Include="GameStructure\Globals.cpp" />
+    <ClCompile Include="GameStructure\UI\Pages\PageDialogue.cpp" />
     <ClCompile Include="GameStructure\UI\Pages\PageMainMenu.cpp" />
     <ClCompile Include="GameStructure\UI\Pages\PageOptions.cpp" />
     <ClCompile Include="GameStructure\UI\Pages\PageWorld.cpp" />
@@ -272,6 +398,9 @@
     <ClCompile Include="Framework\Utils\Random.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="GameStructure\World\Parallax.cpp" />
+    <ClCompile Include="[Tool] Dialogue Editor\DialogueEditor.cpp" />
+    <ClCompile Include="[Tool] Dialogue Editor\Globals.cpp" />
+    <ClCompile Include="[Tool] Dialogue Editor\UI\Pages\PageDialogueEditor.cpp" />
     <ClCompile Include="[Tool] Scene Editor\SceneEditor.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -315,6 +444,11 @@
     <ClInclude Include="Framework\Graphics\Vector\VectorShape.hpp" />
     <ClInclude Include="Framework\Math\Relationship\Graph.hpp" />
     <ClInclude Include="Framework\UI\Views\ViewButton.hpp" />
+    <ClInclude Include="Framework\UI\Views\ViewDraggable.hpp" />
+    <ClInclude Include="Framework\UI\Views\ViewDropTarget.hpp" />
+    <ClInclude Include="Framework\UI\Views\ViewListSelector.hpp" />
+    <ClInclude Include="Framework\UI\Views\ViewRectangles.hpp" />
+    <ClInclude Include="Framework\UI\Views\ViewSizer.hpp" />
     <ClInclude Include="Framework\UI\Views\ViewSlider.hpp" />
     <ClInclude Include="Framework\UI\Views\ViewTextField.hpp" />
     <ClInclude Include="Framework\UI\Views\ViewTickBox.hpp" />
@@ -325,6 +459,7 @@
     <ClInclude Include="GameStructure\Game.hpp" />
     <ClInclude Include="GameStructure\Globals.hpp" />
     <ClInclude Include="GameStructure\PlayerSaveHandler.hpp" />
+    <ClInclude Include="GameStructure\UI\Pages\PageDialogue.hpp" />
     <ClInclude Include="GameStructure\UI\Pages\PageMainMenu.hpp" />
     <ClInclude Include="GameStructure\UI\Pages\PageOptions.hpp" />
     <ClInclude Include="GameStructure\UI\Pages\PageWorld.hpp" />
@@ -399,6 +534,9 @@
     <ClInclude Include="Framework\Utils\Random.hpp" />
     <ClInclude Include="Framework\Utils\Tuple.hpp" />
     <ClInclude Include="Framework\Utils\VFormat.hpp" />
+    <ClInclude Include="[Tool] Dialogue Editor\DialogueEditor.hpp" />
+    <ClInclude Include="[Tool] Dialogue Editor\Globals.hpp" />
+    <ClInclude Include="[Tool] Dialogue Editor\UI\Pages\PageDialogueEditor.hpp" />
     <ClInclude Include="[Tool] Scene Editor\SceneEditor.hpp" />
   </ItemGroup>
   <ItemGroup>

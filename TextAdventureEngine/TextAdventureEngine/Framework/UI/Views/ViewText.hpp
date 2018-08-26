@@ -24,6 +24,7 @@ public:
 		, m_HAlign( GraphicsManager::TA_LEFT )
 		, m_VAlign( GraphicsManager::TA_TOP )
 		, m_Formatted( false )
+		, m_CharacterLimit( INT_MAX )
 	{
 	}
 
@@ -31,12 +32,7 @@ public:
 
 	CString GetText() const
 	{
-		if ( m_Formatted )
-		{
-			return StringTable::Process( m_Text.Get() ).UnformattedString.Get();
-		}
-
-		return StringTable::ProcessUnformatted( m_Text.Get() ).RawString.Get();
+		return m_Text;
 	}
 
 	void SetFontSize( float a_FontSize )
@@ -168,6 +164,16 @@ public:
 		return m_MultiVAlign;
 	}
 
+	inline void SetCharacterLimit( int32_t a_CharacterLimit )
+	{
+		m_CharacterLimit = Clamp( a_CharacterLimit, 0, ( int32_t )m_Text.Length() );
+	}
+
+	inline int32_t GetCharacterLimit() const
+	{
+		return m_CharacterLimit;
+	}
+
 protected:
 
 	void OnReset();
@@ -196,6 +202,7 @@ private:
 	bool m_MultiVAlign;
 	bool m_Skew;
 	bool m_Formatted;
+	int32_t m_CharacterLimit;
 };
 
 #endif//VIEWTEXT_H

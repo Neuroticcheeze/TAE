@@ -16,6 +16,7 @@ ViewTextField::ViewTextField( const char * a_Name, Page * a_ContainerPage, View 
 	, m_CursorPosition( 0 ) // Cursor is initially at the end
 	, m_CachedTextLength( 0 )
 {
+	SetIsInteractible( true );
 	SetTint( Colour::WHITE );
 
 	m_Background.SetBorder( View::Alignment::LEFT, 0.0F );

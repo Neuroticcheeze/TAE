@@ -32,6 +32,11 @@ void SpriteSheet::ApplyUV( uint32_t a_SpriteIndexX, uint32_t a_SpriteIndexY ) co
 
 void SpriteSheet::DrawSprite( uint32_t a_SpriteIndex, const Vector2 & a_Position, const Vector2 & a_Size ) const
 {
+	if ( !m_Texture )
+	{
+		return;
+	}
+
 	ApplyUV( a_SpriteIndex );
 	
 	int32_t s = GraphicsManager::Instance().SetTexture( m_Texture );

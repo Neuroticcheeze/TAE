@@ -18,7 +18,6 @@ struct Colour;
 //=====================================================================================
 class PageWorldMap final : public Page
 						 , public View::IActionListener
-						 , public ViewSprite::IDrawOverrider
 {
 public:
 	PageWorldMap()
@@ -46,7 +45,6 @@ public:
 
 protected:
 
-	bool OnDraw( const ViewSprite & a_Owner, const Vector2 & a_Position, const Vector2 & a_Size );
 	void OnButtonPress( ViewButton & a_ViewButton );
 
 	void OnEnterPage() override;

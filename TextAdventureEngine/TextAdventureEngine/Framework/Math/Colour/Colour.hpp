@@ -66,6 +66,12 @@ struct Colour final : public StringRepresentable< Colour >
 	float a;
 
 	Colour Lerp( const Colour & a_Right, float a_T ) const;
+
+	Colour & WithAlpha( float a_Alpha )
+	{
+		a = Max( a_Alpha, 0.0F );
+		return *this;
+	}
 };
 
 //=====================================================================================

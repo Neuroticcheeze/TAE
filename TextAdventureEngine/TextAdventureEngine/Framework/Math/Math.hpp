@@ -103,21 +103,19 @@ inline T Clamp( const T & a_Value, const T & a_Min, const T & a_Max )
 template< typename T >
 T Wrap( const T & a_Value, const T & a_Min, const T & a_Max )
 {
-	T p = a_Value - a_Min;
-	const T & m1 = 0;
-	const T & m2 = a_Max - a_Min;
-
-	while ( p < m1 )
+	T t = a_Value;
+	T diff = a_Max - a_Min + 1;
+	while ( t < a_Min )
 	{
-		p += m2;
+		t += diff;
 	}
 
-	while ( p > m2 )
+	while ( t > a_Max )
 	{
-		p -= m2;
+		t -= diff;
 	}
 
-	return p + a_Min;
+	return Clamp( t, a_Min, a_Max );
 }
 
 //=====================================================================================

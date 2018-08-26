@@ -5,6 +5,9 @@
 #include <Framework/Containers/Dictionary.hpp>
 
 //=====================================================================================
+class XmlObject;
+
+//=====================================================================================
 typedef uint32_t DialogueID;
 typedef uint32_t ResponseID;
 
@@ -21,6 +24,7 @@ struct Dialogue final
 {
 	uint32_t DialogueStringID = 0;
 	Array< ResponseID > Responses;
+	DialogueID LinkToDialogueID; // Fall back to this link if no responses are present.
 };
 
 //=====================================================================================
@@ -29,6 +33,7 @@ class Conversation final
 public:
 
 	static Conversation Create( const Dictionary< DialogueID, Dialogue > & a_Dialogues, const Dictionary< ResponseID, Response > & a_Responses, DialogueID a_EntryDialogueID );
+	static Conversation Create( const XmlObject & a_Xml );
 
 	const Dictionary< DialogueID, Dialogue > & GetDialogues() const;
 	const Dictionary< ResponseID, Response > & GetResponses() const;

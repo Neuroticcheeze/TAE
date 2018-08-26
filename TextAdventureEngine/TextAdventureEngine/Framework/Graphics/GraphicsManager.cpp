@@ -21,6 +21,7 @@
 #include <Framework/Graphics/GL/GLDraw.hpp>
 #include <Framework/Graphics/GL/GLMesh.hpp>
 #include <Framework/Graphics/GL/GLRenderTexture.hpp>
+#include <Framework/Math/Curve/Bezier.hpp>
 
 #define WM reinterpret_cast< SDL_Window* >( Engine::Instance().m_Window )
 #define R reinterpret_cast< SDL_Renderer* >( Engine::Instance().m_Renderer )
@@ -458,6 +459,9 @@ void GraphicsManager::InitPost()
 	m_TextShaderGlyphsGradiented = LoadShader( WSID( "_Internal_TextShaderGlyphGradientedPerfectEdges" ), "text.shader", WSID( "Text_VGlyph" ), WSID( "Text_FPerfectEdgesGradiented" ) );
 	m_SimpleColourShader = LoadShader( WSID( "_Internal_SimpleColourShader" ), "colour.shader", WSID( "Col_VMain" ), WSID( "Col_FMain" ) );
 	m_TextureColourExplicitUVShader = LoadShader( WSID( "_Internal_TextureColourExplicitUVShader" ), "texture.shader", WSID( "Col_VExplicitUV" ), WSID( "Col_FTextureColour" ) );
+	m_VQuadShader = LoadShader( WSID( "_Internal_VQuad" ), "vquad.shader", WSID( "VQuad_VMain" ), WSID( "VQuad_FMain" ) );
+	m_BezierVQuadShader = LoadShader( WSID( "_Internal_BezierVQuad" ), "vquad_bezier.shader", WSID( "VMain" ), WSID( "FMain" ) );
+	m_TriShader = LoadShader( WSID( "_Internal_TriShader" ), "colour.shader", WSID( "Col_VExplicit" ), WSID( "Col_FExplicit" ) );
 
 	m_BadStringTexture = ResolveTextTexture( "[ERROR]", m_DefaultFont, false );
 
@@ -469,9 +473,18 @@ void GraphicsManager::InitPost()
 						1.0F, 0.0F, 0.0F, 0.0F },
 						{ 0, 1, 1, 2, 2, 3, 3, 0 }, 
 						GLMesh::DrawMode::DM_LINES );
+	m_BezierQuadStrip128 = GLMesh::CreateGrid( "_Internal_BezierQuad128", 1, 128 );
+	m_Triangle = new GLMesh( "_Internal_Triangle", GLMesh::VertexFormat::VF_POS2, {
+						0.0F, 0.0F, 
+						0.0F, 0.0F, 
+						0.0F, 0.0F },
+						{ 0, 1, 2 }, 
+						GLMesh::DrawMode::DM_TRIANGLES );
 
 	SetColour( Colour::WHITE, ColourUsage::COL_PRIMARY );
 	SetColour( Colour::GRAY, ColourUsage::COL_SECONDARY );
+	SetColour( Colour::GRAY, ColourUsage::COL_TERTIARY );
+	SetColour( Colour::GRAY, ColourUsage::COL_QUATERNARY );
 	SetColour( Colour::BLACK, ColourUsage::COL_BACKGROUND );
 }
 
@@ -520,12 +533,14 @@ void GraphicsManager::Finalise()
 	UnloadShader( m_TextShaderGlyphsGradiented );
 	UnloadShader( m_SimpleColourShader );
 	UnloadShader( m_TextureColourExplicitUVShader );
+	UnloadShader( m_VQuadShader );
+	UnloadShader( m_BezierVQuadShader );
+	UnloadShader( m_TriShader );
 
-	delete m_01Quad;
-	m_01Quad = nullptr;
-
-	delete m_01LineQuad;
-	m_01LineQuad = nullptr;
+	Free( m_Triangle );
+	Free( m_01Quad );
+	Free( m_01LineQuad );
+	Free( m_BezierQuadStrip128 );
 }
 
 //=====================================================================================
@@ -1929,10 +1944,18 @@ void GraphicsManager::GfxDrawQuad( const Vector2 & a_Position, const Vector2 & a
 
 	if ( a_Outline > 0.0F )
 	{
-		glLineWidth( a_Outline );
-		SetShaderGlobalColour( m_SimpleColourShader, GetShaderGlobalLocation( m_SimpleColourShader, "uColour" ), m_Colour[ ( uint32_t )COL_SECONDARY ] );
-		GLDraw::Instance().DrawMesh( m_01LineQuad );
-		glLineWidth( 1.0F );
+		Vector2 a = a_Position;
+		Vector2 b = a_Position + Vector2( a_Size.x, 0.0F );
+		Vector2 c = a_Position + a_Size;
+		Vector2 d = a_Position + Vector2( 0.0F, a_Size.y );
+		Colour prim = m_Colour[ ( uint32_t )COL_PRIMARY ];
+
+		SetColour( m_Colour[ ( uint32_t )COL_SECONDARY ], COL_PRIMARY );
+		GfxDrawLine( a, b, a_Outline );
+		GfxDrawLine( b, c, a_Outline );
+		GfxDrawLine( c, d, a_Outline );
+		GfxDrawLine( d, a, a_Outline );
+		SetColour( prim, COL_PRIMARY );
 	}
 }
 
@@ -1967,6 +1990,66 @@ void GraphicsManager::GfxDrawQuadTextured( const Vector2 & a_Position, const Vec
 	
 	SetShader( m_TextureColourExplicitUVShader );
 	GLDraw::Instance().DrawMesh( m_01Quad );
+}
+
+//=====================================================================================
+void GraphicsManager::GfxDrawLine( const Vector2 & a_PositionA, const Vector2 & a_PositionB, float a_Thickness, bool a_EnableGradient )
+{
+	if ( a_Thickness <= 0.0F || a_PositionA == a_PositionB )
+	{
+		return;
+	}
+
+	SetShaderGlobalFloat3x3( m_VQuadShader, GetShaderGlobalLocation( m_VQuadShader, "uTransform" ), TfGetTop() );
+	SetShaderGlobalColour( m_VQuadShader, GetShaderGlobalLocation( m_VQuadShader, "uColour1" ), m_Colour[ ( uint32_t )COL_PRIMARY ] );
+	SetShaderGlobalColour( m_VQuadShader, GetShaderGlobalLocation( m_VQuadShader, "uColour2" ), m_Colour[ ( uint32_t )( a_EnableGradient ? COL_SECONDARY : COL_PRIMARY ) ] );
+	SetShaderGlobalFloat2Array( m_VQuadShader, GetShaderGlobalLocation( m_VQuadShader, "u2xPos" ), { a_PositionA, a_PositionB, Vector2( a_Thickness, 0.0F/*UNUSED*/ ) } );
+
+	SetShader( m_VQuadShader );
+
+	GLDraw::Instance().DrawMesh( m_01Quad );
+}
+
+//=====================================================================================
+void GraphicsManager::GfxDrawBezier( const Bezier & a_Bezier, float a_Thickness )
+{
+	if ( a_Thickness <= 0.0F || a_Bezier.GetControlPoints().Count() < 2 )
+	{
+		return;
+	}
+
+	Bezier bez = a_Bezier;
+	while ( bez.GetControlPoints().Count() > 64 )
+	{
+		bez = bez.GetLowerOrder( 0.5F );
+	}
+
+	const Array< Vector2 > & cps = a_Bezier.GetControlPoints();
+
+	SetShaderGlobalFloat3x3( m_BezierVQuadShader, GetShaderGlobalLocation( m_BezierVQuadShader, "uTransform" ), TfGetTop() );
+	SetShaderGlobalColour( m_BezierVQuadShader, GetShaderGlobalLocation( m_BezierVQuadShader, "uColour" ), m_Colour[ ( uint32_t )COL_PRIMARY ] );
+	SetShaderGlobalFloat1( m_BezierVQuadShader, GetShaderGlobalLocation( m_BezierVQuadShader, "uThickness" ), a_Thickness );
+	SetShaderGlobalFloat2Array( m_BezierVQuadShader, GetShaderGlobalLocation( m_BezierVQuadShader, "uControlPoints" ), cps );
+	SetShaderGlobalInt32( m_BezierVQuadShader, GetShaderGlobalLocation( m_BezierVQuadShader, "uControlPointsCount" ), cps.Count() );
+
+	SetShader( m_BezierVQuadShader );
+
+	GLDraw::Instance().DrawMesh( m_BezierQuadStrip128 );
+}
+
+//=====================================================================================
+void GraphicsManager::GfxDrawTriangle( const Vector2 & a_PositionA, const Vector2 & a_PositionB, const Vector2 & a_PositionC )
+{
+	Array< Colour > cols( &m_Colour[ ( uint32_t )GraphicsManager::COL_PRIMARY ], 
+						  &m_Colour[ ( uint32_t )GraphicsManager::COL_QUATERNARY ] );
+
+	SetShaderGlobalFloat3x3( m_TriShader, GetShaderGlobalLocation( m_TriShader, "uTransform" ), TfGetTop() );
+	SetShaderGlobalFloat2Array( m_TriShader, GetShaderGlobalLocation( m_TriShader, "uPositions" ), { a_PositionA, a_PositionB, a_PositionC } );
+	SetShaderGlobalColourArray(m_TriShader, GetShaderGlobalLocation( m_TriShader, "uColours" ), cols );
+	
+	SetShader( m_TriShader );
+
+	GLDraw::Instance().DrawMesh( m_Triangle );
 }
 
 //=====================================================================================

@@ -41,7 +41,7 @@ void PageWorldMap::OnEnterPage()
 	m_Button->SetBorder(View::Alignment::BOTTOM, 0.0F);
 	m_Button->GetBackground().SetupFromNineSprite(_GetTexture("BG_INVENTORY_0"), 25.0F);
 	m_Button->GetLabel().SetText("Button");
-	m_Button->GetBackground().SetDrawOverrider(this);
+	//m_Button->GetBackground().SetDrawOverrider(this);
 	GetRootView()->AddChild(m_Button);
 	m_Button->SetZOrder(SHRT_MAX);
 
@@ -257,6 +257,7 @@ void PageWorldMap::OnButtonPress( ViewButton & a_ViewButton )
 	}
 }
 
+/*
 //=====================================================================================
 bool PageWorldMap::OnDraw( const ViewSprite & a_Owner, const Vector2 & a_Position, const Vector2 & a_Size )
 {
@@ -291,4 +292,4 @@ bool PageWorldMap::OnDraw( const ViewSprite & a_Owner, const Vector2 & a_Positio
 
 	// If we hit this, then we failed on our effect, render fallback
 	return true;
-}
+}*/

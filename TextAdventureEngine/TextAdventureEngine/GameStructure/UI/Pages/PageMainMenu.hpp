@@ -6,6 +6,7 @@
 #include <Framework/UI/Views/ViewText.hpp>
 #include <Framework/UI/Views/ViewSprite.hpp>
 #include <Framework/UI/Views/ViewButton.hpp>
+#include <Framework/UI/Views/ViewDraggable.hpp>
 #include <Framework/UI/FadeManager.hpp>
 
 //=====================================================================================
@@ -21,6 +22,7 @@ public:
 		, m_LoadGame( new ViewButton( "Play", this ) )
 		, m_Options( new ViewButton( "Options", this ) )
 		, m_Quit( new ViewButton( "Quit", this ) )
+		, m_TESTDraggable( new ViewDraggable( "Test!!", this ) )
 	{}
 
 	~PageMainMenu()
@@ -56,6 +58,7 @@ private:
 	ViewButton	* m_LoadGame;
 	ViewButton	* m_Options;
 	ViewButton	* m_Quit;
+	ViewDraggable * m_TESTDraggable;
 };
 
 #endif//PAGEMAINMENU_H

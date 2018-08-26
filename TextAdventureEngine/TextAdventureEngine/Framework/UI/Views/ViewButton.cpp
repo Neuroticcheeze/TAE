@@ -11,6 +11,7 @@ ViewButton::ViewButton( const char * a_Name, Page * a_ContainerPage, View * a_Pa
 	, m_Label( "Label", a_ContainerPage, this )
 	, m_Enabled( false )
 {
+	SetIsInteractible( true );
 	SetEnabled( true );
 
 	m_Background.SetBorder( View::Alignment::LEFT, 0.0F );

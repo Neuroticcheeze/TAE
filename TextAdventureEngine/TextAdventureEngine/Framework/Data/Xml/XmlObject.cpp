@@ -34,7 +34,11 @@ XmlObject::AttributeValue XmlObject::GetAttribute( const char * a_Attribute, Att
 	int32_t ind = -1;
 	if ( ( ind = m_Attributes.IndexOf( a_Attribute ) ) != -1 )
 	{
-		( *o_TypeOf ) = m_Attributes[ ( uint32_t )ind ].Type;
+		if ( o_TypeOf ) 
+		{
+			( *o_TypeOf ) = m_Attributes[ ( uint32_t )ind ].Type;
+		}
+
 		return m_Attributes[ ( uint32_t )ind ].Value;
 	}
 

@@ -92,10 +92,17 @@ void ViewText::OnTick( float a_DeltaTime )
 	GraphicsManager::Instance().SetState( GraphicsManager::RS_TRANSPARENCY, true );
 
 	{
+		int32_t charBudget = m_CharacterLimit;
+
 		float h = 0.0F;
 		auto it = m_TextLines.First();
 		while ( it < m_TextLines.End() )
 		{
+			if ( charBudget <= 0 )
+			{
+				break;
+			}
+
 			const uint32_t p = it - m_TextLines.First();
 			const float height = !UsingBitmapFont() 
 									? GraphicsManager::Instance().QueryTextSize( it->UnformattedString.Get(), m_Font, m_TextSize ).y
@@ -153,12 +160,14 @@ void ViewText::OnTick( float a_DeltaTime )
 
 						if ( UsingBitmapFont() )
 						{
-							textSize = GraphicsManager::Instance().GfxDrawText( a_String.Get(), m_BitmapFont, GraphicsManager::TextAlignment::TA_LEFT, m_VAlign );
+							textSize = GraphicsManager::Instance().GfxDrawText( a_String.Get(), m_BitmapFont, charBudget, false, GraphicsManager::TextAlignment::TA_LEFT, m_VAlign );
 						}
 						else
 						{
-							textSize = GraphicsManager::Instance().GfxDrawText( a_String.Get(), m_Font, m_TextSize, GraphicsManager::TextAlignment::TA_LEFT, m_VAlign );
+							textSize = GraphicsManager::Instance().GfxDrawText( a_String.SubString( 0, charBudget ).Get(), m_Font, m_TextSize, GraphicsManager::TextAlignment::TA_LEFT, m_VAlign );
 						}
+
+						charBudget -= it->UnformattedString.Length();
 					}, 
 					[]( uint32_t a_TokenID )
 					{

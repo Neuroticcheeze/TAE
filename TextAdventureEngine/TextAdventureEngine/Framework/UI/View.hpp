@@ -17,6 +17,9 @@ class ViewButton;
 class ViewTickBox;
 class ViewTextField;
 class ViewSlider;
+class ViewListSelector;
+class ViewDropTarget;
+class ViewDraggable;
 
 //=====================================================================================
 class View : public InputManager::IMouseEventListener
@@ -40,6 +43,11 @@ public:
 		virtual void OnTextFieldValueChanged( ViewTextField & a_ViewTextField, const CString & a_StringValue ) {}
 		virtual void OnTickBoxValueChanged( ViewTickBox & a_ViewTickBox, bool a_Flag ) {}
 		virtual void OnSliderValueChanged( ViewSlider & a_ViewSlider, float a_PreviousValue, float a_NewValue ) {}
+		virtual void OnListSelectionChanged( ViewListSelector & a_ViewListSelector, int32_t a_SelectionIndex ) {}
+		virtual void OnListSelectionConfirmed( ViewListSelector & a_ViewListSelector, int32_t a_SelectionIndex ) {}
+		virtual void OnDragBegin( ViewDraggable & a_ViewDraggable ) {}
+		virtual void OnDragEnd( ViewDraggable & a_ViewDraggable ) {}
+		virtual void OnDrop( ViewDropTarget & a_ViewDropTarget, ViewDraggable & a_ViewDraggable ) {}
 	};
 
 	void AddActionListener( IActionListener * a_ActionListener, bool a_SendInitialEvents = true );
@@ -56,6 +64,11 @@ public:
 	void OnTextFieldValueChanged( ViewTextField & a_ViewTextField, const CString & a_StringValue );
 	void OnTickBoxValueChanged( ViewTickBox & a_ViewTickBox, bool a_Flag );
 	void OnSliderValueChanged( ViewSlider & a_ViewSlider, float a_PreviousValue, float a_NewValue );
+	void OnListSelectionChanged( ViewListSelector & a_ViewListSelector, int32_t a_SelectionIndex );
+	void OnListSelectionConfirmed( ViewListSelector & a_ViewListSelector, int32_t a_SelectionIndex );
+	void OnDragBegin( ViewDraggable & a_ViewDraggable );
+	void OnDragEnd( ViewDraggable & a_ViewDraggable );
+	void OnDrop( ViewDropTarget & a_ViewDropTarget, ViewDraggable & a_ViewDraggable );
 
 protected:
 
@@ -83,6 +96,7 @@ public:
 	END_ENUMCLASS( Alignment, uint8_t )
 
 	void SetBorder( Alignment a_Alignment, float a_Amount );
+	void SetBorderPx( Alignment a_Alignment, float a_Amount ); // Set borders by locking their offset from the opposite border in px
 	float GetBorder( Alignment a_Alignment );
 
 	void SetBordersFromSizeAndOffset( const Vector2 & a_Size, const Vector2 & a_Offset = Vector2::ZERO );
@@ -199,11 +213,23 @@ protected:
 		return m_IsGrabbed;
 	}
 
+	void SetIsInteractible( bool a_Flag ) { m_Interactible = a_Flag; }
+	bool GetIsInteractible() const { return m_Interactible; }
+
 protected:
 
 	virtual void OnRectangleChanged( const Vector2 & a_TrueOffset, const Vector2 & a_TrueSize ) {}
 	
+	Page * GetContainerPage() { return m_ContainerPage; }
+	const Page * GetContainerPage() const { return m_ContainerPage; }
+
+	virtual bool CheckInput( bool a_ReleaseOnly );
+	
 private:
+
+	bool m_Interactible;
+
+	void AppendToFrameCacheList();
 
 	void OnMousePressed( InputManager::MouseButton a_MouseButton );
 	void OnMouseReleased( InputManager::MouseButton a_MouseButton );
@@ -213,6 +239,7 @@ private:
 	void RecalculateTrueRectangle();
 	CString m_Name;
 	float m_Borders[ AlignmentCount ];
+	float m_BorderPxs[ AlignmentCount ];
 	Vector2 m_Offset;
 	Vector2 m_Size;
 	Array< View * > m_ChildrenViews;

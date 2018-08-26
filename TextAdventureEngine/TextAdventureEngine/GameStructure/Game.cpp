@@ -4,6 +4,7 @@
 #include <Framework/UI/PageManager.hpp>
 #include <GameStructure/UI/Pages/PageMainMenu.hpp>
 #include <GameStructure/UI/Pages/PageOptions.hpp>
+#include <GameStructure/UI/Pages/PageDialogue.hpp>
 
 //=====================================================================================
 #ifdef APP_IS_GAME
@@ -13,6 +14,7 @@ IApplicationContext * g_TheContext = new Game;
 //=====================================================================================
 PageMainMenu * Game::m_MainMenu = nullptr;
 PageOptions * Game::m_Options = nullptr;
+PageDialogue * Game::m_Dialogue = nullptr;
 
 
 #include <Framework/Graphics/Particles/ParticleSystem.hpp>
@@ -25,6 +27,9 @@ PageOptions * Game::m_Options = nullptr;
 static ParticleSystem psys;
 WeakPointer< Emitter > emitter;
 #include <GameStructure/World/Parallax.hpp>
+#include <Framework/Data/Xml/XmlManager.hpp>
+#include <Framework/File/FileManager.hpp>
+
 Parallax parallax( { Parallax::Layer(), Parallax::Layer(), Parallax::Layer(), Parallax::Layer(), Parallax::Layer() } );
 class Listener : public Parallax::Layer::IListener
 {
@@ -54,6 +59,7 @@ void Game::Initialise()
 
 	m_MainMenu = new PageMainMenu();
 	m_Options = new PageOptions();
+	m_Dialogue = new PageDialogue();
 
 	FadeManager::Instance().PushFadeData( FadeManager::POST_UI, Colour::BLACK );
 	FadeManager::Instance().PushFadeData( FadeManager::POST_UI, Colour::BLACK * Colour::INVISIBLE, 1.0F );
@@ -111,65 +117,23 @@ void Game::Initialise()
 	blackboard.PutValue("PlayerData", playerDataCompound);
 	blackboard.GetValue(WSID("PlayerData")).PutValue("Health", Blackboard::Value::NIL);
 	PRINT( blackboard.ToString().Get() );
-
-	{
-		StringTable strings;
-		strings.PutEntry(WSID("Generic_Merchant_Greeting"), "Hello, there.");
-		strings.PutEntry(WSID("Generic_Merchant_About"), "Well, there's not much to say.");
-		strings.PutEntry(WSID("Response_About_S"), "About");
-		strings.PutEntry(WSID("Response_About"), "Tell me about yourself..");
-
-		Dictionary< DialogueID, Dialogue > dialogues;
-
-		{
-			Dialogue dialogue;
-			dialogue.DialogueStringID = WSID("Generic_Merchant_Greeting");
-			dialogue.Responses.Append(WSID("About"));
-			dialogues.Put(WSID("Entry"), dialogue);
-		}
-		{
-			Dialogue dialogue;
-			dialogue.DialogueStringID = WSID("Generic_Merchant_About");
-			dialogues.Put(WSID("TalkAboutSelf"), dialogue);
-		}
-
-		Dictionary< ResponseID, Response > responses;
-		{
-			Response response;
-			response.ShorthandStringID = WSID("Response_About_S");
-			response.ResponseStringID = WSID("Response_About");
-			response.LinkToDialogueID = WSID("TalkAboutSelf");
-			responses.Put(WSID("About"), response);
-		}
-
-		DialogueID entry = WSID("Entry");
-
-		Conversation convo1 = Conversation::Create(dialogues, responses, entry);
-
-		do
-		{
-			CString cstr = strings[convo1.GetCurrentDialogue().DialogueStringID].RawString;
-			PRINT("Merchant: %s", cstr.Get());
-
-			for ( int p = 0; p < convo1.GetCurrentDialogue().Responses.Count(); ++p)
-			{
-				PRINT("Response: %s -- \"%s\"", 
-					strings[convo1.GetResponses()[ convo1.GetCurrentDialogue().Responses[p]]->ShorthandStringID].RawString.Get(),
-					strings[convo1.GetResponses()[ convo1.GetCurrentDialogue().Responses[p]]->ResponseStringID].RawString.Get());
-			}
-
-			convo1.SelectResponseIndex(convo1.GetCurrentDialogue().Responses.Count()-1);
-
-		} while (true);
-	}
 }
-
+#include <Framework/Math/Curve/Bezier.hpp>
 //=====================================================================================
 void Game::Tick( float a_DeltaTime )
 {
 	//parallax.SetBackScale( 1.0F + Sin( Engine::Instance().GetTime() ) * 0.5F + 0.5F );
 	parallax.SetCameraOffset( ( InputManager::Instance().GetMousePosition() - Engine::Instance().GetDisplaySize() / 2 ) * 0.001F );
-	parallax.DrawComposite( a_DeltaTime );
+	//parallax.DrawComposite( a_DeltaTime );
+
+	/*
+	GraphicsManager::Instance().SetState(GraphicsManager::RS_TRANSPARENCY, true);
+	GraphicsManager::Instance().SetColour(Colour::WHITE * Colour(1,1,1,0.25F), GraphicsManager::COL_PRIMARY);
+	for ( float i = 0; i < 2000; i += 50.0F )
+	{
+		GraphicsManager::Instance().GfxDrawLine( Vector2( i, 0.0F ), Vector2(i, 2000.0F), 1 );
+		GraphicsManager::Instance().GfxDrawLine( Vector2( 0.0F, i ), Vector2(2000.0F,i), 1 );
+	}*/
 }
 
 //=====================================================================================
@@ -181,10 +145,9 @@ void Game::Finalise()
 		PageManager::Instance().Tick( 0.0F );
 	}
 
-	delete m_MainMenu;
-	delete m_Options;
-	m_MainMenu = nullptr;
-	m_Options = nullptr;
+	Free( m_MainMenu );
+	Free( m_Options );
+	Free( m_Dialogue );
 
 	Globals::ReleaseBitmapFonts();
 }

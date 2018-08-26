@@ -7,6 +7,7 @@
 //=====================================================================================
 class PageMainMenu;
 class PageOptions;
+class PageDialogue;
 
 //=====================================================================================
 class Game final
@@ -21,10 +22,13 @@ public:
 
 	static PageMainMenu * GetMainMenuUI() { return m_MainMenu; }
 	static PageOptions * GetOptionsUI() { return m_Options; }
+	static PageDialogue * GetDialogueUI() { return m_Dialogue; }
 
 private:
+
 	static PageMainMenu * m_MainMenu;
 	static PageOptions * m_Options;
+	static PageDialogue * m_Dialogue;
 };
 
 #endif//GAME_H

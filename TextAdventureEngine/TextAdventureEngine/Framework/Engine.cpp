@@ -11,6 +11,13 @@
 #include <SDL/SDL_opengl.h>
 #include <gl/glu.h>
 
+#include <Framework/Platform/Platform.hpp>
+
+#if PLATFORM_OS == WINDOWS
+#pragma comment( lib, "Shcore.lib" )
+#include <ShellScalingApi.h>
+#endif
+
 //=====================================================================================
 #ifdef  _DEBUG
 void GLAPIENTRY MessageCallback( GLenum source,
@@ -30,6 +37,10 @@ void GLAPIENTRY MessageCallback( GLenum source,
 //=====================================================================================
 void Engine::Init( const char * a_Title, const Vector2 & a_DisplaySize )
 {
+#if PLATFORM_OS == WINDOWS
+	SetProcessDpiAwareness( PROCESS_DPI_AWARENESS::PROCESS_PER_MONITOR_DPI_AWARE );
+#endif
+
 	m_Title = a_Title;
 	m_DisplaySize = a_DisplaySize;
 

@@ -14,6 +14,7 @@ ViewSlider::ViewSlider( const char * a_Name, Page * a_ContainerPage, View * a_Pa
 	, m_Slider( "Slider", a_ContainerPage, this )
 	, m_InitialTick( true )
 {
+	SetIsInteractible( true );
 	SetEnabled( true );
 	SetStep( 0.0F ); // will choose smallest possible incremental float value as our step
 	SetSliderSize( 0.1F );

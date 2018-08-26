@@ -49,11 +49,7 @@ int main( int args, char *argv[] )
 #define SAVEFILES\
 	DECL_SAVEFILE( playerdata.dat, PlayerSaveHandler ) /* For saving out/loading in player stats, inventory, world, quests, etc */\
 	
-#ifdef _DEBUG
-	#define SCREEN_DIMENSIONS Vector2( 1600.0F, 1000.0F )
-#else
-	#define SCREEN_DIMENSIONS Vector2( 800.0F, 500.0F )
-#endif
+#define SCREEN_DIMENSIONS Vector2( 2048.0F, 1280.0F )
 
 	INIT_MANAGER( CommandLineManager, ( const char ** )argv, ( uint32_t )args );
 	INIT_MANAGER( ThreadManager );

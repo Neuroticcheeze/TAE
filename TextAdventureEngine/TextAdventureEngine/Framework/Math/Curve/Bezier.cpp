@@ -307,6 +307,7 @@ Bezier Bezier::GetHigherOrder( float a_T ) const
 		return Bezier();
 	}
 
+	PRINT( __FUNCTION__ " [Unimplemented]" );
 	return Bezier();
 }
 

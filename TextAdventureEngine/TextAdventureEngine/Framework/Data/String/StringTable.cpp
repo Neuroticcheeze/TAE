@@ -64,6 +64,8 @@ StringEntry StringTable::ProcessUnformatted( const char * a_String )
 //=====================================================================================
 StringEntry StringTable::Process( const char * a_String )
 {
+	PROFILE;
+
 	StringEntry result;
 	result.RawString = a_String;
 	CString string = result.RawString;

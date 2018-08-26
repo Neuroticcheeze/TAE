@@ -6,7 +6,7 @@ void ViewSprite::OnTick( float a_DeltaTime )
 {
 	if ( m_Overrider )
 	{
-		if ( !m_Overrider->OnDraw( *this, GetPosition(), GetSize() ) )
+		if ( !m_Overrider( *this, GetPosition(), GetSize() ) )
 		{
 			return;
 		}
@@ -18,6 +18,7 @@ void ViewSprite::OnTick( float a_DeltaTime )
 	switch ( m_SpriteType )
 	{
 	case ViewSprite::SINGLE:
+		if ( m_SingleSpriteTexture )
 		{
 			GraphicsManager::Instance().GfxSetUV();
 			int32_t s = GraphicsManager::Instance().SetTexture( m_SingleSpriteTexture );
@@ -34,7 +35,7 @@ void ViewSprite::OnTick( float a_DeltaTime )
 }
 
 //=====================================================================================
-void ViewSprite::SetDrawOverrider( IDrawOverrider * a_Overrider )
+void ViewSprite::SetDrawOverrider(  DrawOverrider a_Overrider )
 {
 	m_Overrider = a_Overrider;
 }

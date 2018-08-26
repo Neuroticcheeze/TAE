@@ -19,6 +19,7 @@ struct Vector2;
 struct Colour;
 class UShader;
 class GLMesh;
+class Bezier;
 
 //=====================================================================================
 class GraphicsManager final : public TickableManager< GraphicsManager >
@@ -147,6 +148,8 @@ public:
 	ENUM( ColourUsage, uint8_t )
 		COL_PRIMARY,
 		COL_SECONDARY,
+		COL_TERTIARY,
+		COL_QUATERNARY,
 		COL_BACKGROUND,
 	END_ENUM_C( ColourUsage, uint8_t );
 
@@ -175,7 +178,10 @@ public:
 	void	GfxSetUV( const Vector2 & a_Offset = Vector2::ZERO, const Vector2 & a_Tiling = Vector2::ONE );
 	void	GfxDrawQuad( const Vector2 & a_Position, const Vector2 & a_Size, float a_Outline = 0.0F );
 	void	GfxDrawQuadTextured(const Vector2 & a_Position, const Vector2 & a_Size, int32_t a_SamplerUnit, bool a_UseSetUV = true, float a_AlphaPowFactor = 1.0F, const InitialiserList< Vector2 > & a_UVCoordinates = { Vector2::ZERO, Vector2::UP, Vector2::ONE, Vector2::RIGHT } );
-	
+	void	GfxDrawLine( const Vector2 & a_PositionA, const Vector2 & a_PositionB, float a_Thickness, bool a_EnableGradient = false );
+	void	GfxDrawBezier( const Bezier & a_Bezier, float a_Thickness );
+	void	GfxDrawTriangle( const Vector2 & a_PositionA, const Vector2 & a_PositionB, const Vector2 & a_PositionC );
+
 private:
 
 	struct
@@ -203,8 +209,13 @@ private:
 	Shader m_TextShaderGlyphsGradiented;
 	Shader m_SimpleColourShader;
 	Shader m_TextureColourExplicitUVShader;
+	Shader m_VQuadShader;
+	Shader m_BezierVQuadShader;
+	Shader m_TriShader;
+	GLMesh * m_Triangle = nullptr;
 	GLMesh * m_01Quad = nullptr;
 	GLMesh * m_01LineQuad = nullptr;
+	GLMesh * m_BezierQuadStrip128 = nullptr;
 
 	typedef Pointer< Tuple3< void *, void *, uint8_t /*user-data*/ > > PTexture;
 	typedef Pointer< void * > PRenderTexture;

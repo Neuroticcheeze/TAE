@@ -20,10 +20,16 @@ View::View( const char * a_Name, Page * a_ContainerPage, View * a_Parent, bool a
 	, m_PrevMouseEntered( false )
 	, m_CanFocus( a_CanFocus )
 	, m_IsGrabbed( false )
+	, m_Interactible( false )
 {
 	if ( !m_ParentView && a_ContainerPage && a_ContainerPage->GetRootView() )
 	{
 		a_ContainerPage->GetRootView()->AddChild( this );
+	}
+
+	if ( m_ParentView && m_ParentView->m_ChildrenViews.IndexOf( this ) == -1 )
+	{
+		m_ParentView->AddChild( this );
 	}
 
 	m_Borders[ ( int32_t )Alignment::LEFT ] = 0.0F;
@@ -67,14 +73,13 @@ View::~View()
 //=====================================================================================
 void View::OnMousePressed( InputManager::MouseButton a_MouseButton )
 {
-	if ( !m_ContainerPage || m_ContainerPage->IsBeingBlocked() )
+	if ( !m_Interactible || !m_ContainerPage || m_ContainerPage->IsBeingBlocked() )
 	{
 		return;
 	}
 
 	if ( m_PrevMouseEntered )
 	{
-		View *& focus = m_ContainerPage->m_FocusedView;
 		if ( m_CanFocus )
 		{
 			if ( m_ContainerPage->m_FocusedView )
@@ -130,8 +135,19 @@ void View::SetBorder( Alignment a_Alignment, float a_Amount )
 	
 	if ( val == 0.0F || val != a_Amount )
 	{
-		val = Clamp( a_Amount, -1.0F, 1.0F );
+		val = a_Amount;
+		m_BorderPxs[ ( uint32_t )a_Alignment ] = INFINITY;
 
+		RecalculateTrueRectangle();
+	}
+}
+
+//=====================================================================================
+void View::SetBorderPx( Alignment a_Alignment, float a_Amount )
+{
+	if ( ASSERT_WARN( a_Amount != INFINITY, __FUNCTION__ "To unlock a border px setting, use SetBorder(..)" ) )
+	{
+		m_BorderPxs[ ( uint32_t )a_Alignment ] = a_Amount;
 		RecalculateTrueRectangle();
 	}
 }
@@ -147,7 +163,7 @@ void View::SetBordersFromSizeAndOffset( const Vector2 & a_Size, const Vector2 & 
 {
 	if ( m_ParentView )
 	{
-		Vector2 o = a_Offset / m_ParentView->m_Offset;
+		Vector2 o = a_Offset / m_ParentView->m_Size;
 		Vector2 s = a_Size / m_ParentView->m_Size;
 
 		SetBorder( Alignment::BOTTOM, o.y );
@@ -164,13 +180,35 @@ void View::SetBordersFromSizeAndOffset( const Vector2 & a_Size, const Vector2 & 
 }
 
 //=====================================================================================
-void View::Tick( float a_DeltaTime )
+void View::AppendToFrameCacheList()
 {
+	PROFILE;
+
+	m_ContainerPage->m_AllViews.Append( this );
+
+	if ( m_ChildrenViews.Count() > 0 )
+	{
+		const int32_t l = m_ChildrenViews.Count() - 1;
+		for ( int32_t c = l; c >= 0; --c )
+		{
+			View * childView = m_ChildrenViews[ ( uint32_t )c ];
+			childView->AppendToFrameCacheList();
+		}
+	}
+}
+
+bool View::CheckInput( bool a_ReleaseOnly )
+{
+	if ( m_Interactible == false )
+	{
+		return false;
+	}
+
 	const Vector2 & mpos = InputManager::Instance().GetMousePosition();
 	const Vector2 & bl = GetPosition();
 	const Vector2 & tr = GetPosition() + GetSize();
 
-	bool minside = InRange( mpos.x, bl.x, tr.x ) && InRange( mpos.y, bl.y, tr.y );
+	bool minside = !a_ReleaseOnly && InRange( mpos.x, bl.x, tr.x ) && InRange( mpos.y, bl.y, tr.y );
 	
 	if ( minside != m_PrevMouseEntered )
 	{
@@ -187,18 +225,13 @@ void View::Tick( float a_DeltaTime )
 		m_PrevMouseEntered = minside;
 	}
 
+	return minside;
+}
 
-//#define DEBUG_VIEWS
-#ifdef DEBUG_VIEWS
-	if ( m_ParentView )
-	{
-		GraphicsManager::Instance().SetColour( minside ? Colour::GREEN : Colour::RED, GraphicsManager::COL_SECONDARY );
-		GraphicsManager::Instance().SetColour( Colour::INVISIBLE, GraphicsManager::COL_PRIMARY);
-		GraphicsManager::Instance().GfxDrawQuad( GetPosition(), GetSize(), 1.0F );
-		GraphicsManager::Instance().GfxDrawQuad( GetPosition(), GetSize() * 0.5F, 1.0F );
-		GraphicsManager::Instance().GfxDrawQuad( GetPosition() + GetSize() * 0.5F, GetSize() * 0.5F, 1.0F );
-	}
-#endif
+//=====================================================================================
+void View::Tick( float a_DeltaTime )
+{
+	PROFILE;
 
 	Colour tint = m_Tint;
 
@@ -221,6 +254,18 @@ void View::Tick( float a_DeltaTime )
 	}
 
 	OnTickPost( a_DeltaTime );
+
+	
+//#define DEBUG_VIEWS
+#ifdef DEBUG_VIEWS
+	if ( m_ParentView )
+	{
+		GraphicsManager::Instance().SetState( GraphicsManager::RS_TRANSPARENCY, true );
+		GraphicsManager::Instance().SetColour( m_PrevMouseEntered ? Colour::GREEN : Colour::RED, GraphicsManager::COL_SECONDARY );
+		GraphicsManager::Instance().SetColour( Colour::INVISIBLE, GraphicsManager::COL_PRIMARY);
+		GraphicsManager::Instance().GfxDrawQuad( GetPosition(), GetSize(), 5.0F );
+	}
+#endif
 }
 
 //=====================================================================================
@@ -238,10 +283,20 @@ void View::OnParentRectangleChanged( const Vector2 & a_Offset, const Vector2 & a
 //=====================================================================================
 void View::RecalculateTrueRectangle()
 {
-	const float & l = m_Borders[ ( uint32_t )Alignment::LEFT ];
-	const float & r = m_Borders[ ( uint32_t )Alignment::RIGHT ];
-	const float & t = m_Borders[ ( uint32_t )Alignment::TOP ];
-	const float & b = m_Borders[ ( uint32_t )Alignment::BOTTOM ];
+	float l = m_Borders[ ( uint32_t )Alignment::LEFT ];
+	float r = m_Borders[ ( uint32_t )Alignment::RIGHT ];
+	float t = m_Borders[ ( uint32_t )Alignment::TOP ];
+	float b = m_Borders[ ( uint32_t )Alignment::BOTTOM ];
+
+	const float & l_px = m_BorderPxs[ ( uint32_t )Alignment::LEFT ];
+	const float & r_px = m_BorderPxs[ ( uint32_t )Alignment::RIGHT ];
+	const float & t_px = m_BorderPxs[ ( uint32_t )Alignment::TOP ];
+	const float & b_px = m_BorderPxs[ ( uint32_t )Alignment::BOTTOM ];
+
+	if ( l_px != INFINITY ) { l = 1.0F - ( l_px / m_ParentView->m_Size.x ); }
+	if ( r_px != INFINITY ) { r = 1.0F - ( r_px / m_ParentView->m_Size.x ); }
+	if ( t_px != INFINITY ) { t = 1.0F - ( t_px / m_ParentView->m_Size.y ); }
+	if ( b_px != INFINITY ) { b = 1.0f - ( b_px / m_ParentView->m_Size.y ); }
 
 	m_Offset = m_ParentView->m_Offset + m_ParentView->m_Size * Vector2( l, b );
 	m_Size = m_ParentView->m_Size * Vector2( 1.0F - Clamp( l + r ), 1.0F - Clamp( t + b ) );
@@ -499,5 +554,95 @@ void View::OnSliderValueChanged( ViewSlider & a_ViewSlider, float a_PreviousValu
 	if ( m_ParentView )
 	{
 		m_ParentView->OnSliderValueChanged( a_ViewSlider, a_PreviousValue, a_NewValue );
+	}
+}
+
+//=====================================================================================
+void View::OnListSelectionChanged( ViewListSelector & a_ViewListSelector, int32_t a_SelectionIndex )
+{
+	auto it = m_ActionListeners.First();
+	const auto end = m_ActionListeners.End();
+
+	while ( it != end )
+	{
+		( *it )->OnListSelectionChanged( a_ViewListSelector, a_SelectionIndex );
+		++it;
+	}
+
+	if ( m_ParentView )
+	{
+		m_ParentView->OnListSelectionChanged( a_ViewListSelector, a_SelectionIndex );
+	}
+}
+
+//=====================================================================================
+void View::OnListSelectionConfirmed( ViewListSelector & a_ViewListSelector, int32_t a_SelectionIndex )
+{
+	auto it = m_ActionListeners.First();
+	const auto end = m_ActionListeners.End();
+
+	while ( it != end )
+	{
+		( *it )->OnListSelectionConfirmed( a_ViewListSelector, a_SelectionIndex );
+		++it;
+	}
+
+	if ( m_ParentView )
+	{
+		m_ParentView->OnListSelectionConfirmed( a_ViewListSelector, a_SelectionIndex );
+	}
+}
+
+//=====================================================================================
+void View::OnDragBegin( ViewDraggable & a_ViewDraggable )
+{
+	auto it = m_ActionListeners.First();
+	const auto end = m_ActionListeners.End();
+
+	while ( it != end )
+	{
+		( *it )->OnDragBegin( a_ViewDraggable );
+		++it;
+	}
+
+	if ( m_ParentView )
+	{
+		m_ParentView->OnDragBegin( a_ViewDraggable );
+	}
+}
+
+//=====================================================================================
+void View::OnDragEnd( ViewDraggable & a_ViewDraggable )
+{
+	auto it = m_ActionListeners.First();
+	const auto end = m_ActionListeners.End();
+
+	while ( it != end )
+	{
+		( *it )->OnDragEnd( a_ViewDraggable );
+		++it;
+	}
+
+	if ( m_ParentView )
+	{
+		m_ParentView->OnDragEnd( a_ViewDraggable );
+	}
+}
+
+//=====================================================================================
+void View::OnDrop( ViewDropTarget & a_ViewDropTarget, ViewDraggable & a_ViewDraggable )
+{
+	auto it = m_ActionListeners.First();
+	const auto end = m_ActionListeners.End();
+
+	while ( it != end )
+	{
+		( *it )->OnDrop( a_ViewDropTarget, a_ViewDraggable );
+		++it;
+	}
+
+	if ( m_ParentView )
+	{
+		m_ParentView->OnDrop( a_ViewDropTarget, a_ViewDraggable );
 	}
 }

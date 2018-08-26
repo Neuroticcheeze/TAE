@@ -240,8 +240,18 @@ void GLShader::SetUniformFloat2Array( int32_t a_Loc, const Array< Vector2 > & a_
 		m_CurrentShaderHandle = m_Handle;
 		glUseProgram( m_Handle );
 	}
+
+	float * data = new float[ a_Values.Count() << 1 ];
 	
-	glUniform2fv( a_Loc, a_Values.Count(), &a_Values.First()->x );
+	for ( uint32_t p = 0; p < a_Values.Count(); ++p )
+	{
+		data[ ( p << 1 ) + 0 ] = a_Values[ p ].x;
+		data[ ( p << 1 ) + 1 ] = a_Values[ p ].y;
+	}
+
+	glUniform2fv( a_Loc, a_Values.Count(), data );
+
+	delete[] data;
 }
 
 //=====================================================================================
@@ -252,8 +262,20 @@ void GLShader::SetUniformColourArray( int32_t a_Loc, const Array< Colour > & a_V
 		m_CurrentShaderHandle = m_Handle;
 		glUseProgram( m_Handle );
 	}
+
+	float * data = new float[ a_Values.Count() << 2 ];
 	
-	glUniform1fv( a_Loc, a_Values.Count(), &a_Values.First()->r );
+	for ( uint32_t p = 0; p < a_Values.Count(); ++p )
+	{
+		data[ ( p << 2 ) + 0 ] = a_Values[ p ].r;
+		data[ ( p << 2 ) + 1 ] = a_Values[ p ].g;
+		data[ ( p << 2 ) + 2 ] = a_Values[ p ].b;
+		data[ ( p << 2 ) + 3 ] = a_Values[ p ].a;
+	}
+
+	glUniform4fv( a_Loc, a_Values.Count(), data );
+
+	delete[] data;
 }
 
 //=====================================================================================
