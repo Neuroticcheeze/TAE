@@ -15,13 +15,6 @@ public:
 
 	ViewSlider( const char * a_Name, Page * a_ContainerPage, View * a_Parent = nullptr );
 
-	void SetEnabled( bool a_Enabled );
-
-	inline bool GetEnabled() const
-	{
-		return m_Enabled;
-	}
-
 	inline ViewSprite & GetBackground()
 	{
 		return m_Background;
@@ -57,6 +50,8 @@ public:
 
 protected:
 
+	void OnEnabled() override;
+	void OnDisabled() override;
 	void OnTick( float a_DeltaTime );
 	void OnMouseClick( const Vector2 & m_MousePosition, InputManager::MouseButton a_MouseButton );
 	void RequestInitialEvents( IActionListener * a_ActionListener );
@@ -69,7 +64,6 @@ private:
 	float	   m_SliderSize;
 	float	   m_Step;
 	bool	   m_SnapSlider; // to step
-	bool	   m_Enabled;
 	Vector2	   m_Range;
 	float	   m_Value;
 	ViewSprite m_Background;

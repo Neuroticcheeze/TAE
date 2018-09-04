@@ -21,6 +21,7 @@ public:
 
 	Random & operator=( const Random & a_Other );
 
+	uint32_t Range( const uint32_t & a_Min = 0, const uint32_t & a_Max = 9999 ) const;
 	int32_t Range( const int32_t & a_Min = 0, const int32_t & a_Max = 9999 ) const;
 	float Range( const float & a_Min = 0, const float & a_Max = 9999.0F ) const;
 	Vector2 RandomVector2() const;

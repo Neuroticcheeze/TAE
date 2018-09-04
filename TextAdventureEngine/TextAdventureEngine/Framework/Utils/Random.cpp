@@ -48,6 +48,14 @@ Random & Random::operator=( const Random & a_Other )
 }
 
 //=====================================================================================
+uint32_t Random::Range( const uint32_t & a_Min, const uint32_t & a_Max ) const
+{
+	std::uniform_int_distribution< uint32_t >  distr( a_Min, a_Max );
+
+	return distr( *GENERATOR );
+}
+
+//=====================================================================================
 int32_t Random::Range( const int32_t & a_Min, const int32_t & a_Max ) const
 {
 	std::uniform_int_distribution< int32_t >  distr( a_Min, a_Max );

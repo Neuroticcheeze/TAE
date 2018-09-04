@@ -15,7 +15,9 @@ public:
 	struct EditorNode
 	{
 		ENUM( Type, uint8_t )
-			DIALOGUE
+			DIALOGUE,
+			RESPONSE,
+			SELECTOR,
 		END_ENUM;
 
 		Type Type;
@@ -31,7 +33,12 @@ public:
 	void Finalise() override;
 	const char * GetName() const override { return "Dialogue Editor"; }
 
+	void AddEditorNode( const EditorNode & a_EditorNode )
+	{
+		m_EditorNodes.Append( a_EditorNode );
+	}
 
+	static DialogueEditor * Get();
 
 private:
 

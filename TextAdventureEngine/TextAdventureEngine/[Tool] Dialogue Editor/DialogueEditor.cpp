@@ -30,6 +30,12 @@ IApplicationContext * g_TheContext = new DialogueEditor;
 #endif
 
 //=====================================================================================
+DialogueEditor * DialogueEditor::Get()
+{
+	return static_cast< DialogueEditor* >( g_TheContext );
+}
+
+//=====================================================================================
 void DialogueEditor::Initialise()
 {
 	Globals::CreateBitmapFonts();

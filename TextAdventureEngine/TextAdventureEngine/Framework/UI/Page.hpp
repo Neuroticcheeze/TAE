@@ -21,6 +21,10 @@ public:
 	private:
 
 		ViewPage( const char * a_Name, Page * a_ContainerPage );
+
+	protected:
+		void OnEnabled() override {}
+		void OnDisabled() override {}
 	};
 
 public:

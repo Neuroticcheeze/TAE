@@ -26,6 +26,7 @@ public:
 		, m_Formatted( false )
 		, m_CharacterLimit( INT_MAX )
 	{
+		SetEnabled();
 	}
 
 	void SetText( const char * a_String, bool a_Formatted = false );
@@ -176,6 +177,8 @@ public:
 
 protected:
 
+	void OnEnabled() override {}
+	void OnDisabled() override {}
 	void OnReset();
 	void OnTick( float a_DeltaTime );
 	void OnMouseClick( const Vector2 & m_MousePosition, InputManager::MouseButton a_MouseButton ) override;

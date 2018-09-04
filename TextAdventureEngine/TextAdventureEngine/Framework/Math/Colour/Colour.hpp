@@ -72,6 +72,13 @@ struct Colour final : public StringRepresentable< Colour >
 		a = Max( a_Alpha, 0.0F );
 		return *this;
 	}
+
+	Colour WithAlpha( float a_Alpha ) const
+	{
+		Colour newc = *this;
+		newc.a = Max( a_Alpha, 0.0F );
+		return newc;
+	}
 };
 
 //=====================================================================================

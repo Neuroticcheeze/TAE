@@ -87,7 +87,7 @@ void PageOptions::OnTickPost( float a_DeltaTime )
 //=====================================================================================
 void PageOptions::OnSliderValueChanged( ViewSlider & a_ViewSlider, float a_PreviousValue, float a_NewValue )
 {
-	if ( &a_ViewSlider == m_AmbienceVolumeLabel->GetParentView()->GetParentView() )
+	if ( &a_ViewSlider == m_AmbienceVolumeLabel->GetParent()->GetParent() )
 	{
 		if ( a_NewValue == a_ViewSlider.GetRange().y )
 		{

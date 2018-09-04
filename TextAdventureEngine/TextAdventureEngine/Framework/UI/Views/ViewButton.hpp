@@ -15,13 +15,6 @@ public:
 
 	ViewButton( const char * a_Name, Page * a_ContainerPage, View * a_Parent = nullptr );
 
-	void SetEnabled( bool a_Enabled );
-
-	inline bool GetEnabled() const
-	{
-		return m_Enabled;
-	}
-
 	inline ViewSprite & GetBackground()
 	{
 		return m_Background;
@@ -34,6 +27,8 @@ public:
 
 protected:
 
+	void OnEnabled() override;
+	void OnDisabled() override;
 	void OnTick( float a_DeltaTime );
 	void OnMouseEnter( const Vector2 & m_MousePosition );
 	void OnMouseLeave( const Vector2 & m_MousePosition );
@@ -43,7 +38,6 @@ protected:
 	
 private:
 
-	bool	   m_Enabled;
 	ViewSprite m_Background;
 	ViewText   m_Label;
 };

@@ -279,6 +279,15 @@
     <ClCompile Include="Framework\UI\Views\ViewSizer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Framework\Utils\Uuid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\UI\Views\ViewFlyoutMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="[Tool] Dialogue Editor\Structure\Object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Containers\Array.hpp">
@@ -681,6 +690,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Framework\UI\Views\ViewSizer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Utils\Uuid.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\UI\Views\ViewFlyoutMenu.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="[Tool] Dialogue Editor\Structure\Object.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="[Tool] Dialogue Editor\Structure\Objects\BlackboardValue.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

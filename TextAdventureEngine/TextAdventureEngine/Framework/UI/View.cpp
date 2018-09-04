@@ -21,11 +21,14 @@ View::View( const char * a_Name, Page * a_ContainerPage, View * a_Parent, bool a
 	, m_CanFocus( a_CanFocus )
 	, m_IsGrabbed( false )
 	, m_Interactible( false )
+	, m_Enabled( false )
+	, m_Hover( false )
 {
 	if ( !m_ParentView && a_ContainerPage && a_ContainerPage->GetRootView() )
 	{
 		a_ContainerPage->GetRootView()->AddChild( this );
 	}
+
 
 	if ( m_ParentView && m_ParentView->m_ChildrenViews.IndexOf( this ) == -1 )
 	{
@@ -55,6 +58,7 @@ View::~View()
 	}
 	m_ChildrenViews.Clear();
 
+	SetEnabled( false );
 	Destruct();
 
 	if ( m_ContainerPage != nullptr )
@@ -71,9 +75,59 @@ View::~View()
 }
 
 //=====================================================================================
+void View::SetEnabled( bool a_Flag )
+{
+	if ( a_Flag != m_Enabled )
+	{
+		m_Enabled = a_Flag;
+		if ( a_Flag )
+		{
+			OnEnabled();
+			if ( dynamic_cast< Page::ViewPage* >( this ) )
+			{
+				OnEnabled( this );
+			}
+			else if ( GetParent() )
+			{
+				GetParent()->OnEnabled( this );
+			}
+		}
+		else
+		{
+			OnDisabled();
+			if ( dynamic_cast< Page::ViewPage* >( this ) )
+			{
+				OnDisabled( this );
+			}
+			else if ( GetParent() )
+			{
+				GetParent()->OnDisabled( this );
+			}
+		}
+	}
+}
+
+//=====================================================================================
+bool View::GetEnabled() const
+{
+	auto it = this;
+
+	do
+	{
+		if ( !it->m_Enabled )
+		{
+			return false;
+		}
+	}
+	while ( it = it->GetParent() );
+
+	return true;
+}
+
+//=====================================================================================
 void View::OnMousePressed( InputManager::MouseButton a_MouseButton )
 {
-	if ( !m_Interactible || !m_ContainerPage || m_ContainerPage->IsBeingBlocked() )
+	if ( !GetEnabled() || !m_Interactible || !m_ContainerPage || m_ContainerPage->IsBeingBlocked() )
 	{
 		return;
 	}
@@ -99,6 +153,7 @@ void View::OnMousePressed( InputManager::MouseButton a_MouseButton )
 //=====================================================================================
 void View::OnMouseReleased( InputManager::MouseButton a_MouseButton )
 {
+	// Release is impervious to enabled/disabled state
 	if ( !m_ContainerPage || m_ContainerPage->IsBeingBlocked() )
 	{
 		return;
@@ -163,13 +218,23 @@ void View::SetBordersFromSizeAndOffset( const Vector2 & a_Size, const Vector2 & 
 {
 	if ( m_ParentView )
 	{
-		Vector2 o = a_Offset / m_ParentView->m_Size;
+		Vector2 o = ( a_Offset - m_ParentView->m_Offset ) / m_ParentView->m_Size;
 		Vector2 s = a_Size / m_ParentView->m_Size;
 
-		SetBorder( Alignment::BOTTOM, o.y );
-		SetBorder( Alignment::LEFT, o.x );
-		SetBorder( Alignment::TOP, 1.0F - ( o.y + s.y ) );
-		SetBorder( Alignment::RIGHT, 1.0F - ( o.x + s.x ) );
+
+		m_Borders[ ( uint32_t )Alignment::BOTTOM ] = o.y;
+		m_BorderPxs[ ( uint32_t )Alignment::BOTTOM ] = INFINITY;
+
+		m_Borders[ ( uint32_t )Alignment::LEFT ] = o.x;
+		m_BorderPxs[ ( uint32_t )Alignment::LEFT ] = INFINITY;
+
+		m_Borders[ ( uint32_t )Alignment::TOP ] = 1.0F - ( o.y + s.y );
+		m_BorderPxs[ ( uint32_t )Alignment::TOP ] = INFINITY;
+
+		m_Borders[ ( uint32_t )Alignment::RIGHT ] = 1.0F - ( o.x + s.x );
+		m_BorderPxs[ ( uint32_t )Alignment::RIGHT ] = INFINITY;
+
+		RecalculateTrueRectangle();
 	}
 
 	else
@@ -197,9 +262,10 @@ void View::AppendToFrameCacheList()
 	}
 }
 
+//=====================================================================================
 bool View::CheckInput( bool a_ReleaseOnly )
 {
-	if ( m_Interactible == false )
+	if ( m_Interactible == false || !GetEnabled() )
 	{
 		return false;
 	}
@@ -208,11 +274,11 @@ bool View::CheckInput( bool a_ReleaseOnly )
 	const Vector2 & bl = GetPosition();
 	const Vector2 & tr = GetPosition() + GetSize();
 
-	bool minside = !a_ReleaseOnly && InRange( mpos.x, bl.x, tr.x ) && InRange( mpos.y, bl.y, tr.y );
+	m_Hover = !a_ReleaseOnly && InRange( mpos.x, bl.x, tr.x ) && InRange( mpos.y, bl.y, tr.y );
 	
-	if ( minside != m_PrevMouseEntered )
+	if ( m_Hover != m_PrevMouseEntered )
 	{
-		if ( minside )
+		if ( m_Hover )
 		{
 			this->OnMouseEnter( mpos - bl );
 		}
@@ -222,16 +288,31 @@ bool View::CheckInput( bool a_ReleaseOnly )
 			this->OnMouseLeave( mpos - bl );
 		}
 
-		m_PrevMouseEntered = minside;
+		m_PrevMouseEntered = m_Hover;
 	}
 
-	return minside;
+	return m_Hover;
+}
+
+//=====================================================================================
+bool View::GetMouseOver() const
+{	
+	const Vector2 & mpos = InputManager::Instance().GetMousePosition();
+	const Vector2 & bl = GetPosition();
+	const Vector2 & tr = GetPosition() + GetSize();
+
+	return InRange( mpos.x, bl.x, tr.x ) && InRange( mpos.y, bl.y, tr.y );
 }
 
 //=====================================================================================
 void View::Tick( float a_DeltaTime )
 {
 	PROFILE;
+
+	if ( !GetEnabled() )
+	{
+		return;
+	}
 
 	Colour tint = m_Tint;
 
@@ -261,9 +342,9 @@ void View::Tick( float a_DeltaTime )
 	if ( m_ParentView )
 	{
 		GraphicsManager::Instance().SetState( GraphicsManager::RS_TRANSPARENCY, true );
-		GraphicsManager::Instance().SetColour( m_PrevMouseEntered ? Colour::GREEN : Colour::RED, GraphicsManager::COL_SECONDARY );
+		GraphicsManager::Instance().SetColour( Colour( m_PrevMouseEntered ? Colour::GREEN : Colour::RED ).WithAlpha( 0.75F ), GraphicsManager::COL_SECONDARY );
 		GraphicsManager::Instance().SetColour( Colour::INVISIBLE, GraphicsManager::COL_PRIMARY);
-		GraphicsManager::Instance().GfxDrawQuad( GetPosition(), GetSize(), 5.0F );
+		GraphicsManager::Instance().GfxDrawQuad( GetPosition() + Vector2::ONE * 4.0F * m_PrevMouseEntered, GetSize() - Vector2::ONE * 8.0F * m_PrevMouseEntered, 4.0F );
 	}
 #endif
 }
@@ -299,7 +380,7 @@ void View::RecalculateTrueRectangle()
 	if ( b_px != INFINITY ) { b = 1.0f - ( b_px / m_ParentView->m_Size.y ); }
 
 	m_Offset = m_ParentView->m_Offset + m_ParentView->m_Size * Vector2( l, b );
-	m_Size = m_ParentView->m_Size * Vector2( 1.0F - Clamp( l + r ), 1.0F - Clamp( t + b ) );
+	m_Size = m_ParentView->m_Size * Vector2( 1.0F - ( l + r ), 1.0F - ( t + b ) );
 
 	for ( int32_t c = 0; c < static_cast< int32_t >( m_ChildrenViews.Count() ); ++c )
 	{
@@ -328,6 +409,19 @@ bool View::HasFocus() const
 View * View::GetViewWithFocus() const
 {
 	return m_ContainerPage ? ( m_ContainerPage->m_FocusedView ) : nullptr;
+}
+
+//=====================================================================================
+void View::RequestInitialEvents( IActionListener * a_ActionListener )
+{
+	if ( GetEnabled() )
+	{
+		a_ActionListener->OnEnabled( this );
+	}
+	else
+	{
+		a_ActionListener->OnDisabled( this );
+	}
 }
 
 //=====================================================================================
@@ -378,80 +472,59 @@ void View::OnButtonPress( ViewButton & a_ViewButton )
 }
 
 //=====================================================================================
-void View::OnButtonDisabled( ViewButton & a_ViewButton )
+void View::OnEnabled( View * a_View )
 {
+	if ( m_ActionListeners.Count() == 0 )
+	{
+		return;
+	}
+
 	auto it = m_ActionListeners.First();
 	const auto end = m_ActionListeners.End();
 
 	while ( it != end )
 	{
-		( *it )->OnButtonDisabled( a_ViewButton );
+		( *it )->OnEnabled( a_View );
 		++it;
 	}
 
 	if ( m_ParentView )
 	{
-		m_ParentView->OnButtonDisabled( a_ViewButton );
+		m_ParentView->OnEnabled( a_View );
 	}
 }
 
 //=====================================================================================
-void View::OnButtonEnabled( ViewButton & a_ViewButton )
+void View::OnDisabled( View * a_View )
 {
+	if ( m_ActionListeners.Count() == 0 )
+	{
+		return;
+	}
+
 	auto it = m_ActionListeners.First();
 	const auto end = m_ActionListeners.End();
 
 	while ( it != end )
 	{
-		( *it )->OnButtonEnabled( a_ViewButton );
+		( *it )->OnDisabled( a_View );
 		++it;
 	}
 
 	if ( m_ParentView )
 	{
-		m_ParentView->OnButtonEnabled( a_ViewButton );
-	}
-}
-
-//=====================================================================================
-void View::OnTextFieldDisabled( ViewTextField & a_ViewTextField )
-{
-	auto it = m_ActionListeners.First();
-	const auto end = m_ActionListeners.End();
-
-	while ( it != end )
-	{
-		( *it )->OnTextFieldDisabled( a_ViewTextField );
-		++it;
-	}
-
-	if ( m_ParentView )
-	{
-		m_ParentView->OnTextFieldDisabled( a_ViewTextField );
-	}
-}
-
-//=====================================================================================
-void View::OnTextFieldEnabled( ViewTextField & a_ViewTextField )
-{
-	auto it = m_ActionListeners.First();
-	const auto end = m_ActionListeners.End();
-
-	while ( it != end )
-	{
-		( *it )->OnTextFieldEnabled( a_ViewTextField );
-		++it;
-	}
-
-	if ( m_ParentView )
-	{
-		m_ParentView->OnTextFieldEnabled( a_ViewTextField );
+		m_ParentView->OnDisabled( a_View );
 	}
 }
 
 //=====================================================================================
 void View::OnTextFieldFocus( ViewTextField & a_ViewTextField )
 {
+	if ( m_ActionListeners.Count() == 0 )
+	{
+		return;
+	}
+
 	auto it = m_ActionListeners.First();
 	const auto end = m_ActionListeners.End();
 
@@ -470,6 +543,11 @@ void View::OnTextFieldFocus( ViewTextField & a_ViewTextField )
 //=====================================================================================
 void View::OnTextFieldFocusLost( ViewTextField & a_ViewTextField )
 {
+	if ( m_ActionListeners.Count() == 0 )
+	{
+		return;
+	}
+
 	auto it = m_ActionListeners.First();
 	const auto end = m_ActionListeners.End();
 
@@ -488,6 +566,11 @@ void View::OnTextFieldFocusLost( ViewTextField & a_ViewTextField )
 //=====================================================================================
 void View::OnTextFieldSubmit( ViewTextField & a_ViewTextField )
 {
+	if ( m_ActionListeners.Count() == 0 )
+	{
+		return;
+	}
+	
 	auto it = m_ActionListeners.First();
 	const auto end = m_ActionListeners.End();
 
@@ -506,6 +589,11 @@ void View::OnTextFieldSubmit( ViewTextField & a_ViewTextField )
 //=====================================================================================
 void View::OnTextFieldValueChanged( ViewTextField & a_ViewTextField, const CString & a_StringValue )
 {
+	if ( m_ActionListeners.Count() == 0 )
+	{
+		return;
+	}
+
 	auto it = m_ActionListeners.First();
 	const auto end = m_ActionListeners.End();
 
@@ -524,6 +612,11 @@ void View::OnTextFieldValueChanged( ViewTextField & a_ViewTextField, const CStri
 //=====================================================================================
 void View::OnTickBoxValueChanged( ViewTickBox & a_ViewTickBox, bool a_Flag )
 {
+	if ( m_ActionListeners.Count() == 0 )
+	{
+		return;
+	}
+
 	auto it = m_ActionListeners.First();
 	const auto end = m_ActionListeners.End();
 
@@ -542,6 +635,11 @@ void View::OnTickBoxValueChanged( ViewTickBox & a_ViewTickBox, bool a_Flag )
 //=====================================================================================
 void View::OnSliderValueChanged( ViewSlider & a_ViewSlider, float a_PreviousValue, float a_NewValue )
 {
+	if ( m_ActionListeners.Count() == 0 )
+	{
+		return;
+	}
+
 	auto it = m_ActionListeners.First();
 	const auto end = m_ActionListeners.End();
 
@@ -560,6 +658,11 @@ void View::OnSliderValueChanged( ViewSlider & a_ViewSlider, float a_PreviousValu
 //=====================================================================================
 void View::OnListSelectionChanged( ViewListSelector & a_ViewListSelector, int32_t a_SelectionIndex )
 {
+	if ( m_ActionListeners.Count() == 0 )
+	{
+		return;
+	}
+
 	auto it = m_ActionListeners.First();
 	const auto end = m_ActionListeners.End();
 
@@ -578,6 +681,11 @@ void View::OnListSelectionChanged( ViewListSelector & a_ViewListSelector, int32_
 //=====================================================================================
 void View::OnListSelectionConfirmed( ViewListSelector & a_ViewListSelector, int32_t a_SelectionIndex )
 {
+	if ( m_ActionListeners.Count() == 0 )
+	{
+		return;
+	}
+
 	auto it = m_ActionListeners.First();
 	const auto end = m_ActionListeners.End();
 
@@ -596,6 +704,11 @@ void View::OnListSelectionConfirmed( ViewListSelector & a_ViewListSelector, int3
 //=====================================================================================
 void View::OnDragBegin( ViewDraggable & a_ViewDraggable )
 {
+	if ( m_ActionListeners.Count() == 0 )
+	{
+		return;
+	}
+
 	auto it = m_ActionListeners.First();
 	const auto end = m_ActionListeners.End();
 
@@ -614,6 +727,11 @@ void View::OnDragBegin( ViewDraggable & a_ViewDraggable )
 //=====================================================================================
 void View::OnDragEnd( ViewDraggable & a_ViewDraggable )
 {
+	if ( m_ActionListeners.Count() == 0 )
+	{
+		return;
+	}
+
 	auto it = m_ActionListeners.First();
 	const auto end = m_ActionListeners.End();
 
@@ -632,6 +750,11 @@ void View::OnDragEnd( ViewDraggable & a_ViewDraggable )
 //=====================================================================================
 void View::OnDrop( ViewDropTarget & a_ViewDropTarget, ViewDraggable & a_ViewDraggable )
 {
+	if ( m_ActionListeners.Count() == 0 )
+	{
+		return;
+	}
+
 	auto it = m_ActionListeners.First();
 	const auto end = m_ActionListeners.End();
 
@@ -644,5 +767,24 @@ void View::OnDrop( ViewDropTarget & a_ViewDropTarget, ViewDraggable & a_ViewDrag
 	if ( m_ParentView )
 	{
 		m_ParentView->OnDrop( a_ViewDropTarget, a_ViewDraggable );
+	}
+}
+
+//=====================================================================================
+void View::SendMessageUpward( uint32_t a_Message )
+{
+	auto it = GetParent();
+
+	while ( it != nullptr )
+	{
+		if ( it->OnMessage( this, a_Message ) )
+		{
+			it = it->GetParent();
+		}
+
+		else
+		{
+			break;
+		}
 	}
 }

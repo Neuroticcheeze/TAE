@@ -13,18 +13,13 @@ public:
 
 	ViewDropTarget( const char * a_Name, Page * a_ContainerPage, View * a_Parent = nullptr );
 
-	void SetEnabled( bool a_Enabled );
-
-	inline bool GetEnabled() const
-	{
-		return m_Enabled;
-	}
+protected:
+	void OnEnabled() override {}
+	void OnDisabled() override {}
 
 private:
 
 	void OnDrop( ViewDraggable * a_Draggable );
-
-	bool m_Enabled;
 };
 
 #endif//VIEWDROPTARGET_H

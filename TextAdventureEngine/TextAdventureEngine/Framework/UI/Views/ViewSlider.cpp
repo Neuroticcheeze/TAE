@@ -7,15 +7,14 @@
 //=====================================================================================
 ViewSlider::ViewSlider( const char * a_Name, Page * a_ContainerPage, View * a_Parent )
 	: View( a_Name, a_ContainerPage, a_Parent )
-	, m_Enabled( false )
 	, m_Value( 0.0F )
 	, m_Range( 0.0F, 1.0F )
 	, m_Background( "Background", a_ContainerPage, this )
 	, m_Slider( "Slider", a_ContainerPage, this )
 	, m_InitialTick( true )
 {
+	SetEnabled();
 	SetIsInteractible( true );
-	SetEnabled( true );
 	SetStep( 0.0F ); // will choose smallest possible incremental float value as our step
 	SetSliderSize( 0.1F );
 
@@ -69,24 +68,20 @@ void ViewSlider::OnMouseClick( const Vector2 & m_MousePosition, InputManager::Mo
 //=====================================================================================
 void ViewSlider::RequestInitialEvents( IActionListener * a_ActionListener )
 {
+	View::RequestInitialEvents( a_ActionListener );
 	a_ActionListener->OnSliderValueChanged( *this, GetValue(), GetValue() );
 }
 
 //=====================================================================================
-void ViewSlider::SetEnabled( bool a_Enabled )
+void ViewSlider::OnEnabled()
 {
-	if ( a_Enabled != m_Enabled )
-	{
-		if ( m_Enabled = a_Enabled ) // when enabled
-		{
-			SetTint( Colour::WHITE );
-		}
+	SetTint( Colour::WHITE );
+}
 
-		else // when disabled
-		{
-			SetTint( Colour::GRAY.Lerp( Colour::RED, 0.5F ) );
-		}
-	}
+//=====================================================================================
+void ViewSlider::OnDisabled()
+{
+	SetTint( Colour::GRAY.Lerp( Colour::RED, 0.5F ) );
 }
 
 //=====================================================================================

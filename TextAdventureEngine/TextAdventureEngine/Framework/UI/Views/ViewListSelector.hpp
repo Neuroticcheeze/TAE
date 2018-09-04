@@ -25,6 +25,9 @@ private:
 		void OnMouseLeave( const Vector2 & m_MousePosition );
 		void OnMouseClick( const Vector2 & m_MousePosition, InputManager::MouseButton a_MouseButton );
 
+	protected:
+		void OnEnabled() override {}
+		void OnDisabled() override {}
 
 	private:
 
@@ -36,13 +39,17 @@ public:
 	ViewListSelector( const char * a_Name, Page * a_ContainerPage, View * a_Parent = nullptr );
 	~ViewListSelector();
 
+	const Array< CString > & GetList() const { return m_TextList; }
 	void SetList( const Array< CString > & a_List );
 	void SetSelectedIndex( int32_t a_Index );
 	int32_t GetSelectedIndex() const;
+	void SetSingleClickSelection( bool a_Flag ) { m_SingleClickSelection = a_Flag; }
+	bool GetSingleClickSelection() const { return m_SingleClickSelection; }
 
 protected:
 
-	
+	void OnEnabled() override {}
+	void OnDisabled() override {}
 	void OnKeyPressed( InputManager::Key a_Key ) override;
 	void RequestInitialEvents( IActionListener * a_ActionListener );
 	
@@ -55,7 +62,9 @@ private:
 	void OnSelectionHoverEnd( ViewSelection * a_Selection );
 
 	Array< ViewSelection* > m_List;
+	Array< CString > m_TextList;
 	int32_t m_SelectedIndex;
+	bool m_SingleClickSelection;
 };
 
 #endif//VIEWLISTSELECTOR_H

@@ -7,27 +7,33 @@
 #include <Framework/UI/Views/ViewSprite.hpp>
 #include <Framework/UI/Views/ViewButton.hpp>
 #include <Framework/UI/Views/ViewDraggable.hpp>
+#include <Framework/UI/Views/ViewFlyoutMenu.hpp>
 #include <Framework/UI/FadeManager.hpp>
+#include <[Tool] Dialogue Editor/DialogueEditor.hpp>
 
 //=====================================================================================
 class PageDialogueEditor final : public Page
 							   , public View::IActionListener
+							   , public InputManager::IMouseEventListener
 {
 	friend class DialogueEditor;
 
 public:
 	PageDialogueEditor()
 		: Page( "DIALOGUE_EDITOR" )
-		, m_TESTDraggable( new ViewDraggable( "Test!!", this, GetRootView() ) )
-	{}
+	{
+	}
 
 	~PageDialogueEditor()
 	{
-		GetRootView()->DetatchChild( m_TESTDraggable );
-		Free( m_TESTDraggable );
 	}
 
+	void AddUINode( uint32_t a_Id, const DialogueEditor::EditorNode & a_NodeData );
+	void RemoveUINode( uint32_t a_Id );
+
 protected:
+
+	void OnMousePressed( InputManager::MouseButton a_MouseButton ) override;
 
 	void OnEnterPage() override;
 	void OnExitPage() override;
@@ -38,9 +44,9 @@ private:
 
 	void SetupUI();
 	
-	Array< ViewDraggable* > m_UIDraggableNodes;
+	Dictionary< uint32_t, ViewDraggable* > m_UIDraggableNodes;
 
-	ViewDraggable * m_TESTDraggable;
+	ViewFlyoutMenu * m_ToolboxMenu;
 };
 
 #endif//PAGEDIALOGUEEDITOR_H

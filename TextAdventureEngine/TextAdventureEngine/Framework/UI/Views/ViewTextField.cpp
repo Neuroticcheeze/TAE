@@ -12,10 +12,10 @@ ViewTextField::ViewTextField( const char * a_Name, Page * a_ContainerPage, View 
 	, m_Text( "Text", a_ContainerPage, this )
 	, m_EmptyTextView( "TextEmpty", a_ContainerPage, this )
 	, m_MultilineEnabled( false )
-	, m_Enabled( false )
 	, m_CursorPosition( 0 ) // Cursor is initially at the end
 	, m_CachedTextLength( 0 )
 {
+	SetEnabled();
 	SetIsInteractible( true );
 	SetTint( Colour::WHITE );
 
@@ -56,9 +56,7 @@ ViewTextField::ViewTextField( const char * a_Name, Page * a_ContainerPage, View 
 	InputManager::Instance().AttachListener( InputManager::InputCharEvent::ON_TEXTUAL_CHAR_TYPED, this );
 	InputManager::Instance().AttachListener( InputManager::InputKeyEvent::ON_KEY_PRESSED, this );
 
-	SetEnabled( true );
 	RefreshText();
-	SetEnabled( false );
 }
 
 //=====================================================================================
@@ -82,7 +80,7 @@ void ViewTextField::OnTick( float a_DeltaTime )
 //=====================================================================================
 void ViewTextField::OnTickPost( float a_DeltaTime )
 {
-	if ( GetEnabled() )
+	if ( HasFocus() )
 	{
 		// pulse cursor
 		if ( ModInterval( Engine::Instance().GetTime(), 0.5F ) )
@@ -105,14 +103,7 @@ void ViewTextField::OnMouseClick( const Vector2 & m_MousePosition, InputManager:
 //=====================================================================================
 void ViewTextField::RequestInitialEvents( IActionListener * a_ActionListener )
 {
-	if ( m_Enabled )
-	{
-		a_ActionListener->OnTextFieldEnabled( *this );
-	}
-	else
-	{
-		a_ActionListener->OnTextFieldDisabled( *this );
-	}
+	View::RequestInitialEvents( a_ActionListener );
 	
 	if ( HasFocus() )
 	{
@@ -296,35 +287,26 @@ void ViewTextField::OnKeyPressed( InputManager::Key a_Key )
 }
 
 //=====================================================================================
-void ViewTextField::SetEnabled( bool a_Enabled )
+void ViewTextField::OnEnabled()
 {
-	if ( a_Enabled != m_Enabled )
-	{
-		if ( m_Enabled = a_Enabled ) // when enabled
-		{
-			RefreshText();
-			GetBackground().SetTint( Colour::WHITE );
-			GetParent()->OnTextFieldEnabled( *this );
-		}
+	RefreshText();
+	GetBackground().SetTint( Colour::WHITE );
+}
 
-		else // when disabled
-		{
-			GetBackground().SetTint( Colour::GRAY.Lerp( Colour::WHITE, 0.2F ) );
-			GetParent()->OnTextFieldDisabled( *this );
-		}
-	}
+//=====================================================================================
+void ViewTextField::OnDisabled()
+{
+	GetBackground().SetTint( Colour::GRAY.Lerp( Colour::WHITE, 0.2F ) );
 }
 
 //=====================================================================================
 void ViewTextField::OnGainFocus()
 {
 	InputManager::Instance().SetTextualMode( true );
-	SetEnabled( true );
 }
 
 //=====================================================================================
 void ViewTextField::OnLoseFocus()
 {
 	InputManager::Instance().SetTextualMode( false );
-	SetEnabled( false );
 }

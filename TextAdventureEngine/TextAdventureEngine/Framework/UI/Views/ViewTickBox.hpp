@@ -15,13 +15,6 @@ public:
 
 	ViewTickBox( const char * a_Name, Page * a_ContainerPage, View * a_Parent = nullptr );
 
-	void SetEnabled( bool a_Enabled );
-
-	inline bool GetEnabled() const
-	{
-		return m_Enabled;
-	}
-
 	static const uint32_t SPRITE_BACKGROUND = 0;
 	static const uint32_t SPRITE_TICKMARK = 1;
 
@@ -38,13 +31,14 @@ public:
 
 protected:
 
+	void OnEnabled() override;
+	void OnDisabled() override;
 	void OnTick( float a_DeltaTime );
 	void OnMouseClick( const Vector2 & m_MousePosition, InputManager::MouseButton a_MouseButton );
 	void RequestInitialEvents( IActionListener * a_ActionListener );
 
 private:
 
-	bool	   m_Enabled;
 	bool	   m_Flag;
 	ViewSprite m_Sprites[ 2 ] = 
 	{

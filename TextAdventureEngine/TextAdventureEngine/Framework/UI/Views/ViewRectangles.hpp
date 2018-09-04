@@ -24,12 +24,15 @@ public:
 	ViewRectangles( const char * a_Name, Page * a_ContainerPage, View * a_Parent = nullptr )
 		: View( a_Name, a_ContainerPage, a_Parent )
 	{
+		SetEnabled();
 	}
 
 	Array< Info > & GetRectangleList() { return m_RectInfos; }
 
 protected:
 
+	void OnEnabled() override {}
+	void OnDisabled() override {}
 	void OnTick( float a_DeltaTime );
 	
 private:

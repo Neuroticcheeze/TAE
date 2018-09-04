@@ -9,10 +9,9 @@ ViewButton::ViewButton( const char * a_Name, Page * a_ContainerPage, View * a_Pa
 	: View( a_Name, a_ContainerPage, a_Parent )
 	, m_Background( "Background", a_ContainerPage, this )
 	, m_Label( "Label", a_ContainerPage, this )
-	, m_Enabled( false )
 {
+	SetEnabled();
 	SetIsInteractible( true );
-	SetEnabled( true );
 
 	m_Background.SetBorder( View::Alignment::LEFT, 0.0F );
 	m_Background.SetBorder( View::Alignment::RIGHT, 0.0F );
@@ -79,31 +78,17 @@ void ViewButton::OnMouseReleased( const Vector2 & m_MousePosition, InputManager:
 //=====================================================================================
 void ViewButton::RequestInitialEvents( IActionListener * a_ActionListener )
 {
-	if ( m_Enabled )
-	{
-		a_ActionListener->OnButtonEnabled( *this );
-	}
-	else
-	{
-		a_ActionListener->OnButtonDisabled( *this );
-	}
+	View::RequestInitialEvents( a_ActionListener );
 }
 
 //=====================================================================================
-void ViewButton::SetEnabled( bool a_Enabled )
+void ViewButton::OnEnabled()
 {
-	if ( a_Enabled != m_Enabled )
-	{
-		if ( m_Enabled = a_Enabled ) // when enabled
-		{
-			SetTint( Colour::WHITE );
-			GetParent()->OnButtonEnabled( *this );
-		}
+	SetTint( Colour::WHITE );
+}
 
-		else // when disabled
-		{
-			SetTint( Colour::GRAY.Lerp( Colour::RED, 0.5F ) );
-			GetParent()->OnButtonDisabled( *this );
-		}
-	}
+//=====================================================================================
+void ViewButton::OnDisabled()
+{
+	SetTint( Colour::GRAY.Lerp( Colour::RED, 0.5F ) );
 }

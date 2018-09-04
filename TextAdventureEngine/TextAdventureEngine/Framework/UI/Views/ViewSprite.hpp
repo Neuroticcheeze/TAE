@@ -25,6 +25,7 @@ public:
 		, m_SingleSpriteTexture( 0 )
 		, m_Overrider( nullptr )
 	{
+		SetEnabled();
 	}
 
 	void SetupFromNineSprite( SpriteSheet::Texture a_Texture, float a_EdgeSize = 50.0F );
@@ -40,6 +41,8 @@ public:
 	
 protected:
 
+	void OnEnabled() override {}
+	void OnDisabled() override {}
 	void OnTick( float a_DeltaTime );
 	
 private:

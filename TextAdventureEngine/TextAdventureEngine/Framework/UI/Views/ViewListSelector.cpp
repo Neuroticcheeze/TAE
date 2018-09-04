@@ -8,6 +8,7 @@ ViewListSelector::ViewSelection::ViewSelection( const char * a_Name, Page * a_Co
 	: View( a_Name, a_ContainerPage, a_Parent )
 	, m_Text( new ViewText( "Text", a_ContainerPage, this ) )
 {
+	SetEnabled();
 	SetIsInteractible( true );
 
 	m_Text->SetBorder( View::Alignment::LEFT, 0.0F );
@@ -51,7 +52,9 @@ void ViewListSelector::ViewSelection::OnMouseClick( const Vector2 & m_MousePosit
 ViewListSelector::ViewListSelector( const char * a_Name, Page * a_ContainerPage, View * a_Parent )
 	: View( a_Name, a_ContainerPage, a_Parent )
 	, m_SelectedIndex( 0 )
+	, m_SingleClickSelection( true )
 {
+	SetEnabled();
 	InputManager::Instance().AttachListener( InputManager::InputKeyEvent::ON_KEY_PRESSED, this );
 }
 
@@ -82,6 +85,7 @@ void ViewListSelector::OnKeyPressed( InputManager::Key a_Key )
 //=====================================================================================
 void ViewListSelector::RequestInitialEvents( IActionListener * a_ActionListener )
 {
+	View::RequestInitialEvents( a_ActionListener );
 	a_ActionListener->OnListSelectionChanged( *this, GetSelectedIndex() );
 }
 
@@ -89,14 +93,24 @@ void ViewListSelector::RequestInitialEvents( IActionListener * a_ActionListener 
 void ViewListSelector::OnSelection( ViewSelection * a_Selection )
 {
 	int32_t sel = m_List.IndexOf( a_Selection );
-	if ( GetSelectedIndex() != sel )
+	
+	if ( m_SingleClickSelection )
 	{
 		SetSelectedIndex( sel );
+		OnListSelectionConfirmed( *this, GetSelectedIndex() );
 	}
-
+	
 	else
 	{
-		OnListSelectionConfirmed( *this, GetSelectedIndex() );
+		if ( GetSelectedIndex() != sel )
+		{
+			SetSelectedIndex( sel );
+
+		}
+		else
+		{
+			OnListSelectionConfirmed( *this, GetSelectedIndex() );
+		}
 	}
 }
 
@@ -129,6 +143,8 @@ void ViewListSelector::SetList( const Array< CString > & a_List )
 		Free( *it );
 		++it;
 	}
+
+	m_TextList.Clear();
 	m_List.Clear();
 
 	const int32_t c = a_List.Count();
@@ -152,6 +168,7 @@ void ViewListSelector::SetList( const Array< CString > & a_List )
 		view->GetLabel()->SetText( itSrc->Get(), true );
 
 		AddChild( view );
+		m_TextList.Append( *itSrc );
 		m_List.Append( view );
 		++itSrc;
 	}

@@ -19,13 +19,6 @@ public:
 	ViewTextField( const char * a_Name, Page * a_ContainerPage, View * a_Parent = nullptr );
 	void Destruct() override;
 
-	void SetEnabled( bool a_Enabled );
-
-	inline bool GetEnabled() const
-	{
-		return m_Enabled;
-	}
-
 	inline ViewSprite & GetBackground()
 	{
 		return m_Background;
@@ -75,6 +68,8 @@ public:
 
 protected:
 
+	void OnEnabled() override;
+	void OnDisabled() override;
 	void OnTick( float a_DeltaTime );
 	void OnTickPost( float a_DeltaTime );
 	void OnMouseClick( const Vector2 & m_MousePosition, InputManager::MouseButton a_MouseButton );
@@ -92,7 +87,6 @@ private:
 	uint32_t m_CachedTextLength;
 
 	bool	   m_MultilineEnabled;
-	bool	   m_Enabled;
 	ViewSprite m_Background;
 	ViewText   m_Text;
 	ViewText   m_EmptyTextView;

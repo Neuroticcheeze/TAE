@@ -97,7 +97,7 @@ StringEntry StringTable::Process( const char * a_String )
 
 				if ( symbol.StringData_String.Length() > 0 )
 				{
-					PRINT( "StringTable::Process -> Found: STRING_DATA (@ %u): %s", symbolOpenIdx, symbol.StringData_String.Get() );
+					//PRINT( "StringTable::Process -> Found: STRING_DATA (@ %u): %s", symbolOpenIdx, symbol.StringData_String.Get() );
 				}
 			}
 			continue;
@@ -116,7 +116,7 @@ StringEntry StringTable::Process( const char * a_String )
 			if ( inner.Length() > 0 && inner.Get()[ 0 ] == '/' )
 			{
 				a1 = inner.SubString( 1, inner.Length() - 1 );
-				PRINT( "StringTable::Process -> Found: FORMAT POP (@ %u): %s", symbolOpenIdx, a1.Get() );
+				//PRINT( "StringTable::Process -> Found: FORMAT POP (@ %u): %s", symbolOpenIdx, a1.Get() );
 			}
 
 			else if ( splits.Count() == 1 || splits.Count() == 2 )
@@ -125,7 +125,7 @@ StringEntry StringTable::Process( const char * a_String )
 				a1 = splits[ 0U ];
 				a2 = splits.Count() == 1 ? "" : splits[ 1U ];
 
-				PRINT( "StringTable::Process -> Found: FORMAT (@ %u): %s [%s]", symbolOpenIdx, a1.Get(), a2.Get() );
+				//PRINT( "StringTable::Process -> Found: FORMAT (@ %u): %s [%s]", symbolOpenIdx, a1.Get(), a2.Get() );
 			}
 
 			{	// add format directive
@@ -179,7 +179,7 @@ if ( a1 == #ENUMVAL ) {\
 
 				if ( symbol.StringData_String.Length() > 0 )
 				{
-					PRINT( "StringTable::Process -> Found: STRING_DATA (@ %u): %s", symbolCloseIdx + 1, symbol.StringData_String.Get() );
+					//PRINT( "StringTable::Process -> Found: STRING_DATA (@ %u): %s", symbolCloseIdx + 1, symbol.StringData_String.Get() );
 				}
 			}
 		}
@@ -189,7 +189,7 @@ if ( a1 == #ENUMVAL ) {\
 		{
 			const CString & inner = string.SubString( symbolOpenIdx + 1, symbolCloseIdx - ( symbolOpenIdx + 1 ) );
 			const uint32_t stringId = WSID( inner.Get() );
-			PRINT( "StringTable::Process -> Found: TOKEN  (@ %u): '%s' [ID = %u]", symbolOpenIdx, inner.Get(), stringId );
+			//PRINT( "StringTable::Process -> Found: TOKEN  (@ %u): '%s' [ID = %u]", symbolOpenIdx, inner.Get(), stringId );
 			
 			{	// add token
 				StringEntry::Symbol symbol;
@@ -206,7 +206,7 @@ if ( a1 == #ENUMVAL ) {\
 
 				if ( symbol.StringData_String.Length() > 0 )
 				{
-					PRINT( "StringTable::Process -> Found: STRING_DATA (@ %u): %s", symbolCloseIdx + 1, symbol.StringData_String.Get() );
+					//PRINT( "StringTable::Process -> Found: STRING_DATA (@ %u): %s", symbolCloseIdx + 1, symbol.StringData_String.Get() );
 				}
 			}
 		}

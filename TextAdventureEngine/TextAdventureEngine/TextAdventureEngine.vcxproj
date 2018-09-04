@@ -341,6 +341,7 @@
     <ClCompile Include="Framework\UI\Views\ViewButton.cpp" />
     <ClCompile Include="Framework\UI\Views\ViewDraggable.cpp" />
     <ClCompile Include="Framework\UI\Views\ViewDropTarget.cpp" />
+    <ClCompile Include="Framework\UI\Views\ViewFlyoutMenu.cpp" />
     <ClCompile Include="Framework\UI\Views\ViewListSelector.cpp" />
     <ClCompile Include="Framework\UI\Views\ViewRectangles.cpp" />
     <ClCompile Include="Framework\UI\Views\ViewSizer.cpp" />
@@ -348,6 +349,7 @@
     <ClCompile Include="Framework\UI\Views\ViewTextField.cpp" />
     <ClCompile Include="Framework\UI\Views\ViewTickBox.cpp" />
     <ClCompile Include="Framework\Utils\Blackboard.cpp" />
+    <ClCompile Include="Framework\Utils\Uuid.cpp" />
     <ClCompile Include="GameStructure\Dialogue\Dialogue.cpp" />
     <ClCompile Include="GameStructure\Game.cpp" />
     <ClCompile Include="GameStructure\Globals.cpp" />
@@ -400,6 +402,7 @@
     <ClCompile Include="GameStructure\World\Parallax.cpp" />
     <ClCompile Include="[Tool] Dialogue Editor\DialogueEditor.cpp" />
     <ClCompile Include="[Tool] Dialogue Editor\Globals.cpp" />
+    <ClCompile Include="[Tool] Dialogue Editor\Structure\Object.cpp" />
     <ClCompile Include="[Tool] Dialogue Editor\UI\Pages\PageDialogueEditor.cpp" />
     <ClCompile Include="[Tool] Scene Editor\SceneEditor.cpp" />
   </ItemGroup>
@@ -446,6 +449,7 @@
     <ClInclude Include="Framework\UI\Views\ViewButton.hpp" />
     <ClInclude Include="Framework\UI\Views\ViewDraggable.hpp" />
     <ClInclude Include="Framework\UI\Views\ViewDropTarget.hpp" />
+    <ClInclude Include="Framework\UI\Views\ViewFlyoutMenu.hpp" />
     <ClInclude Include="Framework\UI\Views\ViewListSelector.hpp" />
     <ClInclude Include="Framework\UI\Views\ViewRectangles.hpp" />
     <ClInclude Include="Framework\UI\Views\ViewSizer.hpp" />
@@ -455,6 +459,7 @@
     <ClInclude Include="Framework\Utils\Blackboard.hpp" />
     <ClInclude Include="Framework\Utils\Shorthand.hpp" />
     <ClInclude Include="Framework\Utils\TypeTraits.hpp" />
+    <ClInclude Include="Framework\Utils\Uuid.hpp" />
     <ClInclude Include="GameStructure\Dialogue\Dialogue.hpp" />
     <ClInclude Include="GameStructure\Game.hpp" />
     <ClInclude Include="GameStructure\Globals.hpp" />
@@ -536,6 +541,8 @@
     <ClInclude Include="Framework\Utils\VFormat.hpp" />
     <ClInclude Include="[Tool] Dialogue Editor\DialogueEditor.hpp" />
     <ClInclude Include="[Tool] Dialogue Editor\Globals.hpp" />
+    <ClInclude Include="[Tool] Dialogue Editor\Structure\Object.hpp" />
+    <ClInclude Include="[Tool] Dialogue Editor\Structure\Objects\BlackboardValue.hpp" />
     <ClInclude Include="[Tool] Dialogue Editor\UI\Pages\PageDialogueEditor.hpp" />
     <ClInclude Include="[Tool] Scene Editor\SceneEditor.hpp" />
   </ItemGroup>

@@ -29,8 +29,8 @@ public:
 
 	ENUMCLASS( MouseButton, uint8_t )
 		LEFT,
-		RIGHT,
 		MIDDLE,
+		RIGHT,
 	END_ENUMCLASS( MouseButton, uint8_t )
 
 	typedef uint16_t KeyCode;
@@ -349,7 +349,7 @@ public:
 	void DetatchListener( InputMouseEvent a_Event, IMouseEventListener * a_EventListener );
 	void DetatchListener( InputCharEvent a_Event, ICharEventListener * a_EventListener );
 
-	static const uint32_t MaxListenersPerEvent = 256;
+	static const uint32_t MaxListenersPerEvent = 4096;
 
 	inline void IgnoreInput( bool a_Flag )
 	{

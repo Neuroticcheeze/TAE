@@ -31,12 +31,10 @@ public:
 	class IActionListener abstract
 	{
 	public:
-
+		
+		virtual void OnEnabled( View * a_View ) {}
+		virtual void OnDisabled( View * a_View ) {}
 		virtual void OnButtonPress( ViewButton & a_ViewButton ) {}
-		virtual void OnButtonDisabled( ViewButton & a_ViewButton ) {}
-		virtual void OnButtonEnabled( ViewButton & a_ViewButton ) {}
-		virtual void OnTextFieldDisabled( ViewTextField & a_ViewTextField ) {}
-		virtual void OnTextFieldEnabled( ViewTextField & a_ViewTextField ) {}
 		virtual void OnTextFieldFocus( ViewTextField & a_ViewTextField ) {}
 		virtual void OnTextFieldFocusLost( ViewTextField & a_ViewTextField ) {}
 		virtual void OnTextFieldSubmit( ViewTextField & a_ViewTextField ) {}
@@ -52,12 +50,10 @@ public:
 
 	void AddActionListener( IActionListener * a_ActionListener, bool a_SendInitialEvents = true );
 	void RemoveActionListener( IActionListener * a_ActionListener );
-
+	
+	void OnEnabled( View * a_View );
+	void OnDisabled( View * a_View );
 	void OnButtonPress( ViewButton & a_ViewButton );
-	void OnButtonDisabled( ViewButton & a_ViewButton );
-	void OnButtonEnabled( ViewButton & a_ViewButton );
-	void OnTextFieldDisabled( ViewTextField & a_ViewTextField );
-	void OnTextFieldEnabled( ViewTextField & a_ViewTextField );
 	void OnTextFieldFocus( ViewTextField & a_ViewTextField );
 	void OnTextFieldFocusLost( ViewTextField & a_ViewTextField );
 	void OnTextFieldSubmit( ViewTextField & a_ViewTextField );
@@ -72,7 +68,9 @@ public:
 
 protected:
 
-	virtual void RequestInitialEvents( IActionListener * a_ActionListener ) {}
+	virtual void OnEnabled() {}
+	virtual void OnDisabled() {}
+	virtual void RequestInitialEvents( IActionListener * a_ActionListener );
 
 private:
 
@@ -93,7 +91,8 @@ public:
 		RIGHT,
 		TOP,
 		BOTTOM,
-	END_ENUMCLASS( Alignment, uint8_t )
+		UNSPECIFIED,
+	END_ENUM_C2( Alignment, uint8_t, 4 )
 
 	void SetBorder( Alignment a_Alignment, float a_Amount );
 	void SetBorderPx( Alignment a_Alignment, float a_Amount ); // Set borders by locking their offset from the opposite border in px
@@ -129,7 +128,7 @@ public:
 		a_ChildView->SetZOrder( a_ChildView->GetZOrder() + 1 );
 		a_ChildView->SetZOrder( a_ChildView->GetZOrder() - 1 );
 		a_ChildView->OnParentRectangleChanged( m_Offset, m_Size, this );
-
+		
 		return true;
 	}
 
@@ -172,29 +171,7 @@ public:
 	{
 		return !( *this == a_Other );
 	}
-
-	inline View * GetParentView()
-	{
-		return m_ParentView;
-	}
-
-	inline const View * GetParentView() const
-	{
-		return m_ParentView;
-	}
-
-protected:
-
-	virtual void OnReset() {}
-	virtual void OnTick( float a_DeltaTime ) {}
-	virtual void OnTickPost( float a_DeltaTime ) {}
-	virtual void OnMouseEnter( const Vector2 & m_MousePosition ) {}
-	virtual void OnMouseLeave( const Vector2 & m_MousePosition ) {}
-	virtual void OnMouseClick( const Vector2 & m_MousePosition, InputManager::MouseButton a_MouseButton ) {}
-	virtual void OnMouseReleased( const Vector2 & m_MousePosition, InputManager::MouseButton a_MouseButton ) {}
-	virtual void OnGainFocus() {}
-	virtual void OnLoseFocus() {}
-
+	
 	bool HasFocus() const;
 	View * GetViewWithFocus() const;
 
@@ -216,7 +193,25 @@ protected:
 	void SetIsInteractible( bool a_Flag ) { m_Interactible = a_Flag; }
 	bool GetIsInteractible() const { return m_Interactible; }
 
+	void SetEnabled( bool a_Flag = true );
+	bool GetEnabled() const;
+
+	bool GetMouseOver() const;
+
 protected:
+
+	void SendMessageUpward( uint32_t a_Message );
+	virtual bool OnMessage( View * a_Child, uint32_t a_Message ) { return true; }
+
+	virtual void OnReset() {}
+	virtual void OnTick( float a_DeltaTime ) {}
+	virtual void OnTickPost( float a_DeltaTime ) {}
+	virtual void OnMouseEnter( const Vector2 & m_MousePosition ) {}
+	virtual void OnMouseLeave( const Vector2 & m_MousePosition ) {}
+	virtual void OnMouseClick( const Vector2 & m_MousePosition, InputManager::MouseButton a_MouseButton ) {}
+	virtual void OnMouseReleased( const Vector2 & m_MousePosition, InputManager::MouseButton a_MouseButton ) {}
+	virtual void OnGainFocus() {}
+	virtual void OnLoseFocus() {}
 
 	virtual void OnRectangleChanged( const Vector2 & a_TrueOffset, const Vector2 & a_TrueSize ) {}
 	
@@ -227,6 +222,7 @@ protected:
 	
 private:
 
+	bool m_Hover;
 	bool m_Interactible;
 
 	void AppendToFrameCacheList();
@@ -237,6 +233,9 @@ private:
 	void OnParentRectangleChanged( const Vector2 & a_TrueOffset, const Vector2 & a_TrueSize, const View * a_Parent );
 
 	void RecalculateTrueRectangle();
+	
+	bool m_Enabled;
+	
 	CString m_Name;
 	float m_Borders[ AlignmentCount ];
 	float m_BorderPxs[ AlignmentCount ];

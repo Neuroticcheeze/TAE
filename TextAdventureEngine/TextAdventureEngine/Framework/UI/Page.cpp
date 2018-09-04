@@ -5,6 +5,7 @@
 Page::ViewPage::ViewPage( const char * a_Name, Page * a_ContainerPage ) 
 	: View( a_Name, a_ContainerPage, nullptr, true )
 {
+	SetIsInteractible( true );
 	SetTint( Colour::WHITE );
 	SetBordersFromSizeAndOffset( Engine::Instance().GetDisplaySize() );
 }
@@ -15,6 +16,7 @@ Page::Page( const char * a_Name )
 	, m_FocusedView( 0 )
 {
 	m_RootView = new ViewPage( a_Name, this );
+	m_RootView->SetEnabled();
 	m_RootView->SetTint( Colour::WHITE );
 }
 
