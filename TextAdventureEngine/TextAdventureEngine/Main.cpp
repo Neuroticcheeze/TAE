@@ -14,6 +14,7 @@
 #include <Framework/Data/String/StringManager.hpp>
 #include <Framework/UI/FadeManager.hpp>
 #include <Framework/UI/PageManager.hpp>
+#include <Framework/Console/ConsoleManager.hpp>
 
 #include <GameStructure/Items/ItemRegistry.hpp>
 #include <GameStructure/World/Nature/TimeFlow.hpp>
@@ -65,6 +66,7 @@ int main( int args, char *argv[] )
 	INIT_MANAGER( FadeManager );
 	INIT_MANAGER( TimeFlowManager );
 	INIT_MANAGER( WorldManager );
+	INIT_MANAGER( ConsoleManager );
 
 #undef DECL_SAVEFILE
 #undef SAVEFILES
@@ -86,6 +88,7 @@ int main( int args, char *argv[] )
 	INITPOST_MANAGER( FadeManager );
 	INITPOST_MANAGER( TimeFlowManager );
 	INITPOST_MANAGER( WorldManager );
+	INITPOST_MANAGER( ConsoleManager );
 
 	Engine::Instance().StartGame( []( float a_DeltaTime )
 	{
@@ -152,6 +155,7 @@ int main( int args, char *argv[] )
 
 	g_TheContext->Finalise();
 
+	FINIT_MANAGER( ConsoleManager );
 	FINIT_MANAGER( WorldManager );
 	FINIT_MANAGER( TimeFlowManager );
 	FINIT_MANAGER( FadeManager );

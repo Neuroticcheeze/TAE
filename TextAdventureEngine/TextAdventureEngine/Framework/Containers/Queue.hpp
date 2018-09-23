@@ -30,7 +30,7 @@ public:
 
 	~Queue()
 	{
-		BFree( m_Data );
+		CFree( m_Data );
 		m_Length = 0;
 		m_Capacity = 0;
 	}
@@ -42,7 +42,7 @@ public:
 
 		if ( m_Data )
 		{
-			BFree( m_Data );
+			CFree( m_Data );
 		}
 
 		if ( a_Other.m_Data )
@@ -50,9 +50,14 @@ public:
 			m_Length = a_Other.m_Length;
 			m_Capacity = a_Other.m_Capacity;
 
-			m_Data = BAllocate< T >( m_Capacity * sizeof(T) );
-			BCopy( a_Other.m_Data, m_Data, m_Length );
+			m_Data = CAllocate< T >( m_Capacity );
+			for ( uint32_t k = 0; k < m_Capacity; ++k )
+			{
+				m_Data[ k ] = a_Other.m_Data[ k ];
+			}
 		}
+
+		return *this;
 	}
 
 	T * Peek() const
@@ -101,7 +106,10 @@ public:
 
 		if ( m_Length > 1 )
 		{
-			BCopy( m_Data + 1, m_Data, ( m_Length - 1 ) * sizeof( T ) );
+			for ( uint32_t k = 1; k < m_Length; ++k )
+			{
+				m_Data[ k - 1 ] = m_Data[ k ];
+			}
 		}
 
 		Resize( m_Length - 1 );
@@ -120,18 +128,22 @@ private:
 		}
 
 		T* temp = m_Data;
-		uint32_t oldBLength = m_Length * sizeof( T );
+		uint32_t oldBLength = m_Length;
 
 		m_Length = a_NewLength;
 		m_Capacity = NextPowerOf2( m_Length );
 
-		m_Data = CAllocate< T >( m_Capacity * sizeof( T ) );
+		m_Data = CAllocate< T >( m_Capacity );
 
-		BCopy( temp, m_Data, Min( oldBLength, m_Length * static_cast< uint32_t >( sizeof( T ) ) ) );
-
+		const uint32_t p = Min( oldBLength, m_Length );
+		for ( uint32_t k = 0; k < p; ++k )
+		{
+			m_Data[ k ] = temp[ k ];
+		}
+		
 		if ( temp )
 		{
-			BFree( temp );
+			CFree( temp );
 		}
 	}
 

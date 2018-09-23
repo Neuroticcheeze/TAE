@@ -25,7 +25,7 @@ void ViewText::OnTick( float a_DeltaTime )
 	// We can call this every frame because it will only do any work if the text size changes.
 	if ( !UsingBitmapFont() )
 	{
-		GraphicsManager::Instance().SetFontSize( m_Font, m_TextSize );
+		GraphicsManager::Instance().SetFontSize( m_Font, static_cast< uint32_t >( m_TextSize ) );
 	}
 
 	float x = GetPosition().x;

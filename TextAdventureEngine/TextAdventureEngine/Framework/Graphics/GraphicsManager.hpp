@@ -180,6 +180,7 @@ public:
 	void	GfxDrawQuadTextured(const Vector2 & a_Position, const Vector2 & a_Size, int32_t a_SamplerUnit, bool a_UseSetUV = true, float a_AlphaPowFactor = 1.0F, const InitialiserList< Vector2 > & a_UVCoordinates = { Vector2::ZERO, Vector2::UP, Vector2::ONE, Vector2::RIGHT } );
 	void	GfxDrawLine( const Vector2 & a_PositionA, const Vector2 & a_PositionB, float a_Thickness, bool a_EnableGradient = false );
 	void	GfxDrawBezier( const Bezier & a_Bezier, float a_Thickness );
+	void	GfxDrawBezier( const Bezier & a_Bezier, float a_Thickness, float a_Dash, float a_DashRatio = 0.5F );
 	void	GfxDrawTriangle( const Vector2 & a_PositionA, const Vector2 & a_PositionB, const Vector2 & a_PositionC );
 
 private:
@@ -211,6 +212,7 @@ private:
 	Shader m_TextureColourExplicitUVShader;
 	Shader m_VQuadShader;
 	Shader m_BezierVQuadShader;
+	Shader m_BezierVQuadDashedShader;
 	Shader m_TriShader;
 	GLMesh * m_Triangle = nullptr;
 	GLMesh * m_01Quad = nullptr;

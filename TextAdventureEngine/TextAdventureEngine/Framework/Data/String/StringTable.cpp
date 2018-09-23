@@ -87,7 +87,8 @@ StringEntry StringTable::Process( const char * a_String )
 		int32_t symbolCloseIdx = string.Find( "]", symbolOpenIdx );
 		int32_t nextIdx = ( symbolCloseIdx != -1 && ( ( k + 1 ) < symbolsIdx.Count() ) ) ? ( symbolsIdx[ k + 1 ] ) : ( string.Length() );
 		
-		if ( symbolCloseIdx == -1 || ( symbolOpenIdx > 0 && string[ symbolOpenIdx - 1 ] == '\\' ) )
+		const bool backslash = ( symbolOpenIdx > 0 && string[ symbolOpenIdx - 1 ] == '\\' );
+		if ( symbolCloseIdx == -1 || backslash )
 		{
 			{	// add string
 				StringEntry::Symbol symbol;

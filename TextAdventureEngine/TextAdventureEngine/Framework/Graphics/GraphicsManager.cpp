@@ -461,6 +461,7 @@ void GraphicsManager::InitPost()
 	m_TextureColourExplicitUVShader = LoadShader( WSID( "_Internal_TextureColourExplicitUVShader" ), "texture.shader", WSID( "Col_VExplicitUV" ), WSID( "Col_FTextureColour" ) );
 	m_VQuadShader = LoadShader( WSID( "_Internal_VQuad" ), "vquad.shader", WSID( "VQuad_VMain" ), WSID( "VQuad_FMain" ) );
 	m_BezierVQuadShader = LoadShader( WSID( "_Internal_BezierVQuad" ), "vquad_bezier.shader", WSID( "VMain" ), WSID( "FMain" ) );
+	m_BezierVQuadDashedShader = LoadShader( WSID( "_Internal_BezierVQuadDashed" ), "vquad_bezier.shader", WSID( "VMainDashed" ), WSID( "FMainDashed" ) );
 	m_TriShader = LoadShader( WSID( "_Internal_TriShader" ), "colour.shader", WSID( "Col_VExplicit" ), WSID( "Col_FExplicit" ) );
 
 	m_BadStringTexture = ResolveTextTexture( "[ERROR]", m_DefaultFont, false );
@@ -535,6 +536,7 @@ void GraphicsManager::Finalise()
 	UnloadShader( m_TextureColourExplicitUVShader );
 	UnloadShader( m_VQuadShader );
 	UnloadShader( m_BezierVQuadShader );
+	UnloadShader( m_BezierVQuadDashedShader );
 	UnloadShader( m_TriShader );
 
 	Free( m_Triangle );
@@ -2013,6 +2015,8 @@ void GraphicsManager::GfxDrawLine( const Vector2 & a_PositionA, const Vector2 & 
 //=====================================================================================
 void GraphicsManager::GfxDrawBezier( const Bezier & a_Bezier, float a_Thickness )
 {
+	PROFILE;
+
 	if ( a_Thickness <= 0.0F || a_Bezier.GetControlPoints().Count() < 2 )
 	{
 		return;
@@ -2033,6 +2037,46 @@ void GraphicsManager::GfxDrawBezier( const Bezier & a_Bezier, float a_Thickness 
 	SetShaderGlobalInt32( m_BezierVQuadShader, GetShaderGlobalLocation( m_BezierVQuadShader, "uControlPointsCount" ), cps.Count() );
 
 	SetShader( m_BezierVQuadShader );
+
+	GLDraw::Instance().DrawMesh( m_BezierQuadStrip128 );
+}
+
+//=====================================================================================
+void GraphicsManager::GfxDrawBezier( const Bezier & a_Bezier, float a_Thickness, float a_Dash, float a_DashRatio )
+{
+	PROFILE2( "Dashed" );
+
+	if ( a_Thickness <= 0.0F || a_Bezier.GetControlPoints().Count() < 2 )
+	{
+		return;
+	}
+
+	a_DashRatio = Clamp( a_DashRatio );
+	a_Dash = Max( 0.0F, a_Dash );
+	if ( a_Dash == 0.0F || a_DashRatio == 1.0F )
+	{
+		GfxDrawBezier( a_Bezier, a_Thickness );
+		return;
+	}
+
+	Bezier bez = a_Bezier;
+	while ( bez.GetControlPoints().Count() > 64 )
+	{
+		bez = bez.GetLowerOrder( 0.5F );
+	}
+
+	const Array< Vector2 > & cps = a_Bezier.GetControlPoints();
+
+	SetShaderGlobalFloat3x3( m_BezierVQuadDashedShader, GetShaderGlobalLocation( m_BezierVQuadDashedShader, "uTransform" ), TfGetTop() );
+	SetShaderGlobalColour( m_BezierVQuadDashedShader, GetShaderGlobalLocation( m_BezierVQuadDashedShader, "uColour1" ), m_Colour[ ( uint32_t )COL_PRIMARY ] );
+	SetShaderGlobalColour( m_BezierVQuadDashedShader, GetShaderGlobalLocation( m_BezierVQuadDashedShader, "uColour2" ), m_Colour[ ( uint32_t )COL_SECONDARY ] );
+	SetShaderGlobalFloat1( m_BezierVQuadDashedShader, GetShaderGlobalLocation( m_BezierVQuadDashedShader, "uThickness" ), a_Thickness );
+	SetShaderGlobalFloat1( m_BezierVQuadDashedShader, GetShaderGlobalLocation( m_BezierVQuadDashedShader, "uDash" ), a_Dash );
+	SetShaderGlobalFloat1( m_BezierVQuadDashedShader, GetShaderGlobalLocation( m_BezierVQuadDashedShader, "uDashRatio" ), a_DashRatio );
+	SetShaderGlobalFloat2Array( m_BezierVQuadDashedShader, GetShaderGlobalLocation( m_BezierVQuadDashedShader, "uControlPoints" ), cps );
+	SetShaderGlobalInt32( m_BezierVQuadDashedShader, GetShaderGlobalLocation( m_BezierVQuadDashedShader, "uControlPointsCount" ), cps.Count() );
+
+	SetShader( m_BezierVQuadDashedShader );
 
 	GLDraw::Instance().DrawMesh( m_BezierQuadStrip128 );
 }

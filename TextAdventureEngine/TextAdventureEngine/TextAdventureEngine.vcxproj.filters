@@ -288,6 +288,18 @@
     <ClCompile Include="[Tool] Dialogue Editor\Structure\Object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="[Tool] Dialogue Editor\UI\Views\ViewNodePlug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\UI\Views\ViewColour.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\UI\Pages\PageConsole.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Console\ConsoleManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Containers\Array.hpp">
@@ -702,6 +714,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="[Tool] Dialogue Editor\Structure\Objects\BlackboardValue.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="[Tool] Dialogue Editor\UI\Views\ViewNodePlug.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\UI\Views\ViewColour.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="[Tool] Dialogue Editor\Structure\Objects\Dialogue.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\UI\Pages\PageConsole.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Console\ConsoleManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

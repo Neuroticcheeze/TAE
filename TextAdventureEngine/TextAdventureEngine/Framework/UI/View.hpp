@@ -198,6 +198,9 @@ public:
 
 	bool GetMouseOver() const;
 
+	Page * GetContainerPage() { return m_ContainerPage; }
+	const Page * GetContainerPage() const { return m_ContainerPage; }
+
 protected:
 
 	void SendMessageUpward( uint32_t a_Message );
@@ -214,9 +217,6 @@ protected:
 	virtual void OnLoseFocus() {}
 
 	virtual void OnRectangleChanged( const Vector2 & a_TrueOffset, const Vector2 & a_TrueSize ) {}
-	
-	Page * GetContainerPage() { return m_ContainerPage; }
-	const Page * GetContainerPage() const { return m_ContainerPage; }
 
 	virtual bool CheckInput( bool a_ReleaseOnly );
 	

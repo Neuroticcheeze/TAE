@@ -202,10 +202,10 @@ void ViewFlyoutMenu::SetList( const Array< FlyoutContentTree > & a_List )
 
 	m_List.Clear();
 
-	const int32_t c = a_List.Count();
+	const float c = static_cast< float >( a_List.Count() );
 	const float vc = 1.0F / static_cast< float >( c );
 
-	SetBordersFromSizeAndOffset( Vector2( GetSize().x, c * ITEM_HEIGHT_PX ), GetPosition() + ( -Vector2::UP * ( c - 1 ) * ITEM_HEIGHT_PX ) );
+	SetBordersFromSizeAndOffset( Vector2( GetSize().x, c * ITEM_HEIGHT_PX ), GetPosition() + ( -Vector2::UP * ( c - 1.0F ) * ITEM_HEIGHT_PX ) );
 
 	auto itSrc = a_List.First();
 	const auto endSrc = a_List.End();

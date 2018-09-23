@@ -3,7 +3,7 @@
 #define DEBUG_H
 
 ///* Enable this macro for usage of debug toolset */
-#define ALWAYS_DEBUG
+//#define ALWAYS_DEBUG
 
 #if defined( _DEBUG ) || defined( ALWAYS_DEBUG )
 
@@ -46,9 +46,9 @@ void PDump();
 #define PROFILE
 #define PROFILE2( BLOCK_NAME )
 #define PROFILE_DUMP_RECORDINGS
-#define ASSERT( EXP ) ( EXP )
-#define ASSERT_WARN( EXP ) ( EXP )
-#define VERIFY( EXP, CONDITION ) ( EXP )
+#define ASSERT( EXP, FMT, ... ) ( EXP )
+#define ASSERT_WARN( EXP, FMT, ... ) ( EXP )
+#define VERIFY( EXP, CONDITION, FMT, ... ) ( EXP )
 #define PROFILE_DUMP_RECORDINGS
 #endif
 

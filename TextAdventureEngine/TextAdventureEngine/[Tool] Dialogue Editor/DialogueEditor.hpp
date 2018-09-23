@@ -5,6 +5,7 @@
 #include <Framework/ApplicationContext.hpp>
 #include <Framework/Math/Linear/Vector2.hpp>
 #include <Framework/Containers/CString.hpp>
+#include <[Tool] Dialogue Editor/Structure/Object.hpp>
 
 //=====================================================================================
 class DialogueEditor final
@@ -14,16 +15,9 @@ public:
 
 	struct EditorNode
 	{
-		ENUM( Type, uint8_t )
-			DIALOGUE,
-			RESPONSE,
-			SELECTOR,
-		END_ENUM;
-
-		Type Type;
-		CString Name;
 		Vector2 Position;
 		Vector2 Size;
+		Exposer * Exposer = nullptr;
 	};
 
 public:
@@ -33,16 +27,26 @@ public:
 	void Finalise() override;
 	const char * GetName() const override { return "Dialogue Editor"; }
 
-	void AddEditorNode( const EditorNode & a_EditorNode )
+	void AddEditorNode( uint32_t a_Id, const EditorNode & a_EditorNode )
 	{
-		m_EditorNodes.Append( a_EditorNode );
+		m_EditorNodes.Put( a_Id, a_EditorNode );
+	}
+
+	EditorNode * GetEditorNode( uint32_t a_Id )
+	{
+		return m_EditorNodes[ a_Id ];
+	}
+
+	const EditorNode * GetEditorNode( uint32_t a_Id ) const
+	{
+		return m_EditorNodes[ a_Id ];
 	}
 
 	static DialogueEditor * Get();
 
 private:
 
-	Array< EditorNode > m_EditorNodes;
+	Dictionary< uint32_t, EditorNode > m_EditorNodes;
 };
 
 #endif//DIALOGUEEDITOR_H

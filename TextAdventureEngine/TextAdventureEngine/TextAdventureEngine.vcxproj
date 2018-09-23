@@ -230,6 +230,7 @@
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <OmitFramePointers>true</OmitFramePointers>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <AdditionalDependencies>opengl32.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_mixer.lib;SDL2_image.lib;libsndfile-1.lib;sigil.lib;portaudio_x86_d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -315,6 +316,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Framework\Audio\AudioManager.cpp" />
+    <ClCompile Include="Framework\Console\ConsoleManager.cpp" />
     <ClCompile Include="Framework\Containers\CString.cpp" />
     <ClCompile Include="Framework\Containers\DataStream.cpp" />
     <ClCompile Include="Framework\Containers\WString.cpp" />
@@ -338,7 +340,9 @@
     <ClCompile Include="Framework\Graphics\Vector\VectorGraphic.cpp" />
     <ClCompile Include="Framework\Graphics\Vector\VectorShape.cpp" />
     <ClCompile Include="Framework\Template\Cloneable.hpp" />
+    <ClCompile Include="Framework\UI\Pages\PageConsole.cpp" />
     <ClCompile Include="Framework\UI\Views\ViewButton.cpp" />
+    <ClCompile Include="Framework\UI\Views\ViewColour.cpp" />
     <ClCompile Include="Framework\UI\Views\ViewDraggable.cpp" />
     <ClCompile Include="Framework\UI\Views\ViewDropTarget.cpp" />
     <ClCompile Include="Framework\UI\Views\ViewFlyoutMenu.cpp" />
@@ -404,10 +408,12 @@
     <ClCompile Include="[Tool] Dialogue Editor\Globals.cpp" />
     <ClCompile Include="[Tool] Dialogue Editor\Structure\Object.cpp" />
     <ClCompile Include="[Tool] Dialogue Editor\UI\Pages\PageDialogueEditor.cpp" />
+    <ClCompile Include="[Tool] Dialogue Editor\UI\Views\ViewNodePlug.cpp" />
     <ClCompile Include="[Tool] Scene Editor\SceneEditor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\ApplicationContext.hpp" />
+    <ClInclude Include="Framework\Console\ConsoleManager.hpp" />
     <ClInclude Include="Framework\Engine.hpp" />
     <ClInclude Include="Framework\Audio\AudioManager.hpp" />
     <ClInclude Include="Framework\Containers\Array.hpp" />
@@ -446,7 +452,9 @@
     <ClInclude Include="Framework\Graphics\Vector\VectorGraphic.hpp" />
     <ClInclude Include="Framework\Graphics\Vector\VectorShape.hpp" />
     <ClInclude Include="Framework\Math\Relationship\Graph.hpp" />
+    <ClInclude Include="Framework\UI\Pages\PageConsole.hpp" />
     <ClInclude Include="Framework\UI\Views\ViewButton.hpp" />
+    <ClInclude Include="Framework\UI\Views\ViewColour.hpp" />
     <ClInclude Include="Framework\UI\Views\ViewDraggable.hpp" />
     <ClInclude Include="Framework\UI\Views\ViewDropTarget.hpp" />
     <ClInclude Include="Framework\UI\Views\ViewFlyoutMenu.hpp" />
@@ -543,7 +551,9 @@
     <ClInclude Include="[Tool] Dialogue Editor\Globals.hpp" />
     <ClInclude Include="[Tool] Dialogue Editor\Structure\Object.hpp" />
     <ClInclude Include="[Tool] Dialogue Editor\Structure\Objects\BlackboardValue.hpp" />
+    <ClInclude Include="[Tool] Dialogue Editor\Structure\Objects\Dialogue.hpp" />
     <ClInclude Include="[Tool] Dialogue Editor\UI\Pages\PageDialogueEditor.hpp" />
+    <ClInclude Include="[Tool] Dialogue Editor\UI\Views\ViewNodePlug.hpp" />
     <ClInclude Include="[Tool] Scene Editor\SceneEditor.hpp" />
   </ItemGroup>
   <ItemGroup>

@@ -79,6 +79,25 @@ struct Colour final : public StringRepresentable< Colour >
 		newc.a = Max( a_Alpha, 0.0F );
 		return newc;
 	}
+
+	Colour & WithSaturation( float a_Saturation )
+	{
+		const float f = Luminosity();
+		const Colour gray( f, f, f, a );
+		return *this = Lerp( gray, 1.0F - Clamp( a_Saturation ) );
+	}
+
+	const Colour WithSaturation( float a_Saturation ) const
+	{
+		const float f = Luminosity();
+		const Colour gray( f, f, f, a );
+		return Lerp( gray, 1.0F - Clamp( a_Saturation ) );
+	}
+
+	static friend Colour operator-( float a_LHS, const Colour & a_RHS )
+	{
+		return Colour( a_LHS - a_RHS.r, a_LHS - a_RHS.g, a_LHS - a_RHS.b, a_LHS - a_RHS.a );
+	}
 };
 
 //=====================================================================================

@@ -27,7 +27,7 @@ ViewTextField::ViewTextField( const char * a_Name, Page * a_ContainerPage, View 
 	m_Background.SetTint( Colour::WHITE );
 	AddChild( &m_Background );
 
-	m_Text.SetBorder( View::Alignment::LEFT, 0.05F );
+	m_Text.SetBorder( View::Alignment::LEFT, 0.0F );
 	m_Text.SetBorder( View::Alignment::RIGHT, 0.0F );
 	m_Text.SetBorder( View::Alignment::TOP, 0.5F );
 	m_Text.SetBorder( View::Alignment::BOTTOM, 0.5F );
@@ -159,12 +159,17 @@ void ViewTextField::RefreshText()
 
 	RefreshCursor();
 	GetParent()->OnTextFieldValueChanged( *this, GetTextView().GetText() );
+	
+	if ( InputChangedEventFunctor )
+	{
+		InputChangedEventFunctor( GetTextView().GetText() );
+	}
 }
 
 //=====================================================================================
 void ViewTextField::OnCharTyped( char a_Char )
 {
-	if ( GetEnabled() )
+	if ( GetEnabled() && HasFocus() )
 	{
 		switch ( a_Char )
 		{
@@ -206,13 +211,13 @@ void ViewTextField::OnCharTyped( char a_Char )
 //=====================================================================================
 void ViewTextField::OnKeyPressed( InputManager::Key a_Key )
 {
-	if ( GetEnabled() )
+	if ( GetEnabled() && HasFocus() )
 	{
 		if ( a_Key == InputManager::KEYCODE_DELETE )
 		{
 			const CString & text = GetTextView().GetText();
 			const uint32_t length = text.Length();
-			if ( m_CursorPosition < length )
+			if ( static_cast< uint32_t >( m_CursorPosition ) < length )
 			{
 				GetTextView().SetText( ( text.SubString( 0, m_CursorPosition ) + text.SubString( m_CursorPosition + 1, length - m_CursorPosition - 1 ) ).Get() );
 			}

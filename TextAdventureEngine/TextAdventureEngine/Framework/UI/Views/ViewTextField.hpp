@@ -66,6 +66,8 @@ public:
 	inline void SetMultilineEnabled( bool a_Enabled = true ) { m_MultilineEnabled = a_Enabled; }
 	inline bool GetMultilineEnabled() const { return m_MultilineEnabled; }
 
+	Functor< void( const CString & ) > InputChangedEventFunctor;
+
 protected:
 
 	void OnEnabled() override;
