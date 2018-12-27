@@ -1,2 +1,237 @@
-﻿  Main.cpp
-  TextAdventureEngine.vcxproj -> C:\Users\Neuro\Desktop\Text Adventure Engine\TAE\TextAdventureEngine\Debug\TextAdventureEngine.exe
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: The intermediate directory (C:\Users\Neuro\Desktop\Text Adventure Engine\TAE\TextAdventureEngine\_Inter\Debug\) contains files shared from another project (NeuroEngine.vcxproj, TextAdventureEngine.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  NavFlowField.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\ai\path\navflowfield.cpp(336): warning C4244: 'argument': conversion from 'uint32_t' to 'float', possible loss of data
+  AudioManager.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  ComputeManager.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\compute\computemanager.cpp(241): warning C4101: 'e': unreferenced local variable
+  ConsoleManager.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  ICommand.cpp
+  CString.cpp
+  DataStream.cpp
+  WString.cpp
+  CompressionManager.cpp
+  StringManager.cpp
+  StringTable.cpp
+  XmlObject.cpp
+  Engine.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\engine.cpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\engine.cpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\engine.cpp(173): warning C4244: 'argument': conversion from 'float' to 'int32_t', possible loss of data
+  FileManager.cpp
+  SaveManager.cpp
+  XmlManager.cpp
+  GaussianBlurFilter.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  GLDraw.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\gldraw.cpp(151): warning C4018: '>': signed/unsigned mismatch
+  GLMesh.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\glmesh.cpp(101): warning C4018: '<': signed/unsigned mismatch
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\glmesh.cpp(207): warning C4018: '<': signed/unsigned mismatch
+  GLMeshIndexed.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\glmeshindexed.cpp(71): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Compiling...
+  GLRenderTexture.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  GLShader.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  GLShaderStorageBuffer.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\glshaderstoragebuffer.cpp(29): warning C4018: '>': signed/unsigned mismatch
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\glshaderstoragebuffer.cpp(52): warning C4018: '>': signed/unsigned mismatch
+  GLTexture.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  ImageFilterManager.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  ParticleManager.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  ParticleMemoryPool.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  VectorEllipse.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  VectorGraphic.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  VectorShape.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  VertexBuffer.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  GPUGradient.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  RectilinearPhysicsSystem.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\physics\rectilinearphysicssystem.cpp(80): warning C4244: 'argument': conversion from 'int32_t' to 'float', possible loss of data
+  PageConsole.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  ViewButton.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  ViewColour.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  ViewDraggable.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  ViewDropTarget.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  ViewFlyoutMenu.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  ViewListSelector.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  Generating Code...
+  Compiling...
+  ViewRectangles.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  ViewSizer.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  ViewSlider.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  ViewTextField.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  ViewTickBox.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  Blackboard.cpp
+  Uuid.cpp
+  FadeManager.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  Page.cpp
+  PageManager.cpp
+  ViewSprite.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  ViewText.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  View.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  GraphicsManager.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\graphicsmanager.cpp(460): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  NineSpriteSheet.cpp
+  Emitter.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  ParticleSystem.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\particles\particlesystem.cpp(239): warning C4244: 'argument': conversion from 'const double' to 'float', possible loss of data
+  SpriteSheet.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  CommandLineManager.cpp
+  InputManager.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\input\inputmanager.cpp(4): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\input\inputmanager.cpp(4): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  Generating Code...
+  Compiling...
+  Colour.cpp
+  Bezier.cpp
+  Vector2.cpp
+  ThreadManager.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\thread\threadmanager.cpp(146): warning C4302: 'type cast': truncation from 'void *' to 'uint8_t'
+  Debug.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\utils\debug.cpp(54): warning C4129: '[': unrecognized character escape sequence
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\utils\debug.cpp(54): warning C4129: ']': unrecognized character escape sequence
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\utils\debug.cpp(96): warning C4129: '[': unrecognized character escape sequence
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\utils\debug.cpp(96): warning C4129: ']': unrecognized character escape sequence
+  MemoryExt.cpp
+  Actor.cpp
+  ActorModule.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\actor\modules\actormodulegridmovable.hpp(34): warning C4307: '*': integral constant overflow
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\input\gameinputmanager.hpp(47): warning C4309: 'initializing': truncation of constant value
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\input\gameinputmanager.hpp(47): warning C4369: 'GameInputManager::ISD_INVALID':  enumerator value '-1' cannot be represented as 'unsigned char', value is '255'
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\input\gameinputmanager.hpp(48): warning C4340: 'ISD_KEYBOARD': value wrapped from positive to negative value
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\input\gameinputmanager.hpp(48): warning C4309: 'initializing': truncation of constant value
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\input\gameinputmanager.hpp(48): warning C4369: 'GameInputManager::ISD_KEYBOARD':  enumerator value '256' cannot be represented as 'unsigned char', value is '0'
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\actor\modules\actormoduleplayercontroller.hpp(28): warning C4307: '*': integral constant overflow
+  ActorModuleGridMovable.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\actor\modules\actormodulegridmovable.hpp(34): warning C4307: '*': integral constant overflow
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\actor\modules\actormodulegridmovable.cpp(203): warning C4244: 'argument': conversion from 'const int32_t' to 'float', possible loss of data
+  ActorModulePlayerController.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\input\gameinputmanager.hpp(47): warning C4309: 'initializing': truncation of constant value
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\input\gameinputmanager.hpp(47): warning C4369: 'GameInputManager::ISD_INVALID':  enumerator value '-1' cannot be represented as 'unsigned char', value is '255'
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\input\gameinputmanager.hpp(48): warning C4340: 'ISD_KEYBOARD': value wrapped from positive to negative value
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\input\gameinputmanager.hpp(48): warning C4309: 'initializing': truncation of constant value
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\input\gameinputmanager.hpp(48): warning C4369: 'GameInputManager::ISD_KEYBOARD':  enumerator value '256' cannot be represented as 'unsigned char', value is '0'
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\actor\modules\actormoduleplayercontroller.hpp(28): warning C4307: '*': integral constant overflow
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\actor\modules\actormodulegridmovable.hpp(34): warning C4307: '*': integral constant overflow
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\actor\modules\actormoduleplayercontroller.cpp(42): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  TopDownCamera.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  GameInputManager.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\input\gameinputmanager.hpp(47): warning C4309: 'initializing': truncation of constant value
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\input\gameinputmanager.hpp(47): warning C4369: 'GameInputManager::ISD_INVALID':  enumerator value '-1' cannot be represented as 'unsigned char', value is '255'
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\input\gameinputmanager.hpp(48): warning C4340: 'ISD_KEYBOARD': value wrapped from positive to negative value
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\input\gameinputmanager.hpp(48): warning C4309: 'initializing': truncation of constant value
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\input\gameinputmanager.hpp(48): warning C4369: 'GameInputManager::ISD_KEYBOARD':  enumerator value '256' cannot be represented as 'unsigned char', value is '0'
+  WorldManager.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\input\gameinputmanager.hpp(47): warning C4309: 'initializing': truncation of constant value
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\input\gameinputmanager.hpp(47): warning C4369: 'GameInputManager::ISD_INVALID':  enumerator value '-1' cannot be represented as 'unsigned char', value is '255'
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\input\gameinputmanager.hpp(48): warning C4340: 'ISD_KEYBOARD': value wrapped from positive to negative value
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\input\gameinputmanager.hpp(48): warning C4309: 'initializing': truncation of constant value
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\input\gameinputmanager.hpp(48): warning C4369: 'GameInputManager::ISD_KEYBOARD':  enumerator value '256' cannot be represented as 'unsigned char', value is '0'
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\actor\modules\actormodulegridmovable.hpp(34): warning C4307: '*': integral constant overflow
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\actor\modules\actormoduleplayercontroller.hpp(28): warning C4307: '*': integral constant overflow
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\worldmanager.cpp(94): warning C4244: 'argument': conversion from 'int32_t' to 'float', possible loss of data
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\worldmanager.cpp(95): warning C4244: 'argument': conversion from 'int32_t' to 'float', possible loss of data
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\worldmanager.cpp(160): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\worldmanager.cpp(190): warning C4018: '<': signed/unsigned mismatch
+  Launcher.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\input\gameinputmanager.hpp(47): warning C4309: 'initializing': truncation of constant value
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\input\gameinputmanager.hpp(47): warning C4369: 'GameInputManager::ISD_INVALID':  enumerator value '-1' cannot be represented as 'unsigned char', value is '255'
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\input\gameinputmanager.hpp(48): warning C4340: 'ISD_KEYBOARD': value wrapped from positive to negative value
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\input\gameinputmanager.hpp(48): warning C4309: 'initializing': truncation of constant value
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\tilesiege\input\gameinputmanager.hpp(48): warning C4369: 'GameInputManager::ISD_KEYBOARD':  enumerator value '256' cannot be represented as 'unsigned char', value is '0'
+  Main.cpp
+c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): warning C4005: 'SDL_MAIN_HANDLED': macro redefinition
+  c:\users\neuro\desktop\text adventure engine\tae\textadventureengine\textadventureengine\codebase\neuroengine\framework\graphics\gl\precompiledheadergl.hpp(5): note: command-line arguments:  see previous definition of 'SDL_MAIN_HANDLED'
+  Generating Code...
+  TextAdventureEngine.vcxproj -> C:\Users\Neuro\Desktop\Text Adventure Engine\TAE\TextAdventureEngine\NeuroFramework_out\neurof_x86_d.exe

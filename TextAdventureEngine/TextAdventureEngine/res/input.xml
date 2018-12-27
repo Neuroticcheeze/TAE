@@ -1,0 +1,13 @@
+﻿<root>
+  <input name="MOVE_X">
+    <source>kb$4 -1.0</source>
+    <source>kb$7 1.0</source>
+  </input>
+  <input name="MOVE_Y">
+    <source>kb$22 -1.0</source>
+    <source>kb$26 1.0</source>
+  </input>
+  <input name="JUMP">
+    <source>kb$44 1.0</source>
+  </input>
+</root>

@@ -1,0 +1,31 @@
+<root>
+  <location type="WORLD" id="world" name="LOC_WORLD_NAME" desc="LOC_WORLD_DESC">
+    <location type="EXPANSE" id="north_expanse" name="LOC_NORTHERN_EXPANSE_NAME">
+      <location type="CONTINENT" id="ardia" name="LOC_ARDIA_NAME">
+        <location type="SUBCONTINENT" id="westeros_island" name="LOC_WESTEROS_NAME">
+          <location type="REGION" id="ravensbrook" name="LOC_RAVENSBROOK_NAME">
+            <location type="SUBREGION" id="western_ravensbrook" name="LOC_RAVENSBROOK_W_NAME">
+              <location type="LOCALITY" id="black_creek" name="LOC_BLACK_CREEK_NAME" desc="LOC_BLACK_CREEK_DESC">
+                <weight>0</weight>
+                <long_latd>-218,-33</long_latd>
+              </location>
+              <location type="LOCALITY" id="western_ravensbrook_old_fort" name="LOC_RAVENSBROOK_W_FORT_NAME" desc="LOC_RAVENSBROOK_W_FORT_DESC">
+                <weight>1</weight>
+                <long_latd>-232,-31</long_latd>
+              </location>
+            </location>
+          </location>
+        </location>
+      </location>
+    </location>
+  </location>
+  <route_set>
+    <route type="TWO_WAY">
+      <tail>black_creek</tail>
+      <head>western_ravensbrook_old_fort</head>
+      <weight_fwd>5</weight_fwd>
+      <weight_bwd>3</weight_bwd>
+      <spline>-224,-33|-229,-37</spline>
+    </route>
+  </route_set>
+</root>

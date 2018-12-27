@@ -1,0 +1,36 @@
+<conversation name="Welcome_1" entry="init">
+  
+  <dialogue name="init">
+    <string_id>Welcome_1_Hello</string_id>
+    <dialogue_link>init2</dialogue_link>
+  </dialogue>
+  <dialogue name="init2">
+    <string_id>Welcome_1_Hello2</string_id>
+    <listed_response>who_are_you</listed_response>
+    <listed_response>where_am_i</listed_response>
+    <listed_response>where_is_my_dog</listed_response>
+  </dialogue>
+  <dialogue name="self_intro">
+    <string_id>Welcome_1_Introduction</string_id>
+    <listed_response>who_are_you</listed_response>
+    <listed_response>where_am_i</listed_response>
+    <listed_response>where_is_my_dog</listed_response>
+  </dialogue>
+  
+  <response name="who_are_you">
+    <string_id>Welcome_1_WhoAreYou</string_id>
+    <string_id_short>Welcome_1_WhoAreYou</string_id_short>
+    <dialogue_link>self_intro</dialogue_link>
+  </response>
+  <response name="where_am_i">
+    <string_id>Welcome_1_WhereAmI</string_id>
+    <string_id_short>Welcome_1_WhereAmI</string_id_short>
+    <dialogue_link>self_intro</dialogue_link>
+  </response>
+  <response name="where_is_my_dog">
+    <string_id>Welcome_1_WhereIsMyDog</string_id>
+    <string_id_short>Welcome_1_Dog</string_id_short>
+    <dialogue_link>self_intro</dialogue_link>
+  </response>
+  
+</conversation>

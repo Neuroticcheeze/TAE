@@ -1,0 +1,22 @@
+#pragma once
+#ifndef DIALOGUETOOLGLOBALS_H
+#define DIALOGUETOOLGLOBALS_H
+
+namespace DialogueToolGlobals
+{
+
+//=====================================================================================
+#define BF_LETTERS_AND_DIGITS_DefaultBody		WSID( "BF_LETTERS_AND_DIGITS_DefaultBody" )
+#define BF_LETTERS_AND_DIGITS_DefaultBodyLarge	WSID( "BF_LETTERS_AND_DIGITS_DefaultBodyLarge" )
+#define BF_LETTERS_AND_DIGITS_DefaultHeading	WSID( "BF_LETTERS_AND_DIGITS_DefaultHeading" )
+#define BF_LETTERS_AND_DIGITS_DefaultTiny		WSID( "BF_LETTERS_AND_DIGITS_DefaultTiny" )
+
+//=====================================================================================
+void CreateBitmapFonts();
+
+//=====================================================================================
+void ReleaseBitmapFonts();
+
+}
+
+#endif//DIALOGUETOOLGLOBALS_H

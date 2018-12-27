@@ -1,49 +1,19 @@
 <root>
-  <asset type="TEXTURE" name="Scene0">
-    <path>scene_sky_0.png</path>
-  </asset>
-  <asset type="TEXTURE" name="Scene1">
-    <path>scene_clouds_0.png</path>
-  </asset>
-  <asset type="TEXTURE" name="Scene2">
-    <path>scene_mountains_0.png</path>
-  </asset>
-  <asset type="TEXTURE" name="Scene3">
-    <path>scene_foreground_0.png</path>
-  </asset>
-  <asset type="TEXTURE" name="tex_background">
-    <path>widows_peak_twilight.png</path>
-  </asset>
-  <asset type="TEXTURE" name="BG_INVENTORY_0">
-    <path>button.png</path>
-  </asset>
-  <asset type="TEXTURE" name="Button">
-    <path>button.png</path>
-  </asset>
-  <asset type="TEXTURE" name="RadioOff">
-    <path>radio_0.png</path>
-  </asset>
-  <asset type="TEXTURE" name="RadioOn">
-    <path>radio_1.png</path>
-  </asset>
   <asset type="FONT" name="DEFAULT">
-    <path>consola.ttf</path>
+    <path>font0.ttf</path>
   </asset>
-  <asset type="SPRITESHEET" name="ITEMS">
-    <path>items.png</path>
-    <divs>2,2</divs>
+  <asset type="SPRITESHEET" name="TERRAIN">
+    <path>texture0.png</path>
+    <divs>5,3</divs>
+    <filter>NEAREST_NEIGHBOUR</filter>
   </asset>
-  <asset type="SPRITESHEET" name="WEATHER_ICONS">
-    <path>weather.png</path>
-    <divs>4,4</divs>
+  <asset type="TEXTURE" name="Scene0">
+    <path>texture0.png</path>
   </asset>
   <asset type="STRINGTABLE" name="ST_LEGALS">
-    <path>strings/stringtable0.xml</path>
+    <path>stringtable0.xml</path>
   </asset>
-  <asset type="STRINGTABLE" name="ST_CONVO_NEWSJOURNAL">
-    <path>strings/convo_newsjournal.xml</path>
-  </asset>
-  <asset type="STRINGTABLE" name="WORLD_LOCATIONS">
-    <path>strings/world_locations.xml</path>
+  <asset type="SOUND" name="TEST_SND">
+    <path>sound0.wav</path>
   </asset>
 </root>

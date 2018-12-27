@@ -46,7 +46,8 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{760C8B50-31C8-45FE-89BC-D02E2DF69597}</ProjectGuid>
     <RootNamespace>TextAdventureEngine</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <ProjectName>NeuroProject</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -149,29 +150,39 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)../Dependencies/PCRE;$(SolutionDir)../Dependencies/GLM;$(SolutionDir)../Dependencies/GLEW-2.1.0/include;$(SolutionDir)../Dependencies/SDL2-2.0.8/include;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/include;$(SolutionDir)../Dependencies/LIBSNDFILE/include;$(SolutionDir)../Dependencies/PORTAUDIO/include;$(SolutionDir)../Dependencies/SIGIL-0.9.0/include;$(SolutionDir)TextAdventureEngine;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)../Dependencies/GLEW-2.1.0/lib;$(SolutionDir)../Dependencies/SDL2-2.0.8/lib/x86;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/lib;$(SolutionDir)../Dependencies/LIBSNDFILE/lib;$(SolutionDir)../Dependencies/PORTAUDIO/lib;$(SolutionDir)../Dependencies/SIGIL-0.9.0/lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <IncludePath>$(SolutionDir)../Dependencies/SFML-2.5.0/include;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\include;$(SolutionDir)../Dependencies/PCRE;$(SolutionDir)../Dependencies/GLM;$(SolutionDir)../Dependencies/GLEW-2.1.0/include;$(SolutionDir)../Dependencies/SDL2-2.0.8/include;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/include;$(SolutionDir)../Dependencies/LIBSNDFILE/include;$(SolutionDir)../Dependencies/PORTAUDIO/include;$(SolutionDir)../Dependencies/SIGIL-0.9.0/include;$(SolutionDir)TextAdventureEngine/Codebase;$(SolutionDir)TextAdventureEngine/Codebase/NeuroEngine;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\lib\Win32;$(SolutionDir)../Dependencies/GLEW-2.1.0/lib;$(SolutionDir)../Dependencies/SDL2-2.0.8/lib/x86;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/lib;$(SolutionDir)../Dependencies/LIBSNDFILE/lib;$(SolutionDir)../Dependencies/PORTAUDIO/lib;$(SolutionDir)../Dependencies/SFML-2.5.0/lib;$(SolutionDir)../Dependencies/SIGIL-0.9.0/lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
     <IntDir>$(SolutionDir)_Inter\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)NeuroFramework_out\</OutDir>
+    <TargetName>neurof_x86_d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug - [Tool] Scene Editor|Win32'">
-    <IncludePath>$(SolutionDir)../Dependencies/PCRE;$(SolutionDir)../Dependencies/GLM;$(SolutionDir)../Dependencies/GLEW-2.1.0/include;$(SolutionDir)../Dependencies/SDL2-2.0.8/include;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/include;$(SolutionDir)../Dependencies/LIBSNDFILE/include;$(SolutionDir)../Dependencies/PORTAUDIO/include;$(SolutionDir)../Dependencies/SIGIL-0.9.0/include;$(SolutionDir)TextAdventureEngine;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)../Dependencies/GLEW-2.1.0/lib;$(SolutionDir)../Dependencies/SDL2-2.0.8/lib/x86;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/lib;$(SolutionDir)../Dependencies/LIBSNDFILE/lib;$(SolutionDir)../Dependencies/PORTAUDIO/lib;$(SolutionDir)../Dependencies/SIGIL-0.9.0/lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <IncludePath>$(SolutionDir)../Dependencies/SFML-2.5.0/include;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\include;$(SolutionDir)../Dependencies/PCRE;$(SolutionDir)../Dependencies/GLM;$(SolutionDir)../Dependencies/GLEW-2.1.0/include;$(SolutionDir)../Dependencies/SDL2-2.0.8/include;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/include;$(SolutionDir)../Dependencies/LIBSNDFILE/include;$(SolutionDir)../Dependencies/PORTAUDIO/include;$(SolutionDir)../Dependencies/SIGIL-0.9.0/include;$(SolutionDir)TextAdventureEngine/Codebase;$(SolutionDir)TextAdventureEngine/Codebase/NeuroEngine;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\lib\Win32;$(SolutionDir)../Dependencies/GLEW-2.1.0/lib;$(SolutionDir)../Dependencies/SDL2-2.0.8/lib/x86;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/lib;$(SolutionDir)../Dependencies/LIBSNDFILE/lib;$(SolutionDir)../Dependencies/PORTAUDIO/lib;$(SolutionDir)../Dependencies/SFML-2.5.0/lib;$(SolutionDir)../Dependencies/SIGIL-0.9.0/lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
     <IntDir>$(SolutionDir)_Inter\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)NeuroFramework_out\</OutDir>
+    <TargetName>neurof_x86</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug - [Tool] Dialogue Editor|Win32'">
-    <IncludePath>$(SolutionDir)../Dependencies/PCRE;$(SolutionDir)../Dependencies/GLM;$(SolutionDir)../Dependencies/GLEW-2.1.0/include;$(SolutionDir)../Dependencies/SDL2-2.0.8/include;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/include;$(SolutionDir)../Dependencies/LIBSNDFILE/include;$(SolutionDir)../Dependencies/PORTAUDIO/include;$(SolutionDir)../Dependencies/SIGIL-0.9.0/include;$(SolutionDir)TextAdventureEngine;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)../Dependencies/GLEW-2.1.0/lib;$(SolutionDir)../Dependencies/SDL2-2.0.8/lib/x86;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/lib;$(SolutionDir)../Dependencies/LIBSNDFILE/lib;$(SolutionDir)../Dependencies/PORTAUDIO/lib;$(SolutionDir)../Dependencies/SIGIL-0.9.0/lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <IncludePath>$(SolutionDir)../Dependencies/SFML-2.5.0/include;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\include;$(SolutionDir)../Dependencies/PCRE;$(SolutionDir)../Dependencies/GLM;$(SolutionDir)../Dependencies/GLEW-2.1.0/include;$(SolutionDir)../Dependencies/SDL2-2.0.8/include;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/include;$(SolutionDir)../Dependencies/LIBSNDFILE/include;$(SolutionDir)../Dependencies/PORTAUDIO/include;$(SolutionDir)../Dependencies/SIGIL-0.9.0/include;$(SolutionDir)TextAdventureEngine/Codebase;$(SolutionDir)TextAdventureEngine/Codebase/NeuroEngine;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\lib\Win32;$(SolutionDir)../Dependencies/GLEW-2.1.0/lib;$(SolutionDir)../Dependencies/SDL2-2.0.8/lib/x86;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/lib;$(SolutionDir)../Dependencies/LIBSNDFILE/lib;$(SolutionDir)../Dependencies/PORTAUDIO/lib;$(SolutionDir)../Dependencies/SFML-2.5.0/lib;$(SolutionDir)../Dependencies/SIGIL-0.9.0/lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
     <IntDir>$(SolutionDir)_Inter\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)NeuroFramework_out\</OutDir>
+    <TargetName>neurof_x86</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - [Tool] Dialogue Editor|Win32'">
-    <IncludePath>$(SolutionDir)../Dependencies/PCRE;$(SolutionDir)../Dependencies/GLM;$(SolutionDir)../Dependencies/GLEW-2.1.0/include;$(SolutionDir)../Dependencies/SDL2-2.0.8/include;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/include;$(SolutionDir)../Dependencies/LIBSNDFILE/include;$(SolutionDir)../Dependencies/PORTAUDIO/include;$(SolutionDir)../Dependencies/SIGIL-0.9.0/include;$(SolutionDir)TextAdventureEngine;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)../Dependencies/GLEW-2.1.0/lib;$(SolutionDir)../Dependencies/SDL2-2.0.8/lib/x86;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/lib;$(SolutionDir)../Dependencies/LIBSNDFILE/lib;$(SolutionDir)../Dependencies/PORTAUDIO/lib;$(SolutionDir)../Dependencies/SIGIL-0.9.0/lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <IncludePath>$(SolutionDir)../Dependencies/SFML-2.5.0/include;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\include;$(SolutionDir)../Dependencies/PCRE;$(SolutionDir)../Dependencies/GLM;$(SolutionDir)../Dependencies/GLEW-2.1.0/include;$(SolutionDir)../Dependencies/SDL2-2.0.8/include;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/include;$(SolutionDir)../Dependencies/LIBSNDFILE/include;$(SolutionDir)../Dependencies/PORTAUDIO/include;$(SolutionDir)../Dependencies/SIGIL-0.9.0/include;$(SolutionDir)TextAdventureEngine/Codebase;$(SolutionDir)TextAdventureEngine/Codebase/NeuroEngine;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\lib\Win32;$(SolutionDir)../Dependencies/GLEW-2.1.0/lib;$(SolutionDir)../Dependencies/SDL2-2.0.8/lib/x86;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/lib;$(SolutionDir)../Dependencies/LIBSNDFILE/lib;$(SolutionDir)../Dependencies/PORTAUDIO/lib;$(SolutionDir)../Dependencies/SFML-2.5.0/lib;$(SolutionDir)../Dependencies/SIGIL-0.9.0/lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
     <IntDir>$(SolutionDir)_Inter\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)NeuroFramework_out\</OutDir>
+    <TargetName>neurof_x86</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)../Dependencies/PCRE;$(SolutionDir)../Dependencies/GLM;$(SolutionDir)../Dependencies/GLEW-2.1.0/include;$(SolutionDir)../Dependencies/SDL2-2.0.8/include;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/include;$(SolutionDir)../Dependencies/LIBSNDFILE/include;$(SolutionDir)../Dependencies/PORTAUDIO/include;$(SolutionDir)../Dependencies/SIGIL-0.9.0/include;$(SolutionDir)TextAdventureEngine;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)../Dependencies/GLEW-2.1.0/lib;$(SolutionDir)../Dependencies/SDL2-2.0.8/lib/x86;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/lib;$(SolutionDir)../Dependencies/LIBSNDFILE/lib;$(SolutionDir)../Dependencies/PORTAUDIO/lib;$(SolutionDir)../Dependencies/SIGIL-0.9.0/lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <IncludePath>$(SolutionDir)../Dependencies/SFML-2.5.0/include;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\include;$(SolutionDir)../Dependencies/PCRE;$(SolutionDir)../Dependencies/GLM;$(SolutionDir)../Dependencies/GLEW-2.1.0/include;$(SolutionDir)../Dependencies/SDL2-2.0.8/include;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/include;$(SolutionDir)../Dependencies/LIBSNDFILE/include;$(SolutionDir)../Dependencies/PORTAUDIO/include;$(SolutionDir)../Dependencies/SIGIL-0.9.0/include;$(SolutionDir)TextAdventureEngine/Codebase;$(SolutionDir)TextAdventureEngine/Codebase/NeuroEngine;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\lib\Win32;$(SolutionDir)../Dependencies/GLEW-2.1.0/lib;$(SolutionDir)../Dependencies/SDL2-2.0.8/lib/x86;$(SolutionDir)../Dependencies/LIBXML2-2.7.8/lib;$(SolutionDir)../Dependencies/LIBSNDFILE/lib;$(SolutionDir)../Dependencies/PORTAUDIO/lib;$(SolutionDir)../Dependencies/SFML-2.5.0/lib;$(SolutionDir)../Dependencies/SIGIL-0.9.0/lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
     <IntDir>$(SolutionDir)_Inter\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)NeuroFramework_out\</OutDir>
+    <TargetName>neurof_x86</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -180,11 +191,14 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <ForcedIncludeFiles>cstdint;Framework/Utils/Shorthand.hpp;Framework/Math/Convert.hpp;Framework/Platform/Platform.hpp;Framework/Utils/Debug.hpp;Framework/Utils/Enum.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <PreprocessorDefinitions>APP_IS_GAME;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NF_EXPORT;SDL_MAIN_HANDLED;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_mixer.lib;SDL2_image.lib;libsndfile-1.lib;sigil.lib;portaudio_x86_d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OpenCL.lib;opengl32.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_mixer.lib;SDL2_image.lib;libsndfile-1.lib;sigil.lib;portaudio_x86_d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>NotSet</SubSystem>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug - [Tool] Scene Editor|Win32'">
@@ -195,10 +209,13 @@
       <ConformanceMode>true</ConformanceMode>
       <ForcedIncludeFiles>cstdint;Framework/Utils/Shorthand.hpp;Framework/Math/Convert.hpp;Framework/Platform/Platform.hpp;Framework/Utils/Debug.hpp;Framework/Utils/Enum.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <PreprocessorDefinitions>APP_IS_SCENE_EDITOR;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_mixer.lib;SDL2_image.lib;libsndfile-1.lib;sigil.lib;portaudio_x86_d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OpenCL.lib;opengl32.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_mixer.lib;SDL2_image.lib;libsndfile-1.lib;sigil.lib;portaudio_x86_d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>NotSet</SubSystem>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug - [Tool] Dialogue Editor|Win32'">
@@ -209,10 +226,13 @@
       <ConformanceMode>true</ConformanceMode>
       <ForcedIncludeFiles>cstdint;Framework/Utils/Shorthand.hpp;Framework/Math/Convert.hpp;Framework/Platform/Platform.hpp;Framework/Utils/Debug.hpp;Framework/Utils/Enum.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <PreprocessorDefinitions>APP_IS_DIALOGUE_EDITOR;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_mixer.lib;SDL2_image.lib;libsndfile-1.lib;sigil.lib;portaudio_x86_d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OpenCL.lib;opengl32.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_mixer.lib;SDL2_image.lib;libsndfile-1.lib;sigil.lib;portaudio_x86_d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>NotSet</SubSystem>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release - [Tool] Dialogue Editor|Win32'">
@@ -231,10 +251,13 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <OmitFramePointers>true</OmitFramePointers>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_mixer.lib;SDL2_image.lib;libsndfile-1.lib;sigil.lib;portaudio_x86_d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OpenCL.lib;opengl32.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_mixer.lib;SDL2_image.lib;libsndfile-1.lib;sigil.lib;portaudio_x86_d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>NotSet</SubSystem>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -290,13 +313,16 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <ForcedIncludeFiles>cstdint;Framework/Utils/Shorthand.hpp;Framework/Math/Convert.hpp;Framework/Platform/Platform.hpp;Framework/Utils/Debug.hpp;Framework/Utils/Enum.hpp;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <PreprocessorDefinitions>APP_IS_GAME;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NF_EXPORT;SDL_MAIN_HANDLED;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_mixer.lib;SDL2_image.lib;libsndfile-1.lib;sigil.lib;portaudio_x86.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OpenCL.lib;opengl32.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_mixer.lib;SDL2_image.lib;libsndfile-1.lib;sigil.lib;portaudio_x86.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>NotSet</SubSystem>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -315,249 +341,238 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Framework\Audio\AudioManager.cpp" />
-    <ClCompile Include="Framework\Console\ConsoleManager.cpp" />
-    <ClCompile Include="Framework\Containers\CString.cpp" />
-    <ClCompile Include="Framework\Containers\DataStream.cpp" />
-    <ClCompile Include="Framework\Containers\WString.cpp" />
-    <ClCompile Include="Framework\Data\String\StringManager.cpp" />
-    <ClCompile Include="Framework\Data\String\StringTable.cpp" />
-    <ClCompile Include="Framework\Data\Xml\XmlObject.cpp" />
-    <ClCompile Include="Framework\Engine.cpp" />
-    <ClCompile Include="Framework\Entity\EntitySystem.cpp" />
-    <ClCompile Include="Framework\File\FileManager.cpp" />
-    <ClCompile Include="Framework\File\Save\SaveManager.cpp" />
-    <ClCompile Include="Framework\Data\Xml\XmlManager.cpp" />
-    <ClCompile Include="Framework\Graphics\Filter\GaussianBlurFilter.cpp" />
-    <ClCompile Include="Framework\Graphics\GL\GLDraw.cpp" />
-    <ClCompile Include="Framework\Graphics\GL\GLMesh.cpp" />
-    <ClCompile Include="Framework\Graphics\GL\GLRenderTexture.cpp" />
-    <ClCompile Include="Framework\Graphics\GL\GLShader.cpp" />
-    <ClCompile Include="Framework\Graphics\GL\GLTexture.cpp" />
-    <ClCompile Include="Framework\Graphics\Graphics.cpp" />
-    <ClCompile Include="Framework\Graphics\Filter\ImageFilterManager.cpp" />
-    <ClCompile Include="Framework\Graphics\Vector\VectorEllipse.cpp" />
-    <ClCompile Include="Framework\Graphics\Vector\VectorGraphic.cpp" />
-    <ClCompile Include="Framework\Graphics\Vector\VectorShape.cpp" />
-    <ClCompile Include="Framework\Template\Cloneable.hpp" />
-    <ClCompile Include="Framework\UI\Pages\PageConsole.cpp" />
-    <ClCompile Include="Framework\UI\Views\ViewButton.cpp" />
-    <ClCompile Include="Framework\UI\Views\ViewColour.cpp" />
-    <ClCompile Include="Framework\UI\Views\ViewDraggable.cpp" />
-    <ClCompile Include="Framework\UI\Views\ViewDropTarget.cpp" />
-    <ClCompile Include="Framework\UI\Views\ViewFlyoutMenu.cpp" />
-    <ClCompile Include="Framework\UI\Views\ViewListSelector.cpp" />
-    <ClCompile Include="Framework\UI\Views\ViewRectangles.cpp" />
-    <ClCompile Include="Framework\UI\Views\ViewSizer.cpp" />
-    <ClCompile Include="Framework\UI\Views\ViewSlider.cpp" />
-    <ClCompile Include="Framework\UI\Views\ViewTextField.cpp" />
-    <ClCompile Include="Framework\UI\Views\ViewTickBox.cpp" />
-    <ClCompile Include="Framework\Utils\Blackboard.cpp" />
-    <ClCompile Include="Framework\Utils\Uuid.cpp" />
-    <ClCompile Include="GameStructure\Dialogue\Dialogue.cpp" />
-    <ClCompile Include="GameStructure\Game.cpp" />
-    <ClCompile Include="GameStructure\Globals.cpp" />
-    <ClCompile Include="GameStructure\UI\Pages\PageDialogue.cpp" />
-    <ClCompile Include="GameStructure\UI\Pages\PageMainMenu.cpp" />
-    <ClCompile Include="GameStructure\UI\Pages\PageOptions.cpp" />
-    <ClCompile Include="GameStructure\UI\Pages\PageWorld.cpp" />
-    <ClCompile Include="GameStructure\UI\Pages\PageWorldMap.cpp" />
-    <ClCompile Include="GameStructure\Items\Inventory.cpp" />
-    <ClCompile Include="GameStructure\Items\Item.cpp" />
-    <ClCompile Include="GameStructure\Items\ItemGroup.cpp" />
-    <ClCompile Include="GameStructure\Items\ItemRegistry.cpp" />
-    <ClCompile Include="GameStructure\Player.cpp" />
-    <ClCompile Include="GameStructure\World\Location\Location.cpp" />
-    <ClCompile Include="GameStructure\World\Nature\Meteorology2\ClimateSystem.cpp" />
-    <ClCompile Include="GameStructure\World\Nature\Meteorology2\Climatograph.cpp" />
-    <ClCompile Include="GameStructure\World\Nature\Meteorology2\MeteorologyUtils.cpp" />
-    <ClCompile Include="GameStructure\World\Nature\Meteorology2\WindSystem.cpp" />
-    <ClCompile Include="GameStructure\World\Nature\TimeFlow.cpp" />
-    <ClCompile Include="Framework\UI\FadeManager.cpp" />
-    <ClCompile Include="Framework\UI\Page.cpp" />
-    <ClCompile Include="Framework\UI\PageManager.cpp" />
-    <ClCompile Include="GameStructure\UI\Pages\PageItemInventory.cpp" />
-    <ClCompile Include="Framework\UI\Views\ViewSprite.cpp" />
-    <ClCompile Include="Framework\UI\Views\ViewText.cpp" />
-    <ClCompile Include="Framework\UI\View.cpp" />
-    <ClCompile Include="GameStructure\World\WorldManager.cpp" />
-    <ClCompile Include="Framework\Graphics\GraphicsManager.cpp" />
-    <ClCompile Include="Framework\Graphics\NineSpriteSheet.cpp" />
-    <ClCompile Include="Framework\Graphics\Particles\Emitter.cpp" />
-    <ClCompile Include="Framework\Graphics\Particles\ParticleSystem.cpp" />
-    <ClCompile Include="Framework\Graphics\SpriteSheet.cpp" />
-    <ClCompile Include="Framework\Input\CommandLineManager.cpp" />
-    <ClCompile Include="Framework\Input\InputManager.cpp" />
-    <ClCompile Include="Framework\Math\Colour\Colour.cpp" />
-    <ClCompile Include="Framework\Math\Curve\Bezier.cpp" />
-    <ClCompile Include="Framework\Math\Linear\Vector2.cpp" />
-    <ClCompile Include="Framework\Math\Math.cpp" />
-    <ClCompile Include="Framework\Math\RandomRange.cpp" />
-    <ClCompile Include="Framework\Thread\ConditionVariable.cpp" />
-    <ClCompile Include="Framework\Thread\Mutex.cpp" />
-    <ClCompile Include="Framework\Thread\ThreadManager.cpp" />
-    <ClCompile Include="Framework\Time\TimePoint.cpp" />
-    <ClCompile Include="Framework\Time\Timer.cpp" />
-    <ClCompile Include="Framework\Utils\Debug.cpp" />
-    <ClCompile Include="Framework\Utils\Hash.cpp" />
-    <ClCompile Include="Framework\Utils\MemoryExt.cpp" />
-    <ClCompile Include="Framework\Utils\Random.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="GameStructure\World\Parallax.cpp" />
-    <ClCompile Include="[Tool] Dialogue Editor\DialogueEditor.cpp" />
-    <ClCompile Include="[Tool] Dialogue Editor\Globals.cpp" />
-    <ClCompile Include="[Tool] Dialogue Editor\Structure\Object.cpp" />
-    <ClCompile Include="[Tool] Dialogue Editor\UI\Pages\PageDialogueEditor.cpp" />
-    <ClCompile Include="[Tool] Dialogue Editor\UI\Views\ViewNodePlug.cpp" />
-    <ClCompile Include="[Tool] Scene Editor\SceneEditor.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\AI\Path\NavFlowField.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Audio\AudioManager.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Compute\ComputeManager.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Console\ConsoleManager.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Console\ICommand.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Containers\CString.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Containers\DataStream.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Containers\WString.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Data\Compression\CompressionManager.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Data\String\StringManager.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Data\String\StringTable.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Data\Xml\XmlObject.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Engine.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\File\FileManager.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\File\Save\SaveManager.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Data\Xml\XmlManager.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Graphics\Filter\GaussianBlurFilter.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Graphics\GL\GLDraw.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Graphics\GL\GLMesh.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Graphics\GL\GLMeshIndexed.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Graphics\GL\GLRenderTexture.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Graphics\GL\GLShader.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Graphics\GL\GLShaderStorageBuffer.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Graphics\GL\GLTexture.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Graphics\Filter\ImageFilterManager.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Graphics\GL\GLUniformBuffer.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Graphics\Particles\ParticleManager.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Graphics\Particles\ParticleMemoryPool.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Graphics\Vector\VectorEllipse.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Graphics\Vector\VectorGraphic.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Graphics\Vector\VectorShape.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Graphics\VertexBuffer.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Graphics\GPUGradient.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Math\Spatial\Rect2.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Physics\RectilinearPhysicsSystem.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Procedural\Maze.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Template\Cloneable.hpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Time\Time.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\UI\Pages\PageConsole.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\UI\Views\ViewButton.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\UI\Views\ViewColour.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\UI\Views\ViewDraggable.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\UI\Views\ViewDropTarget.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\UI\Views\ViewFlyoutMenu.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\UI\Views\ViewListSelector.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\UI\Views\ViewRectangles.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\UI\Views\ViewSizer.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\UI\Views\ViewSlider.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\UI\Views\ViewTextField.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\UI\Views\ViewTickBox.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Utils\Blackboard.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Utils\Uuid.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\UI\FadeManager.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\UI\Page.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\UI\PageManager.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\UI\Views\ViewSprite.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\UI\Views\ViewText.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\UI\View.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Graphics\GraphicsManager.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Graphics\NineSpriteSheet.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Graphics\Particles\Emitter.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Graphics\Particles\ParticleSystem.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Graphics\SpriteSheet.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Input\CommandLineManager.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Input\InputManager.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Math\Colour\Colour.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Math\Curve\Bezier.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Math\Linear\Vector2.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Math\Math.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Math\RandomRange.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Thread\ConditionVariable.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Thread\Mutex.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Thread\ThreadManager.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Time\TimePoint.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Time\Timer.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Utils\Debug.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Utils\Hash.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Utils\MemoryExt.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Utils\Random.cpp" />
+    <ClCompile Include="Codebase\TileSiege\Actor\Actor.cpp" />
+    <ClCompile Include="Codebase\TileSiege\Actor\ActorModule.cpp" />
+    <ClCompile Include="Codebase\TileSiege\Actor\Modules\ActorModuleRectilinearPhysicsAgent.cpp" />
+    <ClCompile Include="Codebase\TileSiege\Actor\Modules\ActorModulePlayerController.cpp" />
+    <ClCompile Include="Codebase\TileSiege\Actor\Modules\ActorModulePositional.cpp" />
+    <ClCompile Include="Codebase\TileSiege\Camera\TopDownCamera.cpp" />
+    <ClCompile Include="Codebase\TileSiege\Input\GameInputManager.cpp" />
+    <ClCompile Include="Codebase\TileSiege\WorldManager.cpp" />
+    <ClCompile Include="Codebase\TileSiege\Launcher.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Main.cpp" />
+    <ClCompile Include="Codebase\NeuroEngine\Framework\Graphics\VertexFormat.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Framework\ApplicationContext.hpp" />
-    <ClInclude Include="Framework\Console\ConsoleManager.hpp" />
-    <ClInclude Include="Framework\Engine.hpp" />
-    <ClInclude Include="Framework\Audio\AudioManager.hpp" />
-    <ClInclude Include="Framework\Containers\Array.hpp" />
-    <ClInclude Include="Framework\Containers\CString.hpp" />
-    <ClInclude Include="Framework\Containers\DataStream.hpp" />
-    <ClInclude Include="Framework\Containers\Dictionary.hpp" />
-    <ClInclude Include="Framework\Containers\LinkedList.hpp" />
-    <ClInclude Include="Framework\Containers\Queue.hpp" />
-    <ClInclude Include="Framework\Containers\Set.hpp" />
-    <ClInclude Include="Framework\Containers\Stack.hpp" />
-    <ClInclude Include="Framework\Containers\StaticArray.hpp" />
-    <ClInclude Include="Framework\Containers\StaticDictionary.hpp" />
-    <ClInclude Include="Framework\Containers\Tree.hpp" />
-    <ClInclude Include="Framework\Containers\WString.hpp" />
-    <ClInclude Include="Framework\Data\String\StringManager.hpp" />
-    <ClInclude Include="Framework\Data\String\StringTable.hpp" />
-    <ClInclude Include="Framework\Data\Xml\XmlObject.hpp" />
-    <ClInclude Include="Framework\Entity\EntitySystem.hpp" />
-    <ClInclude Include="Framework\File\FileManager.hpp" />
-    <ClInclude Include="Framework\File\FileStream.hpp" />
-    <ClInclude Include="Framework\File\Save\ISaveLoadListener.hpp" />
-    <ClInclude Include="Framework\File\Save\SaveManager.hpp" />
-    <ClInclude Include="Framework\Data\Xml\XmlManager.hpp" />
-    <ClInclude Include="Framework\Graphics\Filter\GaussianBlurFilter.hpp" />
-    <ClInclude Include="Framework\Graphics\GL\GLDraw.hpp" />
-    <ClInclude Include="Framework\Graphics\GL\GLEnums.hpp" />
-    <ClInclude Include="Framework\Graphics\GL\GLMesh.hpp" />
-    <ClInclude Include="Framework\Graphics\GL\GLObj.hpp" />
-    <ClInclude Include="Framework\Graphics\GL\GLRenderTexture.hpp" />
-    <ClInclude Include="Framework\Graphics\GL\GLShader.hpp" />
-    <ClInclude Include="Framework\Graphics\GL\GLTexture.hpp" />
-    <ClInclude Include="Framework\Graphics\GL\PrecompiledHeaderGL.hpp" />
-    <ClInclude Include="Framework\Graphics\Graphics.hpp" />
-    <ClInclude Include="Framework\Graphics\Filter\ImageFilterManager.hpp" />
-    <ClInclude Include="Framework\Graphics\Vector\VectorEllipse.hpp" />
-    <ClInclude Include="Framework\Graphics\Vector\VectorGraphic.hpp" />
-    <ClInclude Include="Framework\Graphics\Vector\VectorShape.hpp" />
-    <ClInclude Include="Framework\Math\Relationship\Graph.hpp" />
-    <ClInclude Include="Framework\UI\Pages\PageConsole.hpp" />
-    <ClInclude Include="Framework\UI\Views\ViewButton.hpp" />
-    <ClInclude Include="Framework\UI\Views\ViewColour.hpp" />
-    <ClInclude Include="Framework\UI\Views\ViewDraggable.hpp" />
-    <ClInclude Include="Framework\UI\Views\ViewDropTarget.hpp" />
-    <ClInclude Include="Framework\UI\Views\ViewFlyoutMenu.hpp" />
-    <ClInclude Include="Framework\UI\Views\ViewListSelector.hpp" />
-    <ClInclude Include="Framework\UI\Views\ViewRectangles.hpp" />
-    <ClInclude Include="Framework\UI\Views\ViewSizer.hpp" />
-    <ClInclude Include="Framework\UI\Views\ViewSlider.hpp" />
-    <ClInclude Include="Framework\UI\Views\ViewTextField.hpp" />
-    <ClInclude Include="Framework\UI\Views\ViewTickBox.hpp" />
-    <ClInclude Include="Framework\Utils\Blackboard.hpp" />
-    <ClInclude Include="Framework\Utils\Shorthand.hpp" />
-    <ClInclude Include="Framework\Utils\TypeTraits.hpp" />
-    <ClInclude Include="Framework\Utils\Uuid.hpp" />
-    <ClInclude Include="GameStructure\Dialogue\Dialogue.hpp" />
-    <ClInclude Include="GameStructure\Game.hpp" />
-    <ClInclude Include="GameStructure\Globals.hpp" />
-    <ClInclude Include="GameStructure\PlayerSaveHandler.hpp" />
-    <ClInclude Include="GameStructure\UI\Pages\PageDialogue.hpp" />
-    <ClInclude Include="GameStructure\UI\Pages\PageMainMenu.hpp" />
-    <ClInclude Include="GameStructure\UI\Pages\PageOptions.hpp" />
-    <ClInclude Include="GameStructure\UI\Pages\PageWorld.hpp" />
-    <ClInclude Include="GameStructure\UI\Pages\PageWorldMap.hpp" />
-    <ClInclude Include="GameStructure\Items\Inventory.hpp" />
-    <ClInclude Include="GameStructure\Items\Item.hpp" />
-    <ClInclude Include="GameStructure\Items\ItemGroup.hpp" />
-    <ClInclude Include="GameStructure\Items\ItemRegistry.hpp" />
-    <ClInclude Include="GameStructure\Player.hpp" />
-    <ClInclude Include="GameStructure\World\Location\Location.hpp" />
-    <ClInclude Include="GameStructure\World\Location\LocationInfo.hpp" />
-    <ClInclude Include="GameStructure\World\Location\RouteInfo.hpp" />
-    <ClInclude Include="GameStructure\World\Nature\Flora.hpp" />
-    <ClInclude Include="GameStructure\World\Nature\Meteorology2\ClimateSystem.hpp" />
-    <ClInclude Include="GameStructure\World\Nature\Meteorology2\Climatograph.hpp" />
-    <ClInclude Include="GameStructure\World\Nature\Meteorology2\PrecipitationSuspension.hpp" />
-    <ClInclude Include="GameStructure\World\Nature\Meteorology2\WeatherData.hpp" />
-    <ClInclude Include="GameStructure\World\Nature\Meteorology2\WindSystem.hpp" />
-    <ClInclude Include="GameStructure\World\Nature\Meteorology2\MeteorologyUtils.hpp" />
-    <ClInclude Include="GameStructure\World\Nature\TimeFlow.hpp" />
-    <ClInclude Include="Framework\UI\FadeManager.hpp" />
-    <ClInclude Include="Framework\UI\Page.hpp" />
-    <ClInclude Include="Framework\UI\PageManager.hpp" />
-    <ClInclude Include="GameStructure\UI\Pages\PageItemInventory.hpp" />
-    <ClInclude Include="Framework\UI\Views\ViewSprite.hpp" />
-    <ClInclude Include="Framework\UI\Views\ViewText.hpp" />
-    <ClInclude Include="Framework\UI\View.hpp" />
-    <ClInclude Include="GameStructure\World\Parallax.hpp" />
-    <ClInclude Include="GameStructure\World\WorldManager.hpp" />
-    <ClInclude Include="Framework\Graphics\GraphicsManager.hpp" />
-    <ClInclude Include="Framework\Graphics\NineSpriteSheet.hpp" />
-    <ClInclude Include="Framework\Graphics\Particles\Emitter.hpp" />
-    <ClInclude Include="Framework\Graphics\Particles\EmitterInfo.hpp" />
-    <ClInclude Include="Framework\Graphics\Particles\Particle.hpp" />
-    <ClInclude Include="Framework\Graphics\Particles\ParticleSystem.hpp" />
-    <ClInclude Include="Framework\Graphics\SpriteSheet.hpp" />
-    <ClInclude Include="Framework\Input\CommandLineManager.hpp" />
-    <ClInclude Include="Framework\Input\InputManager.hpp" />
-    <ClInclude Include="Framework\Math\Colour\Colour.hpp" />
-    <ClInclude Include="Framework\Math\Convert.hpp" />
-    <ClInclude Include="Framework\Math\Curve\Bezier.hpp" />
-    <ClInclude Include="Framework\Math\Gradient.hpp" />
-    <ClInclude Include="Framework\Math\Linear\Vector2.hpp" />
-    <ClInclude Include="Framework\Math\Math.hpp" />
-    <ClInclude Include="Framework\Math\RandomRange.hpp" />
-    <ClInclude Include="Framework\Platform\Platform.hpp" />
-    <ClInclude Include="Framework\Template\Manager.hpp" />
-    <ClInclude Include="Framework\Template\Registry.hpp" />
-    <ClInclude Include="Framework\Template\Serialisable.hpp" />
-    <ClInclude Include="Framework\Template\Singleton.hpp" />
-    <ClInclude Include="Framework\Template\StateMachine.hpp" />
-    <ClInclude Include="Framework\Template\StringRepresentable.hpp" />
-    <ClInclude Include="Framework\Template\System.hpp" />
-    <ClInclude Include="Framework\Template\Toggleable.hpp" />
-    <ClInclude Include="Framework\Template\Validatable.hpp" />
-    <ClInclude Include="Framework\Thread\ConditionVariable.hpp" />
-    <ClInclude Include="Framework\Thread\Mutex.hpp" />
-    <ClInclude Include="Framework\Thread\ThreadManager.hpp" />
-    <ClInclude Include="Framework\Time\TimePoint.hpp" />
-    <ClInclude Include="Framework\Time\Timer.hpp" />
-    <ClInclude Include="Framework\Utils\Allocator.hpp" />
-    <ClInclude Include="Framework\Utils\BitField.hpp" />
-    <ClInclude Include="Framework\Utils\Debug.hpp" />
-    <ClInclude Include="Framework\Utils\Enum.hpp" />
-    <ClInclude Include="Framework\Utils\Exception.hpp" />
-    <ClInclude Include="Framework\Utils\Function.hpp" />
-    <ClInclude Include="Framework\Utils\Hash.hpp" />
-    <ClInclude Include="Framework\Utils\InitialiserList.hpp" />
-    <ClInclude Include="Framework\Utils\Memory.hpp" />
-    <ClInclude Include="Framework\Utils\MemoryExt.hpp" />
-    <ClInclude Include="Framework\Utils\MemoryOps.hpp" />
-    <ClInclude Include="Framework\Utils\Random.hpp" />
-    <ClInclude Include="Framework\Utils\Tuple.hpp" />
-    <ClInclude Include="Framework\Utils\VFormat.hpp" />
-    <ClInclude Include="[Tool] Dialogue Editor\DialogueEditor.hpp" />
-    <ClInclude Include="[Tool] Dialogue Editor\Globals.hpp" />
-    <ClInclude Include="[Tool] Dialogue Editor\Structure\Object.hpp" />
-    <ClInclude Include="[Tool] Dialogue Editor\Structure\Objects\BlackboardValue.hpp" />
-    <ClInclude Include="[Tool] Dialogue Editor\Structure\Objects\Dialogue.hpp" />
-    <ClInclude Include="[Tool] Dialogue Editor\UI\Pages\PageDialogueEditor.hpp" />
-    <ClInclude Include="[Tool] Dialogue Editor\UI\Views\ViewNodePlug.hpp" />
-    <ClInclude Include="[Tool] Scene Editor\SceneEditor.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\AI\Path\NavFlowField.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\ApplicationContext.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Compute\ComputeManager.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Compute\ComputePrecompiled.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Console\Commands\CommandDebugInfo.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Console\Commands\CommandQuit.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Console\ICommand.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Console\ConsoleManager.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Data\Compression\CompressionManager.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Engine.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Audio\AudioManager.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Containers\Array.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Containers\CString.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Containers\DataStream.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Containers\Dictionary.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Containers\LinkedList.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Containers\Queue.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Containers\Set.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Containers\Stack.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Containers\StaticArray.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Containers\StaticDictionary.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Containers\Tree.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Containers\WString.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Data\String\StringManager.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Data\String\StringTable.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Data\Xml\XmlObject.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\GL\GLShaderStorageBuffer.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\GL\GLUniformBuffer.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\Particles\ParticleManager.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\Particles\ParticleMemoryPool.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\GPUGradient.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Math\Relationship\RelationMatrix.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Math\Spatial\Rect2.hpp" />
+    <ClInclude Include="Codebase\TileSiege\Actor\Actor.hpp" />
+    <ClInclude Include="Codebase\TileSiege\Actor\Modules\ActorModuleRectilinearPhysicsAgent.hpp" />
+    <ClInclude Include="Codebase\TileSiege\Actor\Modules\ActorModulePlayerController.hpp" />
+    <ClInclude Include="Codebase\TileSiege\Actor\Modules\ActorModulePositional.hpp" />
+    <ClInclude Include="Codebase\TileSiege\Camera\TopDownCamera.hpp" />
+    <ClInclude Include="Codebase\TileSiege\Actor\ActorModule.hpp" />
+    <ClInclude Include="Codebase\TileSiege\Input\GameInputManager.hpp" />
+    <ClInclude Include="Codebase\TileSiege\WorldManager.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\File\FileManager.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\File\FileStream.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\File\Save\ISaveLoadListener.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\File\Save\SaveManager.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Data\Xml\XmlManager.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\Filter\GaussianBlurFilter.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\GL\GLDraw.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\GL\GLEnums.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\GL\GLMesh.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\GL\GLMeshIndexed.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\GL\GLObj.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\GL\GLRenderTexture.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\GL\GLShader.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\GL\GLTexture.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\GL\PrecompiledHeaderGL.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\Filter\ImageFilterManager.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\Vector\VectorEllipse.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\Vector\VectorGraphic.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\Vector\VectorShape.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\VertexBuffer.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Math\Relationship\Graph.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Physics\RectilinearPhysicsSystem.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Procedural\Maze.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Time\Time.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\UI\Pages\PageConsole.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\UI\Views\ViewButton.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\UI\Views\ViewColour.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\UI\Views\ViewDraggable.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\UI\Views\ViewDropTarget.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\UI\Views\ViewFlyoutMenu.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\UI\Views\ViewListSelector.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\UI\Views\ViewRectangles.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\UI\Views\ViewSizer.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\UI\Views\ViewSlider.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\UI\Views\ViewTextField.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\UI\Views\ViewTickBox.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Utils\Blackboard.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Utils\Shorthand.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Utils\TypeTraits.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Utils\Uuid.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\UI\FadeManager.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\UI\Page.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\UI\PageManager.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\UI\Views\ViewSprite.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\UI\Views\ViewText.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\UI\View.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\GraphicsManager.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\NineSpriteSheet.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\Particles\Emitter.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\Particles\EmitterInfo.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\Particles\Particle.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\Particles\ParticleSystem.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\SpriteSheet.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Input\CommandLineManager.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Input\InputManager.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Math\Colour\Colour.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Math\Convert.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Math\Curve\Bezier.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Math\Gradient.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Math\Linear\Vector2.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Math\Math.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Math\RandomRange.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Platform\Platform.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Template\Manager.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Template\Registry.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Template\Serialisable.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Template\Singleton.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Template\StateMachine.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Template\StringRepresentable.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Template\System.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Template\Toggleable.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Template\Validatable.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Thread\ConditionVariable.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Thread\Mutex.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Thread\ThreadManager.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Time\TimePoint.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Time\Timer.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Utils\Allocator.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Utils\BitField.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Utils\Debug.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Utils\Enum.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Utils\Exception.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Utils\Function.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Utils\Hash.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Utils\InitialiserList.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Utils\Memory.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Utils\MemoryExt.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Utils\MemoryOps.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Utils\Random.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Utils\Tuple.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Utils\VFormat.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Main.hpp" />
+    <ClInclude Include="Codebase\NeuroEngine\Framework\Graphics\VertexFormat.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Upcoming Feature List.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\kernels\builtin\gfx_particle.cl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
